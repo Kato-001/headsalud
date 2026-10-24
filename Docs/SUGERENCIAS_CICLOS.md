@@ -11,7 +11,7 @@ La división más habitual con el Proceso Unificado es construir primero la base
 
 | Ciclo | Paquetes | Casos de uso |
 |---|---|---|
-| **Ciclo 1** | P1 Seguridad y acceso · P2 Gestión médica · P3 Gestión de pacientes | CU1 Iniciar sesión · CU2 Cerrar sesión / bitácora · CU3 Gestionar usuarios (roles y permisos) · CU4 Especialidades · CU5 Médicos · CU6 Horarios · CU7 Pacientes · CU8 Registrarse como paciente |
+| **Ciclo 1** | P1 Seguridad y acceso · P2 Gestión médica · P3 Gestión de pacientes | CU1 Iniciar sesión · CU2 Gestionar roles y permisos · CU3 Gestionar usuarios (incluye configuración y bitácora) · CU4 Especialidades · CU5 Médicos · CU6 Horarios · CU7 Pacientes · CU8 Registrarse como paciente |
 | **Ciclo 2** | P4 Gestión de citas · P5 Atención médica · P6 Reportes | CU9 Consultar disponibilidad · CU10 Reservar ficha · CU11 Reprogramar · CU12 Cancelar · CU13 Registrar asistencia · CU14 Agenda médica · CU15 Consulta médica · CU16 Historial clínico · CU17 Tratamiento · CU18 Estudios médicos · CU19 Historial de resultados · CU20 Reportes |
 
 ---
