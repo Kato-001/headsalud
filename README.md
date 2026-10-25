@@ -871,7 +871,7 @@ npx vercel deploy --prod
 
 Página de ingreso: **https://novasol-salud.vercel.app/login**. Se puede entrar con el **usuario** o con el **correo**; los pacientes también pueden usar su **CI**.
 
-**Contraseña de todas las cuentas: `NovaSol Salud2026`**
+**Contraseña de todas las cuentas: `HeadSalud2026`**
 
 | Rol | Persona | Usuario | Correo | Qué puede hacer |
 |---|---|---|---|---|
