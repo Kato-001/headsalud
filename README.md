@@ -27,13 +27,15 @@ Caso de estudio: *Clínica Vida Salud*
 | Sergio Estaca Paco | 221089421 |
 | Frank Miguel Yerbales Molina | 218164629 |
 
-**Grupo:** # 20 · **Materia:** Ingeniería de Requisitos · **Docente:** Ing. Angelica Garzon Cuellar
+**Universidad Autónoma Gabriel René Moreno** · Facultad de Ingeniería en Ciencias de la Computación y Telecomunicaciones
+
+**Grupo:** # 20 · **Área:** Ingeniería en Requisitos y Modelado · **Docente:** M.Sc. Ing. Angelica Garzon Cuellar
 
 ## Documentación
 
 | Documento | Contenido |
 |---|---|
-| [📘 Documentación completa (Word)](Docs/Documentacion_NovaSolSalud_Grupo20.docx) · [PDF](Docs/Documentacion_NovaSolSalud_Grupo20.pdf) | Carátula, índice, perfil, marco teórico, modelo de negocio, los flujos de trabajo (captura de requisitos, análisis, diseño, implementación y pruebas), conclusiones, recomendaciones, bibliografía y anexos. 120 páginas, 123 figuras. |
+| [📘 Informe del proyecto (PDF)](Docs/Informe_NovaSolSalud_Grupo20.pdf) | Carátula, índice, perfil, marco teórico, modelo de negocio, los flujos de trabajo (captura de requisitos, análisis, diseño, implementación y pruebas), conclusiones, recomendaciones, bibliografía y anexos. 121 páginas. |
 | [📐 Diagramas UML (PlantUML)](Docs/diagramas) | 66 diagramas: negocio, casos de uso (general y por paquete), prototipos, comunicación y secuencia de los 20 CU, clases, estados, despliegue, paquetes, componentes, datos y trazabilidad. Fuente `.puml` e imagen `.png`. |
 | [🖼️ Capturas de pantalla](Docs/capturas) | 53 pantallas del sistema funcionando, de cada rol. |
 | [📝 Diagrama de clases original](Docs/Diagrama%20de%20Clinica.svg) | Diagrama de clases del que parte la base de datos. |
@@ -153,7 +155,7 @@ Los permisos se asignan por rol desde **Administración → Roles y permisos** (
 
 Los artefactos siguen los flujos de trabajo del Proceso Unificado y describen **el sistema tal como está construido**. Cada diagrama se corresponde con archivos reales del repositorio (ver [Trazabilidad](#trazabilidad-trace)). Los diagramas de esta sección están escritos en Mermaid, que GitHub dibuja automáticamente.
 
-> **Versión UML completa:** los 66 diagramas en notación UML estándar (PlantUML) están en [`Docs/diagramas`](Docs/diagramas) y en la [documentación Word](Docs/Documentacion_NovaSolSalud_Grupo20.docx). Incluyen la descripción, el diagrama de comunicación y el diagrama de secuencia de **los 20 casos de uso**.
+> **Versión UML completa:** los 66 diagramas en notación UML estándar (PlantUML) están en [`Docs/diagramas`](Docs/diagramas) y en el [informe del proyecto](Docs/Informe_NovaSolSalud_Grupo20.pdf). Incluyen la descripción, el diagrama de comunicación y el diagrama de secuencia de **los 20 casos de uso**.
 
 ### 1. Captura de requisitos
 
