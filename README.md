@@ -885,6 +885,14 @@ Página de ingreso: **https://novasol-salud.vercel.app/login**. Se puede entrar 
 | Paciente | Juan Pérez Quispe | `jperez` · CI `1234567` | jperez@correo.com | Portal del paciente |
 | Paciente | María López Rivero | `mlopez` · CI `7654321` | mlopez@correo.com | Portal del paciente |
 
+**Cuenta para probar la recuperación de contraseña** (tiene un correo real):
+
+| Rol | Persona | Usuario | Correo | Contraseña |
+|---|---|---|---|---|
+| Recepcionista | Sergio Estaca Paco | `sestaca` | sergioestaca673@gmail.com | `Recuperar2026` |
+
+Para probarla: en el login elige **"¿Olvidaste tu contraseña?"**, escribe `sergioestaca673@gmail.com`, revisa el correo y usa el código de 6 dígitos para poner una contraseña nueva. Si la cambias, esta tabla deja de estar al día.
+
 > **Para probar la atención médica:** un médico solo puede atender las citas del día. Entre con el médico que atiende el día de hoy, según el horario de la tabla.
 > Un paciente nuevo también puede crear su propia cuenta en **/registro**.
 > Si alguien olvida su contraseña, en el login está **"¿Olvidaste tu contraseña?"**: el código llega al correo de la cuenta. Las cuentas de demostración tienen correos ficticios, así que para probarlo hay que poner un correo real en una cuenta desde **Usuarios**.
