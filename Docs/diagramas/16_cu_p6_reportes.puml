@@ -1,0 +1,30 @@
+@startuml 16_cu_p6_reportes
+!include estilo.iuml
+title P6 · Reportes
+left to right direction
+
+actor "Administrador" as A
+actor "Recepcionista" as R
+A -|> R
+
+rectangle "P6 Reportes" {
+  usecase "CU20 Generar reportes" as CU20
+  usecase "Citas por fecha" as R1
+  usecase "Citas por médico" as R2
+  usecase "Citas por especialidad" as R3
+  usecase "Citas por estado" as R4
+  usecase "Pacientes registrados" as R5
+  usecase "Resumen del período\n(atendidas, canceladas,\ninasistencias)" as R6
+  usecase "Agenda diaria\nde cada médico" as R7
+  usecase "Exportar a CSV /\nimprimir a PDF" as EX
+}
+R --> CU20
+R1 --|> CU20
+R2 --|> CU20
+R3 --|> CU20
+R4 --|> CU20
+R5 --|> CU20
+R6 --|> CU20
+R7 --|> CU20
+CU20 <.. EX : <<extend>>
+@enduml

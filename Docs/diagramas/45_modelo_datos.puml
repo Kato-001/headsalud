@@ -1,0 +1,232 @@
+@startuml 45_modelo_datos
+!include estilo.iuml
+title Diseño de datos · Modelo lógico (esquema «clinica» en PostgreSQL)
+hide circle
+skinparam linetype ortho
+skinparam classFontSize 12
+skinparam classAttributeFontSize 11
+
+entity "rol" as rol {
+  * idrol : integer <<PK>>
+  --
+  * nombre : varchar(50) <<UK>>
+  descripcion : varchar(255)
+}
+entity "permiso" as permiso {
+  * idpermiso : integer <<PK>>
+  --
+  * codigo : varchar(60) <<UK>>
+  * nombre : varchar(120)
+  * modulo : varchar(60)
+}
+entity "rolpermiso" as rolpermiso {
+  * idrol : integer <<PK,FK>>
+  * idpermiso : integer <<PK,FK>>
+}
+entity "usuario" as usuario {
+  * idusuario : integer <<PK>>
+  --
+  * nombre : varchar(150)
+  * username : varchar(50) <<UK>>
+  * email : varchar(150) <<UK>>
+  * password : varchar(255)
+  * estado : varchar(20)
+  ultimoacceso : timestamptz
+  * idrol : integer <<FK>>
+}
+entity "bitacora" as bitacora {
+  * idbitacora : integer <<PK>>
+  --
+  * accion, modulo : varchar(50)
+  tabla, idregistro, descripcion, ip
+  * fecha : timestamptz
+  idusuario : integer <<FK>>
+}
+entity "especialidad" as especialidad {
+  * idespecialidad : integer <<PK>>
+  --
+  * nombre : varchar(100) <<UK normalizado>>
+  descripcion : varchar(255)
+  * estado : varchar(20)
+}
+entity "medico" as medico {
+  * idmedico : integer <<PK>>
+  --
+  * codigo : varchar(20) <<UK>>
+  * registroprofesional : varchar(50) <<UK>>
+  * nombres, apellidos : varchar(100)
+  telefono, email
+  * estado : varchar(20)
+  * idusuario : integer <<FK,UK>>
+}
+entity "medicoespecialidad" as me {
+  * idmedico : integer <<PK,FK>>
+  * idespecialidad : integer <<PK,FK>>
+}
+entity "horario" as horario {
+  * idhorario : integer <<PK>>
+  --
+  * diasemana : integer (1-7)
+  * horainicio, horafin : time
+  * estado : varchar(20)
+  * idmedico : integer <<FK>>
+  EXCLUDE sin cruces
+}
+entity "bloqueoagenda" as bloqueo {
+  * idbloqueo : integer <<PK>>
+  --
+  * fecha : date
+  horainicio, horafin : time
+  * tipo : varchar(30)
+  motivo : varchar(255)
+  * idmedico : integer <<FK>>
+}
+entity "paciente" as paciente {
+  * idpaciente : integer <<PK>>
+  --
+  * codigo : varchar(20) <<UK>>
+  * ci : varchar(20) <<UK>>
+  * nombres, apellidos : varchar(100)
+  * fechanacimiento : date
+  * sexo : varchar(1)
+  * telefono : varchar(30)
+  email, direccion, tiposangre
+  * aceptanotificaciones : boolean
+  * estado : varchar(20)
+  idusuario : integer <<FK,UK>>
+}
+entity "contactoemergencia" as contacto {
+  * idcontacto : integer <<PK>>
+  --
+  * nombre, parentesco, telefono
+  * idpaciente : integer <<FK>>
+}
+entity "historiaclinica" as historia {
+  * idhistoria : integer <<PK>>
+  --
+  * numero : varchar(20) <<UK>>
+  antecedentes, alergias,
+  enfermedadescronicas, medicacionhabitual
+  * idpaciente : integer <<FK,UK>>
+}
+entity "estadocita" as estadocita {
+  * codigo : varchar(20) <<PK>>
+  --
+  * nombre : varchar(50)
+  * ocupahorario : boolean
+}
+entity "cita" as cita {
+  * idcita : integer <<PK>>
+  --
+  * codigo : varchar(30) <<UK>>
+  * fecha : date
+  * horainicio, horafin : time
+  * modalidad : varchar(20)
+  motivo : varchar(255)
+  * fecharegistro : timestamptz
+  * idpaciente : integer <<FK>>
+  * idmedico : integer <<FK>>
+  * idespecialidad : integer <<FK>>
+  * codigoestado : varchar(20) <<FK>>
+  idusuarioregistro : integer <<FK>>
+  EXCLUDE (idmedico, rango) sin cruces
+}
+entity "historialcita" as hcita {
+  * idhistorial : integer <<PK>>
+  --
+  * accion : varchar(30)
+  fechaanterior, horaanterior
+  fechanueva, horanueva
+  motivo, fecha
+  * idcita : integer <<FK>>
+  * codigoestado : varchar(20) <<FK>>
+}
+entity "consulta" as consulta {
+  * idconsulta : integer <<PK>>
+  --
+  * fechahora : timestamptz
+  peso, talla, presionarterial,
+  temperatura, frecuenciacardiaca
+  examenfisico, observaciones
+  * diagnostico : text
+  * idcita : integer <<FK,UK>>
+}
+entity "medicamento" as medicamento {
+  * idmedicamento : integer <<PK>>
+  --
+  * nombre : varchar(150)
+  presentacion, estado
+}
+entity "tratamiento" as tratamiento {
+  * idtratamiento : integer <<PK>>
+  --
+  * dosis, frecuencia, duracion
+  indicaciones : text
+  * idconsulta : integer <<FK>>
+  * idmedicamento : integer <<FK>>
+}
+entity "catalogoestudio" as catalogo {
+  * idcatalogo : integer <<PK>>
+  --
+  * nombre : varchar(150)
+  categoria, descripcion, estado
+}
+entity "estudio" as estudio {
+  * idestudio : integer <<PK>>
+  --
+  indicaciones : text
+  * estado : varchar(20)
+  * fechasolicitud : timestamptz
+  fecharesultado, resultado,
+  archivoresultado
+  * idconsulta : integer <<FK>>
+  * idcatalogo : integer <<FK>>
+}
+entity "notificacion" as notificacion {
+  * idnotificacion : integer <<PK>>
+  --
+  * tipo, canal : varchar
+  * mensaje : text
+  programadapara, enviadaen, leidaen
+  idcita : integer <<FK>>
+  idestudio : integer <<FK>>
+}
+entity "configuracion" as configuracion {
+  * clave : varchar(100) <<PK>>
+  --
+  * valor : varchar(255)
+  descripcion
+}
+entity "sesion" as sesion {
+  * id : varchar(128) <<PK>>
+  --
+  * datos : text
+  * actualizado : timestamptz
+}
+
+rol ||--o{ usuario
+rol ||--o{ rolpermiso
+permiso ||--o{ rolpermiso
+usuario ||--o{ bitacora
+usuario ||--o| medico
+usuario |o--o| paciente
+medico ||--o{ me
+especialidad ||--o{ me
+medico ||--o{ horario
+medico ||--o{ bloqueo
+paciente ||--o{ contacto
+paciente ||--|| historia
+paciente ||--o{ cita
+medico ||--o{ cita
+especialidad ||--o{ cita
+estadocita ||--o{ cita
+cita ||--o{ hcita
+estadocita ||--o{ hcita
+cita ||--o| consulta
+consulta ||--o{ tratamiento
+medicamento ||--o{ tratamiento
+consulta ||--o{ estudio
+catalogo ||--o{ estudio
+cita |o--o{ notificacion
+estudio |o--o{ notificacion
+@enduml

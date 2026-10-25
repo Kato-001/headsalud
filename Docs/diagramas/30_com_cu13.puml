@@ -1,0 +1,16 @@
+@startuml 30_com_cu13
+!include estilo.iuml
+title Diagrama de comunicación · CU13 Registrar asistencia
+left to right direction
+actor "Recepcionista" as A
+boundary "IU_DetalleCita" as IU
+control "CtrlCita" as C
+entity "Cita" as CI
+entity "EstadoCita" as EC
+entity "HistorialCita" as HC
+A --> IU : "1: confirmar() / atendida() / noAsistió()"
+IU --> C : "2: cambiarEstado(cita, estado)"
+C --> EC : "3: transiciónPermitida()"
+C --> CI : "4: actualizarEstado()"
+C --> HC : "5: registrar(acción)"
+@enduml

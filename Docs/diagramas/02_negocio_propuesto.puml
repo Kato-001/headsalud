@@ -1,0 +1,35 @@
+@startuml 02_negocio_propuesto
+!include estilo.iuml
+title Modelo de negocio · Proceso PROPUESTO con HeadSalud
+
+|Paciente|
+start
+if (¿Tiene cuenta en el portal?) then (sí)
+  :Ingresa al portal y elige\nespecialidad y médico;
+else (no)
+  :Llama o se presenta en recepción;
+  |Recepcionista|
+  :Busca al paciente por CI\n(o lo registra con CI único);
+  :Elige especialidad y médico;
+endif
+|Sistema HeadSalud|
+:Calcula los horarios disponibles\n(horario del médico - citas - bloqueos);
+:Muestra **solo** los bloques libres;
+|Paciente|
+:Elige fecha y hora;
+|Sistema HeadSalud|
+:Verifica de nuevo la disponibilidad\nen una transacción (sin cruces);
+:Registra la cita con código único\ny programa el recordatorio;
+|Paciente|
+:Recibe la confirmación\ny el recordatorio;
+|Recepcionista|
+:Confirma, reprograma o cancela\n(el historial queda registrado);
+|Médico|
+:Consulta su agenda del día;
+:Atiende y registra consulta,\ntratamiento y estudios;
+|Sistema HeadSalud|
+:Cambia la cita a ATENDIDA\ny actualiza el historial clínico;
+|Recepcionista|
+:Genera reportes por fecha,\nmédico, especialidad y estado;
+stop
+@enduml

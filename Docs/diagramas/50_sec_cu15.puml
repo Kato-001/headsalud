@@ -1,0 +1,24 @@
+@startuml 50_sec_cu15
+!include estilo.iuml
+title Diagrama de secuencia · CU15 Registrar consulta médica
+autonumber "<b>0."
+hide footbox
+actor Médico as U
+boundary "consulta.php" as V
+control AtencionController as C
+control CitaService as CS
+entity Consulta as CO
+database PostgreSQL as DB
+U -> V : signos vitales, diagnóstico,\ntratamientos y estudios
+V -> C : POST /atencion/guardar
+C -> C : citaDelMedico() y fecha <= hoy
+C -> C : Validator (diagnóstico, rangos, PA 120/80)
+C -> CS : atender(cita, consulta, tratamientos, estudios)
+group transacción
+  CS -> DB : SELECT cita FOR UPDATE + validarTransicion
+  CS -> CO : crear(consulta, tratamientos, estudios)
+  CS -> DB : UPDATE cita SET ATENDIDA
+  CS -> DB : INSERT historialcita (ATENDER)
+end
+C --> U : "Consulta registrada"
+@enduml

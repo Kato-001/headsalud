@@ -1,0 +1,18 @@
+@startuml 30_com_cu11
+!include estilo.iuml
+title Diagrama de comunicación · CU11 Reprogramar cita
+left to right direction
+actor "Recepcionista" as A
+boundary "IU_Reprogramar" as IU
+control "CtrlCita" as C
+control "CtrlDisponibilidad" as D
+entity "Cita" as CI
+entity "HistorialCita" as HC
+entity "Notificacion" as N
+A --> IU : "1: elegirNuevaFechaHora(motivo)"
+IU --> C : "2: reprogramar(cita, fecha, hora, motivo)"
+C --> CI : "3: obtener() FOR UPDATE\n6: actualizar(fecha, hora)"
+C --> D : "4: estaLibre(excluir cita)"
+C --> HC : "7: registrar(anterior → nueva)"
+C --> N : "8: reemplazarRecordatorio()"
+@enduml

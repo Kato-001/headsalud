@@ -1,0 +1,12 @@
+@startuml 30_com_cu04
+!include estilo.iuml
+title Diagrama de comunicación · CU4 Gestionar especialidades
+left to right direction
+actor "Administrador" as A
+boundary "IU_Especialidades" as IU
+control "CtrlEspecialidad" as C
+entity "Especialidad" as E
+A --> IU : "1: registrar(nombre, descripción)"
+IU --> C : "2: guardar(datos)"
+C --> E : "3: existeNombreNormalizado()\n4: crear() / actualizar()\n5: cambiarEstado()"
+@enduml

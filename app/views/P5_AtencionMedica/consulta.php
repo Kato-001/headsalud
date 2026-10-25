@@ -1,7 +1,7 @@
 <?php
 /**
  * CU15 · Registrar consulta médica · CU17 · Registrar tratamiento
- * @var array $c @var array $paciente @var array $anteriores @var array $medicamentos
+ * @var array $c @var array $paciente @var array $anteriores @var array $medicamentos @var array $catalogo
  */
 $titulo = 'Atender ' . $c['codigo'];
 $old = $GLOBALS['_old'];
@@ -13,6 +13,14 @@ $fila = fn($i, $t) => '<div class="trat-row">
     <input class="input" name="tratamientos[' . $i . '][frecuencia]" value="' . e($t['frecuencia'] ?? '') . '" maxlength="100" placeholder="Cada 8 horas" aria-label="Frecuencia">
     <input class="input" name="tratamientos[' . $i . '][duracion]" value="' . e($t['duracion'] ?? '') . '" maxlength="100" placeholder="5 días" aria-label="Duración">
     <input class="input" name="tratamientos[' . $i . '][indicaciones]" value="' . e($t['indicaciones'] ?? '') . '" maxlength="500" placeholder="Indicaciones" aria-label="Indicaciones">
+    <button type="button" class="btn btn-ghost btn-icon btn-danger-ghost" data-quitar-fila aria-label="Quitar">' . icono('cerrar', 16) . '</button>
+</div>';
+$estudiosSol = $old['estudios'] ?? [];
+$filaEstudio = fn($i, $e) => '<div class="trat-row" style="grid-template-columns:1.5fr 2fr auto">
+    <select class="select" name="estudios[' . $i . '][idcatalogo]" aria-label="Estudio"><option value="">Estudio…</option>'
+    . implode('', array_map(fn($c) => '<option value="' . $c['idcatalogo'] . '"' . ((string) ($e['idcatalogo'] ?? '') === (string) $c['idcatalogo'] ? ' selected' : '') . '>' . e($c['nombre'] . ' · ' . $c['categoria']) . '</option>', $catalogo))
+    . '</select>
+    <input class="input" name="estudios[' . $i . '][indicaciones]" value="' . e($e['indicaciones'] ?? '') . '" maxlength="500" placeholder="Indicaciones (ej. en ayunas)" aria-label="Indicaciones">
     <button type="button" class="btn btn-ghost btn-icon btn-danger-ghost" data-quitar-fila aria-label="Quitar">' . icono('cerrar', 16) . '</button>
 </div>';
 ?>
@@ -48,7 +56,13 @@ $fila = fn($i, $t) => '<div class="trat-row">
         <div id="tratamientos"><?php foreach ($tratamientos as $i => $t) echo $fila($i, (array) $t); ?></div>
         <?= error_campo('tratamientos') ?>
         <template id="tpl-tratamiento"><?= $fila('__i__', []) ?></template>
-        <button type="button" class="btn btn-ghost btn-sm" id="agregar-tratamiento"><?= icono('mas', 15) ?> Agregar medicamento</button>
+        <button type="button" class="btn btn-ghost btn-sm" data-agregar="tratamientos" data-plantilla="tpl-tratamiento"><?= icono('mas', 15) ?> Agregar medicamento</button>
+
+        <div class="section-title mt"><?= icono('portapapeles', 14) ?> Estudios a solicitar</div>
+        <div id="estudios"><?php foreach ($estudiosSol as $i => $es) echo $filaEstudio($i, (array) $es); ?></div>
+        <?= error_campo('estudios') ?>
+        <template id="tpl-estudio"><?= $filaEstudio('__i__', []) ?></template>
+        <button type="button" class="btn btn-ghost btn-sm" data-agregar="estudios" data-plantilla="tpl-estudio"><?= icono('mas', 15) ?> Solicitar estudio</button>
 
         <div class="row mt" style="justify-content:flex-end">
             <a href="<?= e(url('/citas/ver', ['id' => $c['idcita']])) ?>" class="btn btn-ghost">Cancelar</a>

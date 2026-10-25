@@ -1,6 +1,6 @@
 <?php
 /**
- * CU15 · Registrar consulta médica · CU17 · Registrar tratamiento.
+ * CU15 · Registrar consulta médica · CU17 · Registrar tratamiento · CU18 · Solicitar estudios.
  * Al guardar la consulta la cita queda ATENDIDA.
  */
 
@@ -17,6 +17,7 @@ final class AtencionController extends Controlador
             'paciente'     => Paciente::buscar((int) $c['idpaciente']),
             'anteriores'   => array_slice(Paciente::consultas((int) $c['idpaciente']), 0, 5),
             'medicamentos' => Consulta::medicamentos(),
+            'catalogo'     => Estudio::catalogo(),
         ]);
     }
 
@@ -48,12 +49,25 @@ final class AtencionController extends Controlador
             $tratamientos[] = $t;
         }
 
+        // CU18: estudios solicitados (opcionales)
+        $estudios = [];
+        $idsCatalogo = array_map('intval', array_column(Estudio::catalogo(), 'idcatalogo'));
+        foreach ((array) ($d['estudios'] ?? []) as $e) {
+            $e = array_map(fn($x) => is_string($x) ? trim($x) : '', (array) $e);
+            if (($e['idcatalogo'] ?? '') === '') {
+                continue;
+            }
+            $v->si(!in_array((int) $e['idcatalogo'], $idsCatalogo, true), 'estudios', 'Estudio no válido.')
+              ->si(mb_strlen($e['indicaciones'] ?? '') > 500, 'estudios', 'Las indicaciones del estudio admiten hasta 500 caracteres.');
+            $estudios[] = $e;
+        }
+
         if ($v->falla()) {
             con_errores($v->errores(), $d);
             flash('error', $v->primerError());
             redirect(url('/atencion', ['cita' => $idcita]));
         }
-        if (!$this->intentar(fn() => CitaService::atender($idcita, $d, $tratamientos), $d)) {
+        if (!$this->intentar(fn() => CitaService::atender($idcita, $d, $tratamientos, $estudios), $d)) {
             redirect(url('/atencion', ['cita' => $idcita]));
         }
         flash('ok', "Consulta registrada. La cita {$c['codigo']} quedó atendida.");

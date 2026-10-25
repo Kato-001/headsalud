@@ -1,0 +1,39 @@
+@startuml 46_trazabilidad
+!include estilo.iuml
+title Trazabilidad (trace) entre modelos del Proceso Unificado
+left to right direction
+skinparam packageStyle folder
+
+package "Modelo de\ncasos de uso" as MCU {
+  usecase "CU10 Reservar ficha" as CU
+}
+package "Modelo de\nanálisis" as MAN {
+  boundary "IU_ProgramarCita" as B
+  control "CtrlCita" as C
+  entity "Cita" as E
+}
+package "Modelo de\ndiseño" as MDI {
+  component "citas/nueva.php" as V
+  component "CitaController" as CC
+  component "CitaService" as CS
+  component "models/Cita" as MC
+}
+package "Modelo de\ndespliegue" as MDE {
+  node "Vercel\n(PHP 8.3)" as NV
+  database "Supabase\n(PostgreSQL)" as ND
+}
+package "Implementación" as IMP {
+  artifact "app/ (código PHP)" as A1
+  artifact "Bakend/database/*.sql" as A2
+}
+
+MCU ..> MAN : <<trace>>
+MAN ..> MDI : <<trace>>
+MDI ..> MDE : <<trace>>
+MDI ..> IMP : <<trace>>
+CU ..> B : <<trace>>
+B ..> V : <<trace>>
+C ..> CC : <<trace>>
+C ..> CS : <<trace>>
+E ..> MC : <<trace>>
+@enduml

@@ -33,15 +33,17 @@ insert into permiso (codigo, nombre, modulo) values
     ('agenda.ver',              'Ver la agenda de todos los médicos',         'Citas'),
     ('agenda.propia',           'Ver la agenda propia (médico)',              'Citas'),
     ('consultas.registrar',     'Atender citas y registrar la consulta',      'Atención médica'),
-    ('reportes.ver',            'Generar reportes',                            'Reportes'),
+    ('estudios.gestionar',      'Ver estudios solicitados y registrar resultados', 'Atención médica'),
+    ('estudios.catalogo',       'Administrar el catálogo de estudios',        'Atención médica'),
+    ('reportes.ver',           'Generar reportes',                            'Reportes'),
     ('portal.paciente',         'Usar el portal del paciente',                'Portal');
 
 insert into rolpermiso (idrol, idpermiso)
 select r.idrol, p.idpermiso from rol r cross join permiso p
 where (r.nombre = 'ADMINISTRADOR' and p.codigo not in ('agenda.propia', 'consultas.registrar', 'portal.paciente'))
    or (r.nombre = 'RECEPCIONISTA' and p.codigo in ('panel.ver', 'medicos.ver', 'pacientes.ver', 'pacientes.gestionar',
-        'citas.ver', 'citas.gestionar', 'citas.asistencia', 'agenda.ver', 'reportes.ver'))
-   or (r.nombre = 'MEDICO' and p.codigo in ('panel.ver', 'agenda.propia', 'consultas.registrar'))
+        'citas.ver', 'citas.gestionar', 'citas.asistencia', 'agenda.ver', 'reportes.ver', 'estudios.gestionar'))
+   or (r.nombre = 'MEDICO' and p.codigo in ('panel.ver', 'agenda.propia', 'consultas.registrar', 'estudios.gestionar'))
    or (r.nombre = 'PACIENTE' and p.codigo = 'portal.paciente');
 
 -- ----------------------------------------------------- Configuración
@@ -192,23 +194,23 @@ begin
                                           codigoestado, fecharegistro, idusuarioregistro)
                         values (v_dia, v_slot, v_slot + interval '30 minutes', v_motivos[1 + v_n % 8],
                                 v_pac[1 + (v_n * 5) % array_length(v_pac, 1)], v_h.idmedico, v_esp, v_estado,
-                                (v_dia - 4)::timestamp + time '10:00', (select idusuario from usuario where username = 'mrojas'))
+                                ((v_dia - 4)::timestamp + time '10:00') at time zone 'America/La_Paz', (select idusuario from usuario where username = 'mrojas'))
                         returning idcita into v_id;
 
                         insert into historialcita (accion, fechanueva, horanueva, motivo, fecha, idcita, codigoestado, idusuario)
-                        values ('PROGRAMAR', v_dia, v_slot, null, (v_dia - 4)::timestamp + time '10:00', v_id, 'PROGRAMADA',
+                        values ('PROGRAMAR', v_dia, v_slot, null, ((v_dia - 4)::timestamp + time '10:00') at time zone 'America/La_Paz', v_id, 'PROGRAMADA',
                                 (select idusuario from usuario where username = 'mrojas'));
                         if v_estado <> 'PROGRAMADA' then
                             insert into historialcita (accion, motivo, fecha, idcita, codigoestado, idusuario)
                             values (case v_estado when 'CONFIRMADA' then 'CONFIRMAR' when 'CANCELADA' then 'CANCELAR'
                                                   when 'ATENDIDA' then 'ATENDER' else 'INASISTENCIA' end,
                                     case v_estado when 'CANCELADA' then 'El paciente avisó que no podrá asistir' end,
-                                    least(v_dia::timestamp + v_slot, now()::timestamp), v_id, v_estado, null);
+                                    least((v_dia + v_slot) at time zone 'America/La_Paz', now()), v_id, v_estado, null);
                         end if;
                         if v_estado = 'ATENDIDA' then
                             insert into consulta (fechahora, motivo, peso, talla, presionarterial, temperatura, frecuenciacardiaca,
                                                   examenfisico, diagnostico, observaciones, idcita)
-                            values (v_dia::timestamp + v_slot, v_motivos[1 + v_n % 8], 60 + v_n % 25, 155 + v_n % 30,
+                            values ((v_dia + v_slot) at time zone 'America/La_Paz', v_motivos[1 + v_n % 8], 60 + v_n % 25, 155 + v_n % 30,
                                     (110 + v_n % 30) || '/' || (70 + v_n % 15), 36.4 + (v_n % 8) / 10.0, 65 + v_n % 25,
                                     'Paciente lúcido, orientado, sin signos de alarma.',
                                     (array['Resfrío común', 'Cefalea tensional', 'Paciente sano', 'Gastritis leve',
@@ -244,4 +246,30 @@ from cita c where c.fecha >= ahora_local()::date and c.codigoestado in ('PROGRAM
 -- Bloqueo de ejemplo dentro de dos semanas para el Dr. Suárez
 insert into bloqueoagenda (fecha, tipo, motivo, idmedico)
 select ahora_local()::date + 14, 'PERMISO', 'Capacitación externa', idmedico from medico where codigo = 'MED-003';
+
+-- Estudios médicos de ejemplo (CU18 / CU19): unos con resultado y otros pendientes
+insert into catalogoestudio (nombre, categoria, descripcion) values
+    ('Perfil lipídico', 'Laboratorio', 'Colesterol total, HDL, LDL y triglicéridos'),
+    ('Radiografía dental panorámica', 'Imagen', 'Ortopantomografía');
+
+insert into estudio (indicaciones, estado, fechasolicitud, fecharesultado, resultado, idconsulta, idcatalogo)
+select 'En ayunas de 8 horas',
+       case when c.idconsulta % 3 = 0 then 'SOLICITADO' else 'COMPLETADO' end,
+       c.fechahora,
+       case when c.idconsulta % 3 = 0 then null else c.fechahora + interval '2 days' end,
+       case when c.idconsulta % 3 = 0 then null
+            else (array['Valores dentro de los rangos normales.',
+                        'Glucosa 98 mg/dL (normal). Sin alteraciones.',
+                        'Leve elevación de colesterol LDL (145 mg/dL). Control en 3 meses.',
+                        'Sin hallazgos patológicos.'])[1 + c.idconsulta % 4] end,
+       c.idconsulta,
+       (select idcatalogo from catalogoestudio order by idcatalogo offset (c.idconsulta % 5) limit 1)
+from consulta c where c.idconsulta % 4 = 1;
+
+insert into notificacion (tipo, canal, mensaje, programadapara, enviadaen, idcita, idestudio)
+select 'RESULTADO', 'APP', 'Ya está disponible el resultado de su estudio: ' || ce.nombre,
+       e.fecharesultado, e.fecharesultado, co.idcita, e.idestudio
+from estudio e join consulta co on co.idconsulta = e.idconsulta
+join catalogoestudio ce on ce.idcatalogo = e.idcatalogo
+where e.estado = 'COMPLETADO';
 

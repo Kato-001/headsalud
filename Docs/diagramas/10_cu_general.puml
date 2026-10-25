@@ -1,0 +1,85 @@
+@startuml 10_cu_general
+!include estilo.iuml
+title Diagrama general de casos de uso · HeadSalud
+left to right direction
+skinparam packageStyle rectangle
+skinparam nodesep 18
+skinparam ranksep 60
+
+' Paquetes a la izquierda de los actores
+package "P1 Seguridad y acceso" {
+  usecase "CU1 Iniciar sesión" as CU1
+  usecase "CU2 Gestionar roles\ny permisos" as CU2
+  usecase "CU3 Gestionar usuarios" as CU3
+}
+package "P2 Gestión médica" {
+  usecase "CU4 Gestionar\nespecialidades" as CU4
+  usecase "CU5 Gestionar médicos" as CU5
+  usecase "CU6 Gestionar horarios" as CU6
+}
+package "P3 Gestión de pacientes" {
+  usecase "CU7 Gestionar pacientes" as CU7
+  usecase "CU8 Registrarse\ncomo paciente" as CU8
+}
+
+actor "Usuario" as U
+actor "Administrador" as A
+actor "Recepcionista" as R
+actor "Médico" as M
+actor "Paciente" as P
+
+' Paquetes a la derecha de los actores
+package "P4 Gestión de citas" {
+  usecase "CU9 Consultar\ndisponibilidad" as CU9
+  usecase "CU10 Reservar ficha" as CU10
+  usecase "CU11 Reprogramar cita" as CU11
+  usecase "CU12 Cancelar cita" as CU12
+  usecase "CU13 Registrar\nasistencia" as CU13
+  usecase "CU14 Consultar\nagenda médica" as CU14
+}
+package "P5 Atención médica" {
+  usecase "CU15 Registrar\nconsulta médica" as CU15
+  usecase "CU16 Gestionar\nhistorial clínico" as CU16
+  usecase "CU17 Registrar\ntratamiento" as CU17
+  usecase "CU18 Gestionar\nestudios médicos" as CU18
+  usecase "CU19 Consultar historial\ny resultados" as CU19
+}
+package "P6 Reportes" {
+  usecase "CU20 Generar reportes" as CU20
+}
+
+' Generalización de actores
+A -up-|> R
+R -up-|> U
+M -up-|> U
+P -up-|> U
+
+' Asociaciones con los paquetes de la izquierda
+CU1 -- U
+CU2 -- A
+CU3 -- A
+CU4 -- A
+CU5 -- A
+CU6 -- A
+CU7 -- R
+CU8 -- P
+
+' Asociaciones con los paquetes de la derecha
+R -- CU9
+R -- CU10
+R -- CU11
+R -- CU12
+R -- CU13
+R -- CU14
+R -- CU18
+R -- CU20
+M -- CU14
+M -- CU15
+M -- CU16
+M -- CU17
+M -- CU18
+P -- CU9
+P -- CU10
+P -- CU12
+P -- CU19
+@enduml

@@ -1,0 +1,22 @@
+@startuml 50_sec_cu17
+!include estilo.iuml
+title Diagrama de secuencia · CU17 Registrar tratamiento
+autonumber "<b>0."
+hide footbox
+actor Médico as U
+boundary "consulta.php" as V
+control AtencionController as C
+entity Medicamento as MD
+entity Consulta as CO
+entity Tratamiento as T
+V -> MD : medicamentos activos
+U -> V : + Agregar medicamento\n(dosis, frecuencia, duración)
+V -> C : POST /atencion/guardar (tratamientos[])
+loop cada fila
+  C -> C : medicamento válido y campos completos
+end
+C -> CO : crear(consulta)
+loop cada tratamiento
+  CO -> T : INSERT tratamiento
+end
+@enduml

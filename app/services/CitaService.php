@@ -187,13 +187,13 @@ final class CitaService
     }
 
     /** El médico registra la consulta; la cita pasa a ATENDIDA en la misma transacción. */
-    public static function atender(int $idcita, array $consulta, array $tratamientos): void
+    public static function atender(int $idcita, array $consulta, array $tratamientos, array $estudios = []): void
     {
         try {
-            $cita = Database::transaccion(function () use ($idcita, $consulta, $tratamientos) {
+            $cita = Database::transaccion(function () use ($idcita, $consulta, $tratamientos, $estudios) {
                 $c = self::citaParaActualizar($idcita);
                 self::validarTransicion($c, 'ATENDIDA');
-                Consulta::crear($idcita, $consulta, $tratamientos);
+                Consulta::crear($idcita, $consulta, $tratamientos, $estudios);
                 Database::query("update cita set codigoestado = 'ATENDIDA' where idcita = :id", ['id' => $idcita]);
                 self::historial($idcita, 'ATENDER', 'ATENDIDA', null, null, null, null, 'Consulta registrada');
                 Notificacion::descartarRecordatorios($idcita);

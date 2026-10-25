@@ -1,0 +1,18 @@
+@startuml 30_com_cu19
+!include estilo.iuml
+title Diagrama de comunicación · CU19 Consultar historial y resultados
+left to right direction
+actor "Paciente" as A
+boundary "IU_PortalHistorial" as IU
+control "CtrlPortal" as C
+entity "Consulta" as CO
+entity "Tratamiento" as T
+entity "Estudio" as E
+entity "Notificacion" as N
+A --> IU : "1: verMiHistorial()"
+IU --> C : "2: historial(paciente de la sesión)"
+C --> CO : "3: consultas()"
+C --> T : "4: tratamientos()"
+C --> E : "5: estudiosConResultado()"
+C --> N : "6: marcarLeídas()"
+@enduml

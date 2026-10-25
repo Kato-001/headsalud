@@ -1,0 +1,28 @@
+@startuml 50_sec_cu09
+!include estilo.iuml
+title Diagrama de secuencia · CU9 Consultar disponibilidad
+autonumber "<b>0."
+hide footbox
+actor Recepcionista as U
+boundary "citas.js" as JS
+control ApiController as API
+control Disponibilidad as D
+entity Configuracion as CF
+entity "medico /\nhorario" as H
+entity BloqueoAgenda as BA
+entity Cita as CI
+U -> JS : elige médico y fecha
+JS -> API : GET /api/disponibilidad?medico&fecha
+API -> D : bloques(médico, fecha)
+D -> CF : DURACION_CITA_MINUTOS
+D -> D : fecha >= hoy y <= DIAS_MAX_RESERVA
+D -> H : médico activo y horarios del día
+D -> BA : bloqueos del día
+D -> CI : citas que ocupan horario
+loop cada bloque de N minutos
+  D -> D : libre = no pasado, sin cita, sin bloqueo
+end
+D --> API : bloques [inicio, fin, libre]
+API --> JS : JSON
+JS --> U : solo se habilitan los libres
+@enduml

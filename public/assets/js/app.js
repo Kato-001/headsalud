@@ -259,21 +259,22 @@
     setTimeout(() => s.remove(), 600);
   });
 
-  /* ----------------------------------- Filas dinámicas de tratamientos */
-  const listaTrat = $('#tratamientos');
-  if (listaTrat) {
-    const plantilla = $('#tpl-tratamiento');
-    let n = listaTrat.children.length;
-    $('#agregar-tratamiento').addEventListener('click', () => {
-      const html = plantilla.innerHTML.replace(/__i__/g, n++);
-      listaTrat.insertAdjacentHTML('beforeend', html);
-      listaTrat.lastElementChild.querySelector('select').focus();
+  /* ------------------- Filas dinámicas (tratamientos y estudios de la consulta)
+     <button data-agregar="idLista" data-plantilla="idTemplate"> agrega una fila */
+  $$('[data-agregar]').forEach((btn) => {
+    const lista = document.getElementById(btn.dataset.agregar);
+    const plantilla = document.getElementById(btn.dataset.plantilla);
+    if (!lista || !plantilla) return;
+    let n = lista.children.length + 100;   // índices únicos para los nombres del formulario
+    btn.addEventListener('click', () => {
+      lista.insertAdjacentHTML('beforeend', plantilla.innerHTML.replace(/__i__/g, n++));
+      lista.lastElementChild.querySelector('select, input').focus();
     });
-    listaTrat.addEventListener('click', (e) => {
+    lista.addEventListener('click', (e) => {
       const b = e.target.closest('[data-quitar-fila]');
       if (b) b.closest('.trat-row').remove();
     });
-  }
+  });
 
   /* --------------------------------- Portal: marcar notificaciones leídas */
   const btnLeer = $('#marcar-leidas');

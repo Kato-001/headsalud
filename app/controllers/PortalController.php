@@ -168,7 +168,11 @@ final class PortalController extends Controlador
     public function historial(): void
     {
         $p = $this->paciente();
-        $this->vista('Portal/historial', ['p' => $p, 'consultas' => Paciente::consultas((int) $p['idpaciente'])]);
+        $this->vista('Portal/historial', [
+            'p' => $p,
+            'consultas' => Paciente::consultas((int) $p['idpaciente']),
+            'estudios' => Estudio::delPaciente((int) $p['idpaciente']),   // CU19
+        ]);
     }
 
     public function leerNotificaciones(): void

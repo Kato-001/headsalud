@@ -1,0 +1,16 @@
+@startuml 30_com_cu02
+!include estilo.iuml
+title Diagrama de comunicación · CU2 Gestionar roles y permisos
+left to right direction
+actor "Administrador" as A
+boundary "IU_Roles" as IU
+control "CtrlRol" as C
+entity "Rol" as R
+entity "Permiso" as P
+entity "RolPermiso" as RP
+A --> IU : "1: registrarRol(nombre)\n4: marcarPermisos()"
+IU --> C : "2: crearRol(datos)\n5: asignarPermisos(idrol, permisos)"
+C --> R : "3: crear()"
+C --> P : "6: listar()"
+C --> RP : "7: reemplazar(idrol, permisos)"
+@enduml

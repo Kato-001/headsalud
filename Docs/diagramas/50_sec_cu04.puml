@@ -1,0 +1,23 @@
+@startuml 50_sec_cu04
+!include estilo.iuml
+title Diagrama de secuencia · CU4 Gestionar especialidades
+autonumber "<b>0."
+hide footbox
+actor Administrador as U
+boundary "especialidades/index.php" as V
+control EspecialidadController as C
+entity Especialidad as E
+entity Bitacora as B
+U -> V : nombre y descripción
+V -> C : POST /especialidades/guardar
+C -> E : existeNombre(normalizar(nombre))
+alt ya existe
+  C --> V : "Ya existe una especialidad con ese nombre"
+else nueva
+  C -> E : guardar(nombre en Título)
+  C -> B : registrar(CREAR)
+  C --> V : "Especialidad registrada"
+end
+U -> C : POST /especialidades/estado
+C -> E : cambiarEstado()
+@enduml

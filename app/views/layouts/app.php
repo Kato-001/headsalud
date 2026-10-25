@@ -26,10 +26,14 @@ $menu = [
         ['/citas', 'Citas', 'calendario', 'citas.ver'],
         ['/pacientes', 'Pacientes', 'pulso', 'pacientes.ver', 'pacientes.gestionar'],
     ],
+    'Atención médica' => [
+        ['/estudios', 'Estudios médicos', 'portapapeles', 'estudios.gestionar'],
+    ],
     'Gestión médica' => [
         ['/medicos', 'Médicos', 'estetoscopio', 'medicos.ver', 'medicos.gestionar'],
         ['/especialidades', 'Especialidades', 'cruz', 'especialidades.gestionar'],
         ['/horarios', 'Horarios', 'reloj', 'horarios.gestionar'],
+        ['/estudios/catalogo', 'Catálogo de estudios', 'documento', 'estudios.catalogo'],
     ],
     'Reportes' => [
         ['/reportes', 'Reportes', 'reporte', 'reportes.ver'],
@@ -42,8 +46,9 @@ $menu = [
     ],
 ];
 $activo = function (string $destino) use ($ruta): bool {
-    if (in_array($destino, ['/portal', '/citas'], true)) {
-        return $ruta === $destino || ($destino === '/citas' && in_array($ruta, ['/citas/ver', '/citas/reprogramar'], true));
+    if (in_array($destino, ['/portal', '/citas', '/estudios'], true)) {
+        return $ruta === $destino || ($destino === '/citas' && in_array($ruta, ['/citas/ver', '/citas/reprogramar'], true))
+            || ($destino === '/estudios' && $ruta === '/estudios/resultado');
     }
     return $ruta === $destino || str_starts_with($ruta, $destino . '/');
 };

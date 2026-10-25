@@ -69,7 +69,7 @@ $titulo = 'Roles y permisos';
                 <thead>
                 <tr>
                     <th>Permiso</th>
-                    <?php foreach ($roles as $r): ?><th><?= e($r['nombre'] === 'ADMINISTRADOR' ? 'ADMIN' : ($r['nombre'] === 'RECEPCIONISTA' ? 'RECEPCIÓN' : $r['nombre'])) ?></th><?php endforeach; ?>
+                    <?php foreach ($roles as $r): ?><th><?= e(['ADMINISTRADOR' => 'ADMIN', 'RECEPCIONISTA' => 'RECEPCIÓN', 'MEDICO' => 'MÉDICO'][$r['nombre']] ?? $r['nombre']) ?></th><?php endforeach; ?>
                 </tr>
                 </thead>
                 <tbody>

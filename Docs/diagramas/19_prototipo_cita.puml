@@ -1,0 +1,38 @@
+@startsalt 19_prototipo_cita
+title Prototipo de IU · CU10 Reservar ficha
+{+
+  {* Panel | Agenda | <b>Programar cita</b> | Citas | Pacientes | Reportes }
+  ==
+  <b>Programar cita
+  (1) Paciente  → (2) Especialidad y médico → (3) Fecha → (4) Hora
+  ==
+  {
+    {+
+      <b>PACIENTE
+      "🔍 CI, nombre o apellido del paciente      "
+      ..
+      <b>ESPECIALIDAD Y MÉDICO
+      ^Medicina General^ | ^Dr. Carlos Mendoza^
+      ..
+      <b>FECHA
+      [Lun 26] | [Mar 27] | [<b>Mié 28</b>] | [Jue 29] | [Vie 30]
+      ..
+      <b>HORA DISPONIBLE
+      [08:00] | [<s>08:30</s>] | [09:00] | [<b>10:30</b>] | [11:00]
+      ..
+      <b>DETALLES
+      ^Presencial^ | "Motivo de la consulta    "
+    } | {+
+      <b>NUEVA CITA · CM-····
+      ..
+      Paciente     | Juan Pérez
+      Especialidad | Medicina General
+      Médico       | Dr. Mendoza
+      Fecha        | Mié 28 oct
+      Horario      | 10:30 - 11:00
+      ..
+      [   Confirmar cita   ]
+    }
+  }
+}
+@endsalt

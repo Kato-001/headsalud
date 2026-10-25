@@ -189,6 +189,7 @@ final class Paciente
         );
         foreach ($consultas as &$c) {
             $c['tratamientos'] = Consulta::tratamientos((int) $c['idconsulta']);
+            $c['estudios'] = Estudio::deConsulta((int) $c['idconsulta']);
         }
         return $consultas;
     }

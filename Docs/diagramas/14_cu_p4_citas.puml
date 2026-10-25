@@ -1,0 +1,38 @@
+@startuml 14_cu_p4_citas
+!include estilo.iuml
+title P4 · Gestión de citas
+left to right direction
+
+actor "Recepcionista" as R
+actor "Paciente" as P
+actor "Médico" as M
+
+rectangle "P4 Gestión de citas" {
+  usecase "CU9 Consultar\ndisponibilidad" as CU9
+  usecase "CU10 Reservar ficha" as CU10
+  usecase "CU11 Reprogramar cita" as CU11
+  usecase "CU12 Cancelar cita" as CU12
+  usecase "CU13 Registrar\nasistencia" as CU13
+  usecase "Confirmar cita" as CC
+  usecase "Registrar inasistencia" as RI
+  usecase "CU14 Consultar\nagenda médica" as CU14
+}
+R --> CU10
+R --> CU11
+R --> CU12
+R --> CU13
+R --> CU14
+P --> CU9
+P --> CU10
+P --> CU12
+M --> CU14
+CU10 ..> CU9 : <<include>>
+CU11 ..> CU9 : <<include>>
+CU13 <.. CC : <<extend>>
+CU13 <.. RI : <<extend>>
+note bottom of CU10
+  Verifica la disponibilidad en el servidor
+  dentro de una transacción (RN13) y
+  PostgreSQL impide cruces (EXCLUDE)
+end note
+@enduml

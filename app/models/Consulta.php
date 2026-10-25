@@ -12,6 +12,7 @@ final class Consulta
         $c = Database::fila('select * from consulta where idcita = :id', ['id' => $idcita]);
         if ($c) {
             $c['tratamientos'] = self::tratamientos((int) $c['idconsulta']);
+            $c['estudios'] = Estudio::deConsulta((int) $c['idconsulta']);
         }
         return $c;
     }
@@ -30,8 +31,8 @@ final class Consulta
         return Database::filas("select * from medicamento where estado = 'ACTIVO' order by nombre");
     }
 
-    /** Guarda la consulta y sus tratamientos (dentro de la transacción del servicio). */
-    public static function crear(int $idcita, array $d, array $tratamientos): int
+    /** Guarda la consulta, sus tratamientos y los estudios solicitados (dentro de la transacción del servicio). */
+    public static function crear(int $idcita, array $d, array $tratamientos, array $estudios = []): int
     {
         $num = fn(string $k) => ($d[$k] ?? '') !== '' ? str_replace(',', '.', $d[$k]) : null;
         $id = (int) Database::valor(
@@ -52,6 +53,9 @@ final class Consulta
                 ['c' => $id, 'm' => (int) $t['idmedicamento'], 'd' => $t['dosis'], 'f' => $t['frecuencia'],
                  'du' => $t['duracion'], 'i' => ($t['indicaciones'] ?? '') ?: null]
             );
+        }
+        foreach ($estudios as $e) {
+            Estudio::solicitar($id, (int) $e['idcatalogo'], $e['indicaciones'] ?? null);   // CU18 «extend» CU15
         }
         return $id;
     }

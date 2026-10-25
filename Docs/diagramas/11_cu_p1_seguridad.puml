@@ -1,0 +1,36 @@
+@startuml 11_cu_p1_seguridad
+!include estilo.iuml
+title P1 · Seguridad y acceso
+left to right direction
+
+actor "Usuario" as U
+actor "Administrador" as A
+A -|> U
+
+rectangle "P1 Seguridad y acceso" {
+  usecase "CU1 Iniciar sesión" as CU1
+  usecase "Cerrar sesión" as CS
+  usecase "Cambiar contraseña" as CP
+  usecase "CU2 Gestionar roles\ny permisos" as CU2
+  usecase "Asignar / quitar\npermisos" as AP
+  usecase "CU3 Gestionar usuarios" as CU3
+  usecase "Activar / desactivar\ncuenta" as AD
+  usecase "Configurar parámetros\ndel sistema" as CF
+  usecase "Consultar bitácora" as BI
+}
+U --> CU1
+U --> CS
+U --> CP
+A --> CU2
+A --> CU3
+A --> CF
+A --> BI
+CU2 <.. AP : <<extend>>
+CU3 <.. AD : <<extend>>
+CU3 ..> CU2 : <<include>>\n(asignar rol)
+note bottom of CU1
+  Valida con password_verify(),
+  bloquea tras 5 intentos fallidos
+  y registra la bitácora.
+end note
+@enduml

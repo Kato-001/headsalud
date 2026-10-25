@@ -1,0 +1,46 @@
+@startuml 43_componentes
+!include estilo.iuml
+title Diagrama de componentes · Subsistemas de HeadSalud
+left to right direction
+
+component "Navegador\n(HTML + app.js + citas.js)" as NAV
+component "Controlador frontal\napi/index.php" as FRONT
+component "Router + Csrf" as ROUTER
+component "Auth + Session" as AUTH
+
+package "Subsistemas (controladores)" {
+  component "P1 Seguridad\nAuth, Usuario, Rol,\nConfiguración, Bitácora" as S1
+  component "P2 Gestión médica\nEspecialidad, Médico, Horario" as S2
+  component "P3 Pacientes\nPaciente, Registro" as S3
+  component "P4 Citas\nCita, Agenda, Api" as S4
+  component "P5 Atención\nAtencion, Estudio" as S5
+  component "P6 Reportes\nReporte" as S6
+  component "Portal del paciente\nPortal" as SP
+}
+component "CitaService\n+ Disponibilidad" as SERV
+component "Modelos\n(SQL parametrizado)" as MOD
+component "Database (PDO)" as PDO
+database "PostgreSQL" as DB
+
+NAV --> FRONT : HTTP
+FRONT --> ROUTER
+ROUTER --> AUTH : requerir(permiso)
+ROUTER --> S1
+ROUTER --> S2
+ROUTER --> S3
+ROUTER --> S4
+ROUTER --> S5
+ROUTER --> S6
+ROUTER --> SP
+S4 --> SERV
+S5 --> SERV
+SP --> SERV
+S1 --> MOD
+S2 --> MOD
+S3 --> MOD
+S6 --> MOD
+SERV --> MOD
+MOD --> PDO
+PDO --> DB : pdo_pgsql
+NAV ..> S4 : JSON /api/disponibilidad
+@enduml

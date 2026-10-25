@@ -1,0 +1,45 @@
+@startuml 21_paquetes_analisis
+!include estilo.iuml
+title Análisis de la arquitectura · Paquetes de análisis y dependencias
+skinparam packageStyle folder
+
+package "Portal del paciente" as PORTAL {
+}
+package "P6 Reportes" as P6 {
+}
+package "P5 Atención médica" as P5 {
+}
+package "P4 Gestión de citas" as P4 {
+}
+package "P3 Gestión de pacientes" as P3 {
+}
+package "P2 Gestión médica" as P2 {
+}
+package "P1 Seguridad y acceso" as P1 {
+}
+
+PORTAL ..> P4 : <<use>>
+PORTAL ..> P3 : <<use>>
+PORTAL ..> P5 : <<use>>
+P6 ..> P4
+P6 ..> P3
+P5 ..> P4
+P5 ..> P3
+P4 ..> P3
+P4 ..> P2
+P2 ..> P1
+P3 ..> P1
+P4 ..> P1
+P5 ..> P1
+P6 ..> P1
+
+note right of P1
+  Paquete de servicio común:
+  autenticación, permisos por rol
+  y bitácora
+end note
+note left of P4
+  Paquete central del negocio:
+  disponibilidad y citas sin cruces
+end note
+@enduml

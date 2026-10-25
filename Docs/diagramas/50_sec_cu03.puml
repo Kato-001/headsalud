@@ -1,0 +1,28 @@
+@startuml 50_sec_cu03
+!include estilo.iuml
+title Diagrama de secuencia · CU3 Gestionar usuarios
+autonumber "<b>0."
+hide footbox
+actor Administrador as U
+boundary "usuarios/form.php" as V
+control UsuarioController as C
+participant Validator as VA
+entity Usuario as M
+entity Bitacora as B
+U -> V : completa nombre, usuario, correo, rol, contraseña
+V -> V : validación JavaScript
+V -> C : POST /usuarios/guardar
+C -> VA : requerido, regex, email, password, coincide
+C -> M : existeUsername() / existeEmail()
+alt datos inválidos
+  C --> V : redirige con errores por campo
+else válidos
+  C -> M : crear(password_hash)
+  C -> B : registrar(CREAR)
+  C --> U : "Usuario creado"
+end
+U -> C : POST /usuarios/estado (desactivar)
+C -> M : cambiarEstado(INACTIVO)
+M -> M : elimina sus sesiones abiertas
+C -> B : registrar(DESACTIVAR)
+@enduml

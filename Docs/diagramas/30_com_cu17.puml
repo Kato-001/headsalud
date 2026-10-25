@@ -1,0 +1,16 @@
+@startuml 30_com_cu17
+!include estilo.iuml
+title Diagrama de comunicación · CU17 Registrar tratamiento
+left to right direction
+actor "Médico" as A
+boundary "IU_Consulta" as IU
+control "CtrlAtencion" as C
+entity "Medicamento" as MD
+entity "Tratamiento" as T
+entity "Consulta" as CO
+A --> IU : "1: agregarMedicamento(dosis, frecuencia, duración)"
+IU --> MD : "2: listarActivos()"
+IU --> C : "3: atender(cita, datos, tratamientos)"
+C --> CO : "4: crear()"
+C --> T : "5: crear() por cada fila"
+@enduml

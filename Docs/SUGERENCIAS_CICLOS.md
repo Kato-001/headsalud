@@ -100,7 +100,7 @@ La división más habitual con el Proceso Unificado es construir primero la base
 | ¿Cómo funcionan los recordatorios? | Al programar se crea una `NOTIFICACION` con `programadapara` = cita − 24 h, que el paciente ve en su portal desde ese momento. |
 
 ### Posibles requisitos extra que podrían agregar
-- **Estudios médicos (CU18–CU19):** las tablas `ESTUDIO` y `CATALOGOESTUDIO` ya existen; faltan las pantallas para solicitar estudios y subir resultados.
+- **Subir el archivo del resultado** de un estudio (PDF o imagen) al servidor, en lugar de solo un enlace; hoy CU18–CU19 guardan el resultado en texto y un enlace.
 - Envío real de recordatorios por correo o WhatsApp con una tarea programada.
 - Reporte en PDF generado en el servidor (con una librería como Dompdf).
 - Lista de espera cuando no hay horarios disponibles.

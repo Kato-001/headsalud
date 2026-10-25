@@ -1,0 +1,34 @@
+@startuml 15_cu_p5_atencion
+!include estilo.iuml
+title P5 · Atención médica
+left to right direction
+
+actor "Médico" as M
+actor "Recepcionista" as R
+actor "Paciente" as P
+actor "Administrador" as A
+
+rectangle "P5 Atención médica" {
+  usecase "CU15 Registrar\nconsulta médica" as CU15
+  usecase "CU13 Registrar\nasistencia" as CU13
+  usecase "CU16 Gestionar\nhistorial clínico" as CU16
+  usecase "CU17 Registrar\ntratamiento" as CU17
+  usecase "CU18 Gestionar\nestudios médicos" as CU18
+  usecase "Solicitar estudio" as SE
+  usecase "Registrar resultado" as RR
+  usecase "Administrar catálogo\nde estudios" as CAT
+  usecase "CU19 Consultar historial\ny resultados" as CU19
+}
+M --> CU15
+M --> CU16
+R --> RR
+A --> CAT
+P --> CU19
+CU15 ..> CU13 : <<include>>
+CU15 ..> CU16 : <<include>>
+CU15 <.. CU17 : <<extend>>
+CU15 <.. SE : <<extend>>
+SE --|> CU18
+RR --|> CU18
+CAT --|> CU18
+@enduml

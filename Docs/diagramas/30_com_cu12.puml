@@ -1,0 +1,16 @@
+@startuml 30_com_cu12
+!include estilo.iuml
+title Diagrama de comunicación · CU12 Cancelar cita
+left to right direction
+actor "Recepcionista" as A
+boundary "IU_DetalleCita" as IU
+control "CtrlCita" as C
+entity "Cita" as CI
+entity "HistorialCita" as HC
+entity "Notificacion" as N
+A --> IU : "1: cancelar(motivo)"
+IU --> C : "2: cancelar(cita, motivo)"
+C --> CI : "3: obtener() FOR UPDATE\n4: validarEstado()\n5: cambiarEstado(CANCELADA)"
+C --> HC : "6: registrar(CANCELAR, motivo)"
+C --> N : "7: descartarRecordatorios()\n8: avisar()"
+@enduml

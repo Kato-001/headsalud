@@ -1,0 +1,17 @@
+@startuml 30_com_cu08
+!include estilo.iuml
+title Diagrama de comunicación · CU8 Registrarse como paciente
+left to right direction
+actor "Paciente" as A
+boundary "IU_Registro" as IU
+control "CtrlRegistro" as C
+entity "Usuario" as U
+entity "Paciente" as P
+entity "HistoriaClinica" as H
+A --> IU : "1: completarFormulario(datos, cuenta)"
+IU --> C : "2: registrar(datos)"
+C --> P : "3: existeCI()\n5: crear()"
+C --> U : "4: crear(rol PACIENTE)"
+C --> H : "6: crear()"
+C --> IU : "7: iniciarSesión y mostrar portal"
+@enduml

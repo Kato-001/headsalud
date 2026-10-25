@@ -1,0 +1,26 @@
+@startuml 50_sec_cu08
+!include estilo.iuml
+title Diagrama de secuencia · CU8 Registrarse como paciente
+autonumber "<b>0."
+hide footbox
+actor Paciente as U
+boundary "registro.php" as V
+control AuthController as C
+participant Validator as VA
+entity Usuario as US
+entity Paciente as P
+control Auth as A
+U -> V : datos personales y de la cuenta
+V -> C : POST /registro
+C -> VA : validador del paciente + usuario,\ncontraseña y aceptación
+alt inválido
+  C --> V : errores por campo
+else válido
+  group transacción
+    C -> US : crear(rol PACIENTE)
+    C -> P : crear() + historia clínica
+  end
+  C -> A : intentar(usuario, clave)
+  C --> U : portal del paciente
+end
+@enduml

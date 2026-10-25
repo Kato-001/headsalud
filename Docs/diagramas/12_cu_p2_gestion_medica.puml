@@ -1,0 +1,34 @@
+@startuml 12_cu_p2_gestion_medica
+!include estilo.iuml
+title P2 · Gestión médica
+left to right direction
+
+actor "Administrador" as A
+actor "Recepcionista" as R
+
+rectangle "P2 Gestión médica" {
+  usecase "CU4 Gestionar\nespecialidades" as CU4
+  usecase "CU5 Gestionar médicos" as CU5
+  usecase "Consultar médicos\ny su agenda" as CM
+  usecase "Activar / desactivar\nmédico" as AM
+  usecase "CU6 Gestionar horarios" as CU6
+  usecase "Bloquear agenda\n(feriado, vacación, permiso)" as BA
+  usecase "Crear cuenta del médico" as CC
+}
+A --> CU4
+A --> CU5
+A --> CU6
+R --> CM
+CU5 <.. AM : <<extend>>
+CU5 ..> CC : <<include>>
+CU6 <.. BA : <<extend>>
+CM ..> CU5 : <<include>>
+note right of CU4
+  No se permiten nombres repetidos
+  normalizados (RF04)
+end note
+note right of CU6
+  Hora final > hora inicial, sin cruces
+  y en bloques de la duración configurada (RF05)
+end note
+@enduml

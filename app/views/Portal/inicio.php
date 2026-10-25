@@ -52,7 +52,7 @@ $titulo = 'Inicio';
         <?php if (!$notificaciones): ?><div class="empty" style="padding:30px">No tiene avisos.</div><?php endif; ?>
         <?php foreach ($notificaciones as $n): ?>
             <div class="notif <?= $n['leidaen'] ? '' : 'nueva' ?>">
-                <div class="feed-ico" style="color:var(--primary);background:var(--primary-soft)"><?= icono($n['tipo'] === 'RECORDATORIO' ? 'reloj' : ($n['tipo'] === 'CANCELACION' ? 'x-circulo' : 'campana'), 17) ?></div>
+                <div class="feed-ico" style="color:var(--primary);background:var(--primary-soft)"><?= icono(['RECORDATORIO' => 'reloj', 'CANCELACION' => 'x-circulo', 'RESULTADO' => 'portapapeles'][$n['tipo']] ?? 'campana', 17) ?></div>
                 <div><p><?= e($n['mensaje']) ?></p><small><?= e(hace_cuanto($n['programadapara'] ?? $n['enviadaen'])) ?></small></div>
             </div>
         <?php endforeach; ?>

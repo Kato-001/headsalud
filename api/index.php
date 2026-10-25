@@ -79,7 +79,13 @@ $r->get('/citas', [CitaController::class, 'index'])
 
 // --- P5 · Atención médica ---------------------------------------------
 $r->get('/atencion', [AtencionController::class, 'formulario'])
-  ->post('/atencion/guardar', [AtencionController::class, 'guardar']);
+  ->post('/atencion/guardar', [AtencionController::class, 'guardar'])
+  ->get('/estudios', [EstudioController::class, 'index'])
+  ->get('/estudios/resultado', [EstudioController::class, 'resultado'])
+  ->post('/estudios/resultado', [EstudioController::class, 'guardarResultado'])
+  ->get('/estudios/catalogo', [EstudioController::class, 'catalogo'])
+  ->post('/estudios/catalogo', [EstudioController::class, 'guardarCatalogo'])
+  ->post('/estudios/catalogo/estado', [EstudioController::class, 'estadoCatalogo']);
 
 // --- P6 · Reportes ----------------------------------------------------
 $r->get('/reportes', [ReporteController::class, 'index']);

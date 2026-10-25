@@ -1,0 +1,26 @@
+@startuml 50_sec_cu02
+!include estilo.iuml
+title Diagrama de secuencia · CU2 Gestionar roles y permisos
+autonumber "<b>0."
+hide footbox
+actor Administrador as U
+boundary "roles/index.php" as V
+control RolController as C
+entity Rol as R
+entity "permiso /\nrolpermiso" as P
+entity Bitacora as B
+U -> V : abre Roles y permisos
+V -> C : index()
+C -> R : todos()
+C -> P : permisos() y matrizPermisos()
+C --> V : roles + matriz
+U -> V : marca permisos de un rol y Guardar
+V -> C : POST /roles/permisos (idrol, permisos[])
+C -> C : Auth::requerir(roles.gestionar)
+opt rol ADMINISTRADOR
+  C -> C : agrega permisos fijos (usuarios, roles)
+end
+C -> P : asignarPermisos(idrol, ids) en transacción
+C -> B : registrar(PERMISOS)
+C --> U : "Permisos guardados"
+@enduml

@@ -1,0 +1,43 @@
+@startuml 01_negocio_actual
+!include estilo.iuml
+title Modelo de negocio · Proceso ACTUAL de programación de citas (manual)
+
+|Paciente|
+start
+:Llama por teléfono o se presenta\nen la recepción de la clínica;
+|Recepcionista|
+:Busca los datos del paciente en el\ncuaderno o la hoja de cálculo;
+if (¿Paciente registrado?) then (no)
+  :Anota sus datos a mano\n(posibles errores o duplicados);
+else (sí)
+endif
+:Pregunta la especialidad requerida;
+:Revisa el cuaderno de turnos\nde los médicos;
+note right
+  No hay una vista clara de los
+  horarios libres: se calculan
+  manualmente
+end note
+:Propone una fecha y hora;
+|Paciente|
+if (¿Acepta el horario?) then (no)
+  |Recepcionista|
+  :Busca otro horario a mano;
+else (sí)
+endif
+|Recepcionista|
+:Anota la cita en el cuaderno;
+note right #fee2e2
+  Riesgo de **citas duplicadas**
+  para el mismo médico y hora
+end note
+:Comunica fecha y hora al paciente;
+|Médico|
+:Recibe una lista impresa\no consulta el cuaderno;
+:Atiende al paciente;
+:Registra la atención en papel;
+|Recepcionista|
+:Las cancelaciones e inasistencias\nno quedan controladas;
+:Los reportes se arman a mano\n(si se hacen);
+stop
+@enduml

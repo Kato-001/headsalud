@@ -1,0 +1,16 @@
+@startuml 30_com_cu05
+!include estilo.iuml
+title Diagrama de comunicación · CU5 Gestionar médicos
+left to right direction
+actor "Administrador" as A
+boundary "IU_Medicos" as IU
+control "CtrlMedico" as C
+entity "Medico" as M
+entity "Usuario" as U
+entity "MedicoEspecialidad" as ME
+A --> IU : "1: registrarMédico(datos, especialidades)"
+IU --> C : "2: guardar(datos)"
+C --> U : "3: crearCuenta(rol MEDICO)"
+C --> M : "4: crear()\n6: activar/desactivar()"
+C --> ME : "5: asignarEspecialidades()"
+@enduml

@@ -1,0 +1,24 @@
+@startuml 50_sec_cu13
+!include estilo.iuml
+title Diagrama de secuencia · CU13 Registrar asistencia
+autonumber "<b>0."
+hide footbox
+actor Recepcionista as U
+boundary "citas/ver.php" as V
+control CitaController as CC
+control CitaService as CS
+database PostgreSQL as DB
+U -> V : Confirmar / Atendida / No asistió
+V -> CC : POST /citas/estado
+CC -> CS : cambiarEstado(cita, nuevo)
+CS -> DB : SELECT cita FOR UPDATE
+CS -> CS : validarTransicion()\n(TRANSICIONES y fecha <= hoy)
+alt transición no permitida
+  CS --> CC : AppException
+else
+  CS -> DB : UPDATE codigoestado
+  CS -> DB : INSERT historialcita
+  CS -> DB : INSERT bitacora
+end
+CC --> U : mensaje y nuevo estado
+@enduml

@@ -1,0 +1,16 @@
+@startuml 30_com_cu16
+!include estilo.iuml
+title Diagrama de comunicación · CU16 Gestionar historial clínico
+left to right direction
+actor "Médico" as A
+boundary "IU_HistoriaClinica" as IU
+control "CtrlPaciente" as C
+entity "HistoriaClinica" as H
+entity "Consulta" as CO
+entity "Tratamiento" as T
+A --> IU : "1: verHistoria(paciente)\n4: actualizarAntecedentes()"
+IU --> C : "2: historia()\n5: actualizarHistoria()"
+C --> CO : "3: consultas(paciente)"
+C --> T : "3.1: tratamientos(consulta)"
+C --> H : "6: actualizar()"
+@enduml

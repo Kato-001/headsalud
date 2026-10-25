@@ -1,0 +1,16 @@
+@startuml 30_com_cu06
+!include estilo.iuml
+title Diagrama de comunicación · CU6 Gestionar horarios
+left to right direction
+actor "Administrador" as A
+boundary "IU_Horarios" as IU
+control "CtrlHorario" as C
+entity "Horario" as H
+entity "BloqueoAgenda" as BA
+entity "Cita" as CI
+A --> IU : "1: agregarHorario(día, inicio, fin)\n5: bloquearAgenda(fecha)"
+IU --> C : "2: guardar()\n6: bloquear()"
+C --> H : "3: seCruza()\n4: crear()"
+C --> BA : "8: crearBloqueo()"
+C --> CI : "7: citasEnBloqueo()"
+@enduml

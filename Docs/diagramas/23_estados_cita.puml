@@ -1,0 +1,31 @@
+@startuml 23_estados_cita
+!include estilo.iuml
+title Diagrama de estados · Cita médica (RF10)
+
+[*] --> Programada : programar()\n[horario libre]
+Programada --> Confirmada : confirmar()
+Programada --> Programada : reprogramar()\n[nuevo horario libre]
+Confirmada --> Programada : reprogramar()\n[requiere nueva confirmación]
+Programada --> Cancelada : cancelar(motivo)
+Confirmada --> Cancelada : cancelar(motivo)
+Programada --> Atendida : atender()\n[fecha <= hoy]
+Confirmada --> Atendida : atender()\n[fecha <= hoy]
+Programada --> Inasistencia : marcarNoAsistió()\n[fecha <= hoy]
+Confirmada --> Inasistencia : marcarNoAsistió()\n[fecha <= hoy]
+Atendida --> [*]
+Cancelada --> [*]
+Inasistencia --> [*]
+
+state Programada : ocupa horario
+state Confirmada : ocupa horario
+state Atendida : genera Consulta,\nTratamiento y Estudio
+state Cancelada : NO ocupa horario (RN09)\nse conserva en el historial
+state Inasistencia : se conserva en el historial
+
+note bottom of Cancelada
+  Atendida, Cancelada e Inasistencia son estados finales:
+  no se reprograman. Se registra una cita nueva.
+  Se controla en PHP (CitaService::TRANSICIONES)
+  y en el trigger validar_cita de PostgreSQL.
+end note
+@enduml

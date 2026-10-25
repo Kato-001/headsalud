@@ -1,0 +1,19 @@
+@startuml 30_com_cu20
+!include estilo.iuml
+title Diagrama de comunicación · CU20 Generar reportes
+left to right direction
+actor "Recepcionista" as A
+boundary "IU_Reportes" as IU
+control "CtrlReporte" as C
+entity "Cita" as CI
+entity "Paciente" as P
+entity "Medico" as M
+entity "Bitacora" as B
+A --> IU : "1: elegirTipoYPeríodo()"
+IU --> C : "2: generar(tipo, desde, hasta, filtros)"
+C --> CI : "3: agrupar(fecha|médico|especialidad|estado)"
+C --> P : "4: pacientesRegistrados()"
+C --> M : "5: agendaDiaria()"
+C --> IU : "6: mostrarTablaYTotales()\n7: exportarCSV()"
+C --> B : "8: registrar(EXPORTAR)"
+@enduml

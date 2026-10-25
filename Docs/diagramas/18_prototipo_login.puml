@@ -1,0 +1,18 @@
+@startsalt 18_prototipo_login
+title Prototipo de IU · CU1 Iniciar sesión
+{+
+  {* HeadSalud | Clínica Vida Salud }
+  ..
+  <b>Bienvenido de nuevo
+  Ingrese con su usuario o correo electrónico
+  ..
+  Usuario o correo electrónico
+  "admin o nombre@correo.com    "
+  Contraseña
+  "••••••••                     " | [👁]
+  ..
+  [         Ingresar →          ]
+  ..
+  ¿Es paciente y no tiene cuenta? <u>Regístrese aquí</u>
+}
+@endsalt

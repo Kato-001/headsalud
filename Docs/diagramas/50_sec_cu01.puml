@@ -1,0 +1,38 @@
+@startuml 50_sec_cu01
+!include estilo.iuml
+title Diagrama de secuencia · CU1 Iniciar sesión
+autonumber "<b>0."
+hide footbox
+actor Usuario as U
+boundary "login.php" as V
+participant Router as R
+control AuthController as AC
+control Auth as A
+entity "usuario / rol\n/ permiso" as DB
+entity Bitacora as B
+U -> V : escribe usuario/correo y contraseña
+V -> R : POST /login (token CSRF)
+R -> R : Csrf::verificar()
+R -> AC : ingresar()
+AC -> AC : Validator: campos obligatorios
+AC -> A : intentar(login, clave)
+A -> B : contar LOGIN_FALLIDO de la IP (10 min)
+alt 5 o más intentos
+  A --> AC : AppException("Demasiados intentos")
+else
+  A -> DB : SELECT por username, email o CI
+  A -> A : password_verify(clave, hash)
+  alt credenciales inválidas
+    A -> B : registrar(LOGIN_FALLIDO)
+    A --> AC : AppException("Usuario o contraseña incorrectos")
+  else cuenta INACTIVA
+    A --> AC : AppException("Cuenta desactivada")
+  else correcto
+    A -> A : session_regenerate_id(true)
+    A -> DB : UPDATE ultimoacceso
+    A -> B : registrar(INICIAR_SESION)
+    A --> AC : usuario + rol + permisos
+  end
+end
+AC --> U : 302 a /panel o /portal\n(o /login con mensaje)
+@enduml

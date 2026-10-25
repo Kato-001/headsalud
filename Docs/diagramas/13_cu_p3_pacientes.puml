@@ -1,0 +1,30 @@
+@startuml 13_cu_p3_pacientes
+!include estilo.iuml
+title P3 · Gestión de pacientes
+left to right direction
+
+actor "Recepcionista" as R
+actor "Paciente" as P
+
+rectangle "P3 Gestión de pacientes" {
+  usecase "CU7 Gestionar pacientes" as CU7
+  usecase "Buscar paciente\n(CI, nombre, apellido)" as BP
+  usecase "Desactivar paciente\n(conserva historial)" as DP
+  usecase "Registrar contacto\nde emergencia" as CE
+  usecase "Consultar historial\nde citas" as HC
+  usecase "CU8 Registrarse\ncomo paciente" as CU8
+  usecase "Actualizar mi perfil" as MP
+}
+R --> CU7
+R --> BP
+P --> CU8
+P --> MP
+CU7 <.. DP : <<extend>>
+CU7 <.. CE : <<extend>>
+CU7 <.. HC : <<extend>>
+CU8 ..> CU7 : <<include>>\n(crear paciente)
+MP <.. CE : <<extend>>
+note bottom of CU7
+  No se registran dos pacientes con el mismo CI (RF02)
+end note
+@enduml

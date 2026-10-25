@@ -1,0 +1,27 @@
+@startuml 50_sec_cu11
+!include estilo.iuml
+title Diagrama de secuencia · CU11 Reprogramar cita
+autonumber "<b>0."
+hide footbox
+actor Recepcionista as U
+boundary "citas/reprogramar.php" as V
+control CitaController as CC
+control CitaService as CS
+control Disponibilidad as D
+database PostgreSQL as DB
+U -> V : nueva fecha, hora y motivo
+V -> CC : POST /citas/reprogramar
+CC -> CS : reprogramar(cita, fecha, hora, motivo)
+CS -> DB : BEGIN y SELECT cita FOR UPDATE
+alt estado no es PROGRAMADA ni CONFIRMADA
+  CS --> CC : "registre una cita nueva"
+else
+  CS -> DB : SELECT medico FOR UPDATE
+  CS -> D : estaLibre(..., excluir = cita)
+  CS -> DB : UPDATE cita (fecha, hora, PROGRAMADA)
+  CS -> DB : INSERT historialcita (anterior → nueva)
+  CS -> DB : reemplaza recordatorio
+  CS -> DB : COMMIT
+end
+CC --> U : detalle de la cita
+@enduml

@@ -1,0 +1,48 @@
+@startuml 42_paquetes_diseno
+!include estilo.iuml
+title Diseño lógico de la arquitectura · Diagrama de paquetes (capas MVC)
+skinparam packageStyle folder
+
+package "Presentación" as PRES {
+  package "app/views" as VIEWS {
+    package "P1_SeguridadAcceso" as V1
+    package "P2_GestionMedica" as V2
+    package "P3_GestionPacientes" as V3
+    package "P4_GestionCitas" as V4
+    package "P5_AtencionMedica" as V5
+    package "P6_Reportes" as V6
+    package "Portal" as VP
+    package "layouts / partials" as VL
+  }
+  package "public/assets\n(CSS, JavaScript)" as ASSETS
+}
+
+package "Control" as CTRL {
+  package "api/index.php\n(controlador frontal + rutas)" as FRONT
+  package "app/controllers" as CONTROLLERS
+}
+
+package "Lógica de negocio" as NEG {
+  package "app/services\n(CitaService, Disponibilidad)" as SERV
+}
+
+package "Acceso a datos" as DAT {
+  package "app/models" as MODELS
+}
+
+package "Núcleo (framework propio)" as CORE {
+  package "app/core\n(Router, Auth, Session, Csrf,\nValidator, View, Database PDO)" as CORECLS
+}
+
+database "PostgreSQL" as BD
+
+FRONT ..> CONTROLLERS
+CONTROLLERS ..> VIEWS
+CONTROLLERS ..> SERV
+CONTROLLERS ..> MODELS
+SERV ..> MODELS
+MODELS ..> CORECLS
+CONTROLLERS ..> CORECLS
+VIEWS ..> ASSETS
+CORECLS ..> BD
+@enduml

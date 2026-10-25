@@ -1,0 +1,16 @@
+@startuml 30_com_cu18
+!include estilo.iuml
+title Diagrama de comunicación · CU18 Gestionar estudios médicos
+left to right direction
+actor "Médico / Recepcionista" as A
+boundary "IU_Estudios" as IU
+control "CtrlEstudio" as C
+entity "CatalogoEstudio" as CE
+entity "Estudio" as E
+entity "Notificacion" as N
+A --> IU : "1: solicitarEstudio()\n4: registrarResultado()"
+IU --> CE : "2: listarActivos()"
+IU --> C : "3: solicitar(consulta, estudio)\n5: registrarResultado(estudio, resultado)"
+C --> E : "3.1: crear(SOLICITADO)\n6: actualizar(COMPLETADO)"
+C --> N : "7: avisarResultado(paciente)"
+@enduml

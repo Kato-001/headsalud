@@ -1,0 +1,18 @@
+@startuml 30_com_cu15
+!include estilo.iuml
+title Diagrama de comunicación · CU15 Registrar consulta médica
+left to right direction
+actor "Médico" as A
+boundary "IU_Consulta" as IU
+control "CtrlAtencion" as C
+entity "Cita" as CI
+entity "Consulta" as CO
+entity "HistorialCita" as HC
+entity "HistoriaClinica" as P
+A --> IU : "1: registrarSignosYDiagnóstico()"
+IU --> C : "2: atender(cita, datos)"
+C --> CI : "3: esDelMédico()\n4: validarEstado()\n6: cambiarEstado(ATENDIDA)"
+C --> CO : "5: crear()"
+C --> HC : "7: registrar(ATENDER)"
+C --> P : "8: consultarAntecedentes()"
+@enduml

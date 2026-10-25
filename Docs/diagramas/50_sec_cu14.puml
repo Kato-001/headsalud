@@ -1,0 +1,23 @@
+@startuml 50_sec_cu14
+!include estilo.iuml
+title Diagrama de secuencia · CU14 Consultar agenda médica
+autonumber "<b>0."
+hide footbox
+actor Médico as U
+boundary "agenda/index.php" as V
+control AgendaController as C
+control Auth as A
+entity Cita as CI
+control Disponibilidad as D
+U -> V : elige fecha (y estado)
+V -> C : GET /agenda?fecha
+C -> A : requerir(agenda.ver | agenda.propia)
+alt médico (solo agenda propia)
+  C -> C : idmedico = médico de la sesión
+else recepción / administrador
+  C -> C : idmedico = filtro elegido
+end
+C -> CI : agenda(fecha, médico, estado)
+C -> D : bloques(médico, fecha)
+C --> V : citas intercaladas con bloques libres
+@enduml

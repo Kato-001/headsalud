@@ -1,0 +1,21 @@
+@startuml 30_com_cu09
+!include estilo.iuml
+title Diagrama de comunicación · CU9 Consultar disponibilidad
+left to right direction
+actor "Recepcionista" as A
+boundary "IU_ProgramarCita" as IU
+control "CtrlDisponibilidad" as D
+entity "Medico" as M
+entity "Horario" as H
+entity "BloqueoAgenda" as BA
+entity "Cita" as CI
+entity "Configuracion" as CF
+A --> IU : "1: elegirMédicoYFecha()"
+IU --> D : "2: bloques(médico, fecha)"
+D --> CF : "3: duraciónCita()"
+D --> M : "4: estáActivo()"
+D --> H : "5: horariosDelDía()"
+D --> BA : "6: bloqueos()"
+D --> CI : "7: citasQueOcupan()"
+D --> IU : "8: mostrarBloquesLibres()"
+@enduml

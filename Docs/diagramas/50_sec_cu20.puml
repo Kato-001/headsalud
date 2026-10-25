@@ -1,0 +1,27 @@
+@startuml 50_sec_cu20
+!include estilo.iuml
+title Diagrama de secuencia · CU20 Generar reportes
+autonumber "<b>0."
+hide footbox
+actor Recepcionista as U
+boundary "reportes/index.php" as V
+control ReporteController as C
+entity Reporte as R
+entity Bitacora as B
+U -> V : tipo, rango de fechas y filtros
+V -> C : GET /reportes?tipo&desde&hasta
+C -> C : filtros() (rango máximo 1 año)
+alt resumen
+  C -> R : resumen(), porEstado(), porDia()
+else por médico / especialidad / estado
+  C -> R : porMedico() / porEspecialidad() / porEstado()
+else agenda diaria
+  C -> R : agendaDiaria(día)
+end
+C --> V : tabla con totales y gráficos
+opt Exportar CSV
+  U -> C : formato=csv
+  C -> B : registrar(EXPORTAR)
+  C --> U : archivo .csv
+end
+@enduml

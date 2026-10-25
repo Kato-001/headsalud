@@ -1,0 +1,28 @@
+@startuml 03_cu_negocio
+!include estilo.iuml
+title Diagrama de casos de uso del negocio · Clínica Vida Salud
+left to right direction
+
+actor "Paciente" as P
+actor "Recepcionista" as R
+actor "Médico" as M
+actor "Administración\nde la clínica" as A
+
+rectangle "Clínica Vida Salud" {
+  usecase "Solicitar una cita\nmédica" as N1
+  usecase "Programar y controlar\nlas citas" as N2
+  usecase "Atender al paciente" as N3
+  usecase "Llevar el historial\nclínico" as N4
+  usecase "Administrar médicos,\nespecialidades y horarios" as N5
+  usecase "Obtener reportes de\nlas atenciones" as N6
+}
+
+P --> N1
+R --> N2
+N1 ..> N2 : <<include>>
+M --> N3
+M --> N4
+N3 ..> N4 : <<include>>
+A --> N5
+A --> N6
+@enduml

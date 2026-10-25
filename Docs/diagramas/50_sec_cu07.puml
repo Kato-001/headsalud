@@ -1,0 +1,27 @@
+@startuml 50_sec_cu07
+!include estilo.iuml
+title Diagrama de secuencia · CU7 Gestionar pacientes
+autonumber "<b>0."
+hide footbox
+actor Recepcionista as U
+boundary "pacientes/form.php" as V
+control PacienteController as C
+participant Validator as VA
+entity Paciente as P
+entity HistoriaClinica as H
+U -> V : CI, nombres, nacimiento, sexo, teléfono…
+V -> C : POST /pacientes/guardar
+C -> VA : validador(datos)
+C -> P : existeCi(ci)
+alt CI duplicado
+  C --> V : "Ya existe un paciente con ese CI"
+else
+  group transacción
+    C -> P : crear(código PAC-####)
+    C -> H : crear(número HC-####)
+  end
+  C --> U : ficha del paciente
+end
+U -> C : GET /pacientes/ver (historial)
+C -> P : buscar() + Cita::delPaciente()
+@enduml

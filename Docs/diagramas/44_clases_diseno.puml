@@ -1,0 +1,124 @@
+@startuml 44_clases_diseno
+!include estilo.iuml
+title Diagrama de clases de diseño · Núcleo y módulo de citas
+skinparam classAttributeIconSize 0
+
+package "app/core" {
+  class Router {
+    - rutas : array
+    + get(ruta, accion) : Router
+    + post(ruta, accion) : Router
+    + despachar(metodo, uri) : void
+  }
+  class Auth {
+    + {static} intentar(login, clave) : array
+    + {static} usuario() : ?array
+    + {static} puede(...permisos) : bool
+    + {static} requerir(...permisos) : array
+    + {static} cerrarSesion() : void
+  }
+  class Session {
+    + {static} iniciar() : void
+    + read(id) : string
+    + write(id, datos) : bool
+  }
+  interface SessionHandlerInterface
+  class Csrf {
+    + {static} token() : string
+    + {static} verificar() : void
+  }
+  class Validator {
+    + requerido(campo, etiqueta) : Validator
+    + fecha(campo, min, max) : Validator
+    + password(campo) : Validator
+    + falla() : bool
+    + errores() : array
+  }
+  class Database {
+    - {static} pdo : PDO
+    + {static} query(sql, params) : PDOStatement
+    + {static} transaccion(fn) : mixed
+  }
+  class View {
+    + {static} render(vista, datos, layout) : void
+  }
+  class AppException
+}
+
+package "app/controllers" {
+  abstract class Controlador {
+    # vista(vista, datos) : void
+    # intentar(operacion, datos) : bool
+  }
+  class CitaController {
+    + index() / nueva() / guardar()
+    + ver() / reprogramar() / cancelar()
+    + estado()
+  }
+  class AtencionController {
+    + formulario() / guardar()
+  }
+  class PortalController {
+    + reservar() / guardarReserva()
+    + citas() / cancelar() / historial()
+  }
+}
+
+package "app/services" {
+  class CitaService {
+    + {static} TRANSICIONES : array
+    + {static} programar(datos) : array
+    + {static} reprogramar(id, fecha, hora, motivo) : array
+    + {static} cancelar(id, motivo, porPaciente) : array
+    + {static} cambiarEstado(id, estado) : array
+    + {static} atender(id, consulta, tratamientos, estudios) : void
+  }
+  class Disponibilidad {
+    + {static} bloques(medico, fecha, excluir) : array
+    + {static} estaLibre(medico, fecha, hora) : bool
+  }
+}
+
+package "app/models" {
+  class Cita {
+    + {static} buscar(id) : ?array
+    + {static} listar(filtros) : array
+    + {static} agenda(fecha, medico) : array
+    + {static} historial(id) : array
+  }
+  class Paciente
+  class Medico
+  class Consulta
+  class Estudio
+  class Notificacion
+  class Bitacora {
+    + {static} registrar(accion, modulo, ...) : void
+  }
+}
+
+Session ..|> SessionHandlerInterface
+Controlador <|-- CitaController
+Controlador <|-- AtencionController
+Controlador <|-- PortalController
+CitaController ..> CitaService
+AtencionController ..> CitaService
+PortalController ..> CitaService
+CitaService ..> Disponibilidad
+CitaService ..> Notificacion
+CitaService ..> Bitacora
+CitaService ..> Consulta
+Consulta ..> Estudio
+CitaController ..> Cita
+Cita ..> Database
+Paciente ..> Database
+Medico ..> Database
+Disponibilidad ..> Database
+Router ..> Csrf
+Router ..> Controlador
+Controlador ..> View
+Controlador ..> AppException
+Controlador ..> Validator
+CitaController ..> Auth
+Auth ..> Session
+Session ..> Database
+@enduml

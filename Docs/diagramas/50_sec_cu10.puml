@@ -1,0 +1,32 @@
+@startuml 50_sec_cu10
+!include estilo.iuml
+title Diagrama de secuencia · CU10 Reservar ficha
+autonumber "<b>0."
+hide footbox
+actor Recepcionista as U
+boundary "citas/nueva.php\n+ citas.js" as V
+control CitaController as CC
+control CitaService as CS
+control Disponibilidad as D
+database PostgreSQL as DB
+U -> V : paciente, especialidad, médico, fecha y hora libre
+V -> CC : POST /citas/guardar
+CC -> CS : programar(datos)
+CS -> CS : Validator (ids, fecha >= hoy, hora)
+CS -> DB : BEGIN
+CS -> DB : SELECT medico FOR UPDATE
+CS -> DB : paciente activo y médico atiende especialidad
+CS -> D : estaLibre(médico, fecha, hora)
+alt ocupado o fuera de horario
+  CS -> DB : ROLLBACK
+  CS --> CC : AppException(motivo)
+  CC --> V : formulario con el mensaje
+else libre
+  CS -> DB : INSERT cita (trigger validar_cita\n+ restricción EXCLUDE)
+  CS -> DB : INSERT historialcita (PROGRAMAR)
+  CS -> DB : INSERT notificacion (aviso + recordatorio)
+  CS -> DB : COMMIT
+  CS -> DB : INSERT bitacora (CREAR)
+  CC --> U : "Cita CM-#### programada"
+end
+@enduml

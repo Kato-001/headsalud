@@ -1,0 +1,16 @@
+@startuml 30_com_cu03
+!include estilo.iuml
+title Diagrama de comunicación · CU3 Gestionar usuarios
+left to right direction
+actor "Administrador" as A
+boundary "IU_Usuarios" as IU
+control "CtrlUsuario" as C
+entity "Usuario" as U
+entity "Rol" as R
+entity "Bitacora" as B
+A --> IU : "1: nuevoUsuario(datos)\n6: desactivar(id)"
+IU --> C : "2: guardar(datos)\n7: cambiarEstado(id)"
+C --> U : "3: existeUsername/Email()\n4: crear(password_hash)\n8: actualizarEstado()"
+C --> R : "3.1: validarRol()"
+C --> B : "5: registrar(CREAR)\n9: registrar(DESACTIVAR)"
+@enduml

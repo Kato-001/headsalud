@@ -1,0 +1,18 @@
+@startsalt 20_prototipo_agenda
+title Prototipo de IU · CU14 Consultar agenda médica
+{+
+  {* Panel | <b>Agenda</b> | Programar cita | Citas | Pacientes }
+  ==
+  <b>Sábado 24 de octubre                 [◀] [Hoy] [▶] [🖨]
+  Fecha "24/10/2026" | Médico ^Dr. Roberto Suárez^ | Estado ^Todos^
+  ==
+  {#
+    <b>Hora | <b>Código | <b>Paciente | <b>Especialidad | <b>Estado
+    09:00 | CM-0151 | Pedro Rivas | Odontología | Atendida
+    09:30 | . | <i>Disponible</i> | . | [Programar]
+    10:00 | . | <i>Disponible</i> | . | [Programar]
+    10:30 | CM-0154 | Ana Gutiérrez | Odontología | Atendida
+    12:00 | CM-0155 | Diego Coca | Odontología | Programada
+  }
+}
+@endsalt

@@ -1,0 +1,22 @@
+@startuml 30_com_cu10
+!include estilo.iuml
+title Diagrama de comunicación · CU10 Reservar ficha
+left to right direction
+actor "Recepcionista" as A
+boundary "IU_ProgramarCita" as IU
+control "CtrlCita" as C
+control "CtrlDisponibilidad" as D
+entity "Paciente" as P
+entity "Medico" as M
+entity "Cita" as CI
+entity "HistorialCita" as HC
+entity "Notificacion" as N
+A --> IU : "1: elegirPaciente()\n4: confirmar(fecha, hora)"
+IU --> C : "2: buscarPaciente(q)\n5: programar(datos)"
+C --> P : "3: buscar()\n6: estáActivo()"
+C --> M : "7: bloquear() FOR UPDATE"
+C --> D : "8: estaLibre(médico, fecha, hora)"
+C --> CI : "9: crear(CM-####)"
+C --> HC : "10: registrar(PROGRAMAR)"
+C --> N : "11: programarRecordatorio()"
+@enduml

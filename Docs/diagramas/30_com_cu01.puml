@@ -1,0 +1,18 @@
+@startuml 30_com_cu01
+!include estilo.iuml
+title Diagrama de comunicación · CU1 Iniciar sesión
+left to right direction
+actor "Usuario" as A
+boundary "IU_Login" as IU
+control "CtrlSesion" as C
+entity "Usuario" as U
+entity "Rol / Permiso" as R
+entity "Bitacora" as B
+A --> IU : "1: ingresar(login, clave)"
+IU --> C : "2: iniciarSesion(login, clave)"
+C --> B : "3: contarIntentosFallidos(ip)"
+C --> U : "4: buscar(login)\n5: verificarClave(hash)"
+C --> R : "6: obtenerPermisos(idrol)"
+C --> B : "7: registrar(INICIAR_SESION)"
+C --> IU : "8: mostrarMenúSegúnRol()"
+@enduml

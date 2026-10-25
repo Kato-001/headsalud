@@ -1,0 +1,26 @@
+@startuml 50_sec_cu06
+!include estilo.iuml
+title Diagrama de secuencia · CU6 Gestionar horarios
+autonumber "<b>0."
+hide footbox
+actor Administrador as U
+boundary "horarios/index.php" as V
+control HorarioController as C
+entity Horario as H
+entity BloqueoAgenda as BA
+entity Cita as CI
+U -> V : día, hora inicial, hora final
+V -> C : POST /horarios/guardar
+C -> C : fin > inicio y cubre al menos una cita
+C -> H : seCruza(médico, día, inicio, fin)
+alt se cruza
+  C --> V : "Se cruza con otro horario activo"
+else
+  C -> H : crear()
+end
+U -> V : bloquear fecha (feriado, permiso…)
+V -> C : POST /bloqueos/guardar
+C -> CI : citasEnBloqueo()
+C -> BA : crearBloqueo()
+C --> V : aviso si hay citas afectadas
+@enduml

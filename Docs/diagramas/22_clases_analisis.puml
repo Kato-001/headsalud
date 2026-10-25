@@ -1,0 +1,125 @@
+@startuml 22_clases_analisis
+!include estilo.iuml
+title Análisis de clases · Clases de interfaz, control y entidad
+left to right direction
+skinparam packageStyle rectangle
+
+package "Interfaz «boundary»" {
+  class IU_Login <<boundary>>
+  class IU_Usuarios <<boundary>>
+  class IU_Medicos <<boundary>>
+  class IU_Horarios <<boundary>>
+  class IU_Pacientes <<boundary>>
+  class IU_ProgramarCita <<boundary>>
+  class IU_DetalleCita <<boundary>>
+  class IU_Agenda <<boundary>>
+  class IU_Consulta <<boundary>>
+  class IU_Estudios <<boundary>>
+  class IU_Reportes <<boundary>>
+  class IU_Portal <<boundary>>
+}
+
+package "Control «control»" {
+  class CtrlSesion <<control>> {
+    iniciarSesion()
+    cerrarSesion()
+    tienePermiso()
+  }
+  class CtrlUsuario <<control>> {
+    guardar()
+    cambiarEstado()
+  }
+  class CtrlMedico <<control>> {
+    registrar()
+    asignarEspecialidades()
+  }
+  class CtrlHorario <<control>> {
+    agregar()
+    bloquearAgenda()
+  }
+  class CtrlPaciente <<control>> {
+    registrar()
+    buscar()
+    desactivar()
+  }
+  class CtrlDisponibilidad <<control>> {
+    bloques(médico, fecha)
+    estaLibre()
+  }
+  class CtrlCita <<control>> {
+    programar()
+    reprogramar()
+    cancelar()
+    cambiarEstado()
+  }
+  class CtrlAtencion <<control>> {
+    atender()
+  }
+  class CtrlEstudio <<control>> {
+    solicitar()
+    registrarResultado()
+  }
+  class CtrlReporte <<control>> {
+    generar()
+    exportarCSV()
+  }
+}
+
+package "Entidad «entity»" {
+  class Usuario <<entity>>
+  class Rol <<entity>>
+  class Permiso <<entity>>
+  class Bitacora <<entity>>
+  class Especialidad <<entity>>
+  class Medico <<entity>>
+  class Horario <<entity>>
+  class BloqueoAgenda <<entity>>
+  class Paciente <<entity>>
+  class HistoriaClinica <<entity>>
+  class Cita <<entity>>
+  class EstadoCita <<entity>>
+  class HistorialCita <<entity>>
+  class Consulta <<entity>>
+  class Tratamiento <<entity>>
+  class Estudio <<entity>>
+  class Notificacion <<entity>>
+}
+
+IU_Login --> CtrlSesion
+IU_Usuarios --> CtrlUsuario
+IU_Medicos --> CtrlMedico
+IU_Horarios --> CtrlHorario
+IU_Pacientes --> CtrlPaciente
+IU_ProgramarCita --> CtrlCita
+IU_ProgramarCita --> CtrlDisponibilidad
+IU_DetalleCita --> CtrlCita
+IU_Agenda --> CtrlDisponibilidad
+IU_Consulta --> CtrlAtencion
+IU_Estudios --> CtrlEstudio
+IU_Reportes --> CtrlReporte
+IU_Portal --> CtrlCita
+
+CtrlSesion --> Usuario
+CtrlSesion --> Bitacora
+CtrlUsuario --> Usuario
+CtrlUsuario --> Rol
+Rol --> Permiso
+CtrlMedico --> Medico
+CtrlMedico --> Especialidad
+CtrlHorario --> Horario
+CtrlHorario --> BloqueoAgenda
+CtrlPaciente --> Paciente
+CtrlPaciente --> HistoriaClinica
+CtrlDisponibilidad --> Horario
+CtrlDisponibilidad --> BloqueoAgenda
+CtrlDisponibilidad --> Cita
+CtrlCita --> Cita
+CtrlCita --> HistorialCita
+CtrlCita --> Notificacion
+Cita --> EstadoCita
+CtrlAtencion --> Consulta
+CtrlAtencion --> Tratamiento
+CtrlEstudio --> Estudio
+CtrlEstudio --> Notificacion
+CtrlReporte --> Cita
+@enduml

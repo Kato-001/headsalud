@@ -1,0 +1,21 @@
+@startuml 50_sec_cu16
+!include estilo.iuml
+title Diagrama de secuencia · CU16 Gestionar historial clínico
+autonumber "<b>0."
+hide footbox
+actor Médico as U
+boundary "pacientes/ver.php\n(tab Historia clínica)" as V
+control PacienteController as C
+entity Paciente as P
+entity "Consulta /\nTratamiento / Estudio" as CO
+entity HistoriaClinica as H
+U -> V : abre la historia del paciente
+V -> C : ver(id, tab=clinica)
+C -> P : buscar(id)
+C -> CO : consultas(paciente) con tratamientos y estudios
+C --> V : antecedentes + consultas
+U -> V : actualiza antecedentes / alergias
+V -> C : POST /pacientes/historia
+C -> H : actualizarHistoria()
+C --> U : "Historia clínica actualizada"
+@enduml

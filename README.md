@@ -27,7 +27,16 @@ Caso de estudio: *Clínica Vida Salud*
 | Sergio Estaca Paco | 221089421 |
 | Frank Miguel Yerbales Molina | 218164629 |
 
-**Grupo:** _(completar)_ · **Materia:** _(completar)_ · **Docente:** _(completar)_
+**Grupo:** # 20 · **Materia:** Ingeniería de Requisitos · **Docente:** Ing. Angelica Garzon Cuellar
+
+## Documentación
+
+| Documento | Contenido |
+|---|---|
+| [📘 Documentación completa (Word)](Docs/Documentacion_HeadSalud_Grupo20.docx) · [PDF](Docs/Documentacion_HeadSalud_Grupo20.pdf) | Carátula, índice, perfil, marco teórico, modelo de negocio, los flujos de trabajo (captura de requisitos, análisis, diseño, implementación y pruebas), conclusiones, recomendaciones, bibliografía y anexos. 117 páginas, 118 figuras. |
+| [📐 Diagramas UML (PlantUML)](Docs/diagramas) | 64 diagramas: negocio, casos de uso (general y por paquete), prototipos, comunicación y secuencia de los 20 CU, clases, estados, despliegue, paquetes, componentes, datos y trazabilidad. Fuente `.puml` e imagen `.png`. |
+| [🖼️ Capturas de pantalla](Docs/capturas) | 50 pantallas del sistema funcionando, de cada rol. |
+| [📝 Diagrama de clases original](Docs/Diagrama%20de%20Clinica.svg) | Diagrama de clases del que parte la base de datos. |
 
 ---
 
@@ -35,24 +44,25 @@ Caso de estudio: *Clínica Vida Salud*
 
 1. [Descripción](#descripción)
 2. [¿Para quién es el sistema?](#para-quién-es-el-sistema)
-3. [Objetivos](#objetivos)
-4. [Funcionalidades](#funcionalidades)
-5. [Roles y permisos](#roles-y-permisos)
-6. [Proceso Unificado · Flujos de trabajo (PUDS-UML)](#proceso-unificado--flujos-de-trabajo-puds-uml)
+3. [Ciclo 1 y Ciclo 2](#ciclo-1-y-ciclo-2)
+4. [Objetivos](#objetivos)
+5. [Funcionalidades](#funcionalidades)
+6. [Roles y permisos](#roles-y-permisos)
+7. [Proceso Unificado · Flujos de trabajo (PUDS-UML)](#proceso-unificado--flujos-de-trabajo-puds-uml)
    - [1. Captura de requisitos](#1-captura-de-requisitos)
    - [2. Análisis](#2-análisis)
    - [3. Diseño](#3-diseño)
    - [Trazabilidad](#trazabilidad-trace)
-7. [Tecnologías](#tecnologías)
-8. [Arquitectura](#arquitectura)
-9. [Base de datos](#base-de-datos)
-10. [Reglas de negocio](#reglas-de-negocio-cómo-se-cumplen)
-11. [Seguridad](#seguridad)
-12. [Instalación local](#instalación-local)
-13. [Despliegue en Vercel](#despliegue-en-vercel)
-14. [Cuentas de prueba](#cuentas-de-prueba)
-15. [Pruebas](#pruebas)
-16. [Estructura del proyecto](#estructura-del-proyecto)
+8. [Tecnologías](#tecnologías)
+9. [Arquitectura](#arquitectura)
+10. [Base de datos](#base-de-datos)
+11. [Reglas de negocio](#reglas-de-negocio-cómo-se-cumplen)
+12. [Seguridad](#seguridad)
+13. [Instalación local](#instalación-local)
+14. [Despliegue en Vercel](#despliegue-en-vercel)
+15. [Cuentas de prueba](#cuentas-de-prueba)
+16. [Pruebas](#pruebas)
+17. [Estructura del proyecto](#estructura-del-proyecto)
 
 ---
 
@@ -74,6 +84,15 @@ El sistema tiene **dos tipos de usuarios**, que entran por la **misma página de
 | **Requisitos que cubre** | Secciones 2, 3.1–3.3 y RF01–RF13 del enunciado | Sección 3.4 *Perfil de pacientes para una app de citas médicas* |
 
 El **corazón del sistema es el personal**: el enunciado indica que está "destinado principalmente al personal administrativo", y la recepción es quien programa las citas, incluidas las de los pacientes que llaman o llegan sin cuenta. El **portal del paciente** es el complemento que pide el punto 3.4. Un paciente solo ve sus propios datos y sus propias citas: nunca accede a las pantallas internas (si lo intenta, recibe un 403).
+
+## Ciclo 1 y Ciclo 2
+
+El Proceso Unificado es iterativo: el sistema se construyó en dos ciclos. El primero arma la **base** (seguridad y datos maestros) y el segundo el **núcleo del negocio** (citas, atención médica y reportes). Los 20 casos de uso están implementados.
+
+| Ciclo | Paquetes | Casos de uso | Estado |
+|---|---|---|:-:|
+| **Ciclo 1** | P1 Seguridad y acceso · P2 Gestión médica · P3 Gestión de pacientes | CU1 Iniciar sesión · CU2 Gestionar roles y permisos · CU3 Gestionar usuarios · CU4 Gestionar especialidades · CU5 Gestionar médicos · CU6 Gestionar horarios · CU7 Gestionar pacientes | ✅ |
+| **Ciclo 2** | P4 Gestión de citas · P5 Atención médica · P6 Reportes · Portal del paciente | CU8 Registrarse como paciente · CU9 Consultar disponibilidad · CU10 Reservar ficha · CU11 Reprogramar cita · CU12 Cancelar cita · CU13 Registrar asistencia · CU14 Consultar agenda médica · CU15 Registrar consulta médica · CU16 Gestionar historial clínico · CU17 Registrar tratamiento · CU18 Gestionar estudios médicos · CU19 Consultar historial y resultados · CU20 Generar reportes | ✅ |
 
 ## Objetivos
 
@@ -108,7 +127,8 @@ El **corazón del sistema es el personal**: el enunciado indica que está "desti
 | **RF12** Historial por paciente | Todas sus citas (incluidas canceladas) con médico, especialidad, estado y fecha de registro, además de sus consultas y tratamientos. |
 | **RF13** Reportes | Resumen del período, citas por fecha, médico, especialidad y estado, pacientes registrados y agenda diaria. Filtros por rango, totales, **exportación a CSV** e impresión a PDF. |
 | Portal del paciente (3.4) | Autoregistro, perfil (datos personales, información médica, contactos de emergencia, cuenta), reserva y cancelación de citas, historial médico y recordatorios automáticos. |
-| Atención médica | El médico registra signos vitales, diagnóstico y tratamientos; la cita pasa a *Atendida* en la misma transacción. |
+| Atención médica | El médico registra signos vitales, diagnóstico, tratamientos y estudios a solicitar; la cita pasa a *Atendida* en la misma transacción. |
+| Estudios médicos (CU18–CU19) | Catálogo de estudios, bandeja de estudios solicitados, registro del resultado (texto y enlace al archivo) y aviso automático al paciente, que ve el resultado en su portal. |
 | Auditoría | Bitácora de inicios de sesión, intentos fallidos y cada operación, con usuario, fecha e IP. |
 
 ## Roles y permisos
@@ -124,12 +144,16 @@ Los permisos se asignan por rol desde **Administración → Roles y permisos** (
 | Confirmar e inasistencia | ✔ | ✔ | | |
 | Agenda de todos los médicos | ✔ | ✔ | | |
 | Agenda propia y atender citas | | | ✔ | |
+| Estudios médicos (ver y registrar resultados) | ✔ | ✔ | ✔ (sus pacientes) | |
+| Catálogo de estudios | ✔ | | | |
 | Reportes | ✔ | ✔ | | |
 | Portal del paciente | | | | ✔ |
 
 ## Proceso Unificado · Flujos de trabajo (PUDS-UML)
 
-Los artefactos siguen los flujos de trabajo del Proceso Unificado y describen **el sistema tal como está construido**. Cada diagrama se corresponde con archivos reales del repositorio (ver [Trazabilidad](#trazabilidad-trace)). Los diagramas están escritos en Mermaid, que GitHub dibuja automáticamente.
+Los artefactos siguen los flujos de trabajo del Proceso Unificado y describen **el sistema tal como está construido**. Cada diagrama se corresponde con archivos reales del repositorio (ver [Trazabilidad](#trazabilidad-trace)). Los diagramas de esta sección están escritos en Mermaid, que GitHub dibuja automáticamente.
+
+> **Versión UML completa:** los 64 diagramas en notación UML estándar (PlantUML) están en [`Docs/diagramas`](Docs/diagramas) y en la [documentación Word](Docs/Documentacion_HeadSalud_Grupo20.docx). Incluyen la descripción, el diagrama de comunicación y el diagrama de secuencia de **los 20 casos de uso**.
 
 ### 1. Captura de requisitos
 
@@ -223,7 +247,7 @@ Primero se construyen los casos de uso **arquitectónicamente significativos**, 
 | 9 | CU3 Usuarios · CU2 Roles · CU4 Especialidades | Administración | 1 | ✅ |
 | 10 | CU15 Consulta · CU17 Tratamiento · CU16 Historial | Atención médica | 2 | ✅ |
 | 11 | CU8 Registrarse · CU19 Historial (portal) | Portal del paciente (3.4) | 2 | ✅ |
-| 12 | CU18 Gestionar estudios médicos | Las tablas `ESTUDIO` y `CATALOGOESTUDIO` ya existen | 2 | ⏳ Pendiente |
+| 12 | CU18 Gestionar estudios médicos | Solicitud en la consulta, resultados y aviso al paciente | 2 | ✅ |
 
 #### 1.3 Detallar un caso de uso · CU10 Reservar ficha
 
@@ -291,6 +315,7 @@ Los prototipos se construyeron como pantallas funcionales. Prototipo de **CU10 R
 | CU14 | `/agenda` |
 | CU15 · CU17 | `/atencion` |
 | CU16 | `/pacientes/ver?tab=clinica`, `/portal/perfil?seccion=medica` |
+| CU18 | `/estudios`, `/estudios/resultado`, `/estudios/catalogo` (y en `/atencion`) |
 | CU19 | `/portal/historial` |
 | CU20 | `/reportes` |
 
@@ -451,7 +476,7 @@ classDiagram
 | P2 Gestión médica | IU_Especialidades, IU_Médicos, IU_Horarios | CtrlMedico, CtrlHorario | Especialidad, Medico, MedicoEspecialidad, Horario, BloqueoAgenda | CU4–CU6 |
 | P3 Gestión de pacientes | IU_Pacientes, IU_FichaPaciente, IU_Registro | CtrlPaciente | Paciente, HistoriaClinica, ContactoEmergencia | CU7–CU8 |
 | P4 Gestión de citas | IU_ProgramarCita, IU_DetalleCita, IU_Reprogramar, IU_Agenda | CtrlCita, CtrlDisponibilidad | Cita, EstadoCita, HistorialCita, Notificacion | CU9–CU14 |
-| P5 Atención médica | IU_Consulta, IU_Historial | CtrlAtencion | Consulta, Tratamiento, Medicamento, Estudio, CatalogoEstudio | CU15–CU19 |
+| P5 Atención médica | IU_Consulta, IU_Estudios, IU_Historial | CtrlAtencion, CtrlEstudio | Consulta, Tratamiento, Medicamento, Estudio, CatalogoEstudio | CU15–CU19 |
 | P6 Reportes | IU_Reportes | CtrlReporte | (consulta a Cita, Paciente, Medico) | CU20 |
 
 ### 3. Diseño
@@ -888,7 +913,7 @@ headsalud/
 │   └── views/                 # P1_SeguridadAcceso … P6_Reportes, Portal, layouts, partials
 ├── public/assets/             # CSS (diseño y animaciones) y JS (validación y asistente de citas)
 ├── Bakend/database/           # Scripts SQL de PostgreSQL
-├── Docs/                      # Diagrama de clases y códigos QR
+├── Docs/                      # Documentación Word/PDF, diagramas UML, capturas y códigos QR
 ├── router.php                 # Enrutador para `php -S`
 ├── .htaccess                  # Reglas para Apache (XAMPP)
 ├── vercel.json                # Despliegue en Vercel

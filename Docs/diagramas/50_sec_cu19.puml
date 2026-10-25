@@ -1,0 +1,20 @@
+@startuml 50_sec_cu19
+!include estilo.iuml
+title Diagrama de secuencia · CU19 Consultar historial y resultados
+autonumber "<b>0."
+hide footbox
+actor Paciente as U
+boundary "portal/historial.php" as V
+control PortalController as C
+entity Paciente as P
+entity "Consulta /\nTratamiento" as CO
+entity Estudio as E
+U -> V : Historial médico
+V -> C : historial()
+C -> C : Auth::requerir(portal.paciente)
+C -> P : paciente de la sesión
+C -> CO : consultas(paciente)
+C -> E : delPaciente(paciente)
+C --> V : diagnósticos, tratamientos y resultados
+note right : solo ve sus propios datos
+@enduml

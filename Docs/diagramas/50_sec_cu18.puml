@@ -1,0 +1,26 @@
+@startuml 50_sec_cu18
+!include estilo.iuml
+title Diagrama de secuencia · CU18 Gestionar estudios médicos
+autonumber "<b>0."
+hide footbox
+actor Médico as M
+actor Recepcionista as R
+boundary "consulta.php /\nestudios/*.php" as V
+control EstudioController as C
+entity CatalogoEstudio as CE
+entity Estudio as E
+entity Notificacion as N
+M -> V : solicita estudio en la consulta
+V -> CE : catalogo() activos
+V -> E : solicitar(consulta, estudio, indicaciones)
+R -> V : abre bandeja de estudios
+V -> C : index()
+C -> E : listar(filtros)
+R -> V : registra resultado
+V -> C : POST /estudios/resultado
+C -> C : Validator (resultado, enlace https)
+group transacción
+  C -> E : registrarResultado(COMPLETADO)
+  C -> N : INSERT RESULTADO (aviso al paciente)
+end
+@enduml

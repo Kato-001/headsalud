@@ -1,0 +1,41 @@
+@startuml 17_cu_estructurado
+!include estilo.iuml
+title Modelo de casos de uso estructurado (generalización, include y extend)
+left to right direction
+
+actor "Usuario" as U
+actor "Administrador" as A
+actor "Recepcionista" as R
+actor "Médico" as M
+actor "Paciente" as P
+A -|> R
+R -|> U
+M -|> U
+P -|> U
+
+usecase "CU1 Iniciar sesión" as CU1
+usecase "CU2 Gestionar roles\ny permisos" as CU2
+usecase "CU3 Gestionar usuarios" as CU3
+usecase "CU5 Gestionar médicos" as CU5
+usecase "CU7 Gestionar pacientes" as CU7
+usecase "CU8 Registrarse\ncomo paciente" as CU8
+usecase "CU9 Consultar\ndisponibilidad" as CU9
+usecase "CU10 Reservar ficha" as CU10
+usecase "CU11 Reprogramar cita" as CU11
+usecase "CU13 Registrar asistencia" as CU13
+usecase "CU15 Registrar consulta" as CU15
+usecase "CU16 Gestionar\nhistorial clínico" as CU16
+usecase "CU17 Registrar\ntratamiento" as CU17
+usecase "CU18 Gestionar\nestudios médicos" as CU18
+
+U --> CU1
+CU3 ..> CU2 : <<include>>
+CU5 ..> CU3 : <<include>>
+CU8 ..> CU7 : <<include>>
+CU10 ..> CU9 : <<include>>
+CU11 ..> CU9 : <<include>>
+CU15 ..> CU13 : <<include>>
+CU15 ..> CU16 : <<include>>
+CU15 <.. CU17 : <<extend>>
+CU15 <.. CU18 : <<extend>>
+@enduml

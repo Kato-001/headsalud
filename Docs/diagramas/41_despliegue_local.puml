@@ -1,0 +1,19 @@
+@startuml 41_despliegue_local
+!include estilo.iuml
+title Despliegue alternativo · Servidor local (XAMPP / Laragon)
+left to right direction
+
+node "PC del usuario\n<<dispositivo>>" {
+  artifact "Navegador web" as NAV
+}
+node "Servidor local\n<<Windows / Linux>>" {
+  node "Apache 2.4 + PHP 8\n<<servidor web>>" as AP {
+    artifact ".htaccess\n(reescritura de URL)" as HT
+    artifact "api/index.php + app/" as APP
+  }
+  database "PostgreSQL 14+\nbase headsalud" as DB
+}
+NAV -- AP : HTTP :80
+HT ..> APP
+AP -- DB : TCP 5432\nPDO pdo_pgsql
+@enduml

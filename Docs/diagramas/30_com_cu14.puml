@@ -1,0 +1,17 @@
+@startuml 30_com_cu14
+!include estilo.iuml
+title Diagrama de comunicación · CU14 Consultar agenda médica
+left to right direction
+actor "Médico" as A
+boundary "IU_Agenda" as IU
+control "CtrlAgenda" as C
+control "CtrlDisponibilidad" as D
+entity "Cita" as CI
+entity "Medico" as M
+A --> IU : "1: elegirFecha(médico, estado)"
+IU --> C : "2: agenda(fecha, médico, estado)"
+C --> M : "3: médicoDeLaSesión()"
+C --> CI : "4: citasDelDía()"
+C --> D : "5: bloquesLibres()"
+C --> IU : "6: mostrarAgenda()"
+@enduml

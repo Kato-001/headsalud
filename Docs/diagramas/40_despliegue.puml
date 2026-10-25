@@ -1,0 +1,43 @@
+@startuml 40_despliegue
+!include estilo.iuml
+title Diseño físico de la arquitectura · Diagrama de despliegue
+left to right direction
+
+node "PC / Celular\n<<dispositivo>>" as CLI {
+  artifact "Navegador web\n(HTML5, CSS3, JavaScript)" as NAV
+}
+
+cloud "Internet" as NET
+
+node "Vercel · región gru1 (São Paulo)\n<<plataforma serverless>>" as VER {
+  node "CDN / Edge\n<<servidor web>>" as CDN {
+    artifact "public/assets\n(app.css, componentes.css,\napp.js, citas.js)" as ASSETS
+  }
+  node "Función serverless\nPHP 8.3 (vercel-php)\n<<entorno de ejecución>>" as FN {
+    artifact "api/index.php\n(controlador frontal)" as FRONT
+    artifact "app/\n(controllers, services,\nmodels, views, core)" as APP
+  }
+}
+
+node "Supabase · sa-east-1 (São Paulo)\n<<servidor de base de datos>>" as SUP {
+  node "Supavisor\n<<pooler de conexiones>>" as POOL
+  database "PostgreSQL 17\nesquema «clinica»" as DB
+}
+
+NAV -- NET : HTTPS
+NET -- CDN : HTTPS / TLS 1.3
+NET -- FN : HTTPS\n(cookie de sesión HttpOnly)
+FRONT ..> APP
+FN -- POOL : TCP 6543 · TLS\nPDO pdo_pgsql
+POOL -- DB : TCP 5432
+
+note bottom of FN
+  Las sesiones PHP se guardan en la tabla SESION
+  porque cada petición puede ejecutarse en una
+  instancia distinta de la función.
+end note
+note bottom of DB
+  Restricciones EXCLUDE, triggers y RLS.
+  Usuario de mínimo privilegio: headsalud_app
+end note
+@enduml
