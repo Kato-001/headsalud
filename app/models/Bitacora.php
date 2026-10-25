@@ -24,7 +24,7 @@ final class Bitacora
                 ]
             );
         } catch (Throwable $e) {
-            error_log('[HeadSalud] No se pudo registrar la bitácora: ' . $e->getMessage());
+            error_log('[NovaSol Salud] No se pudo registrar la bitácora: ' . $e->getMessage());
         }
     }
 

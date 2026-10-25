@@ -1,0 +1,44 @@
+@startuml 50_sec_cu01b
+!include estilo.iuml
+title Diagrama de secuencia · CU1 (flujo alternativo) Recuperar contraseña por correo
+autonumber "<b>0."
+hide footbox
+
+actor Usuario as U
+boundary "recuperar.php /\nrecuperar_codigo.php" as V
+control RecuperacionController as C
+entity Recuperacion as R
+entity Usuario as US
+control Mailer as M
+participant "Gmail SMTP" as G
+
+U -> V : ¿Olvidaste tu contraseña? → escribe su correo
+V -> C : POST /recuperar (email, CSRF)
+C -> C : Validator (email) y límite de solicitudes por IP
+C -> R : usuarioPorCorreo(email) [cuenta ACTIVA]
+alt la cuenta existe
+  C -> R : crear(): random_int 6 dígitos,\nanula códigos previos, guarda password_hash(código),\nvence en 15 min
+  C -> M : enviar(correo, asunto, html, texto)
+  M -> G : AUTH LOGIN + MAIL FROM + RCPT TO + DATA
+  G --> U : correo con el código
+end
+C --> V : "Si el correo está registrado, te enviamos un código"\n(misma respuesta siempre: no revela cuentas)
+U -> V : código + nueva contraseña + confirmación
+V -> C : POST /recuperar/codigo
+C -> C : Validator (6 dígitos, contraseña segura, coincide)
+C -> R : vigente(usuario) [no usado y no vencido]
+alt sin código vigente o 5 intentos
+  C --> V : "Solicite un código nuevo"
+else código incorrecto
+  C -> R : sumarIntento()
+  C --> V : "Código incorrecto. Le quedan N intentos"
+else código correcto (password_verify)
+  group transacción
+    C -> US : cambiarPassword(password_hash(nueva))
+    C -> R : marcar como usado
+    C -> R : cerrar las sesiones abiertas del usuario
+  end
+  C -> C : Bitacora::registrar(RECUPERAR_CONTRASENA)
+  C --> U : 302 a /login "Tu contraseña fue restablecida"
+end
+@enduml

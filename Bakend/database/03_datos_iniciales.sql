@@ -1,7 +1,7 @@
 -- =====================================================================
--- HeadSalud · 03 · Datos iniciales y de demostración
+-- NovaSol Salud · 03 · Datos iniciales y de demostración
 -- ---------------------------------------------------------------------
--- Contraseña de todas las cuentas de ejemplo: HeadSalud2026
+-- Contraseña de todas las cuentas de ejemplo: NovaSol Salud2026
 -- (hash generado con password_hash() de PHP; cámbiela al ingresar)
 -- =====================================================================
 
@@ -87,7 +87,7 @@ insert into catalogoestudio (nombre, categoria, descripcion) values
 -- ------------------------------------------------- Usuarios y personas
 do $$
 declare
-    h text := '$2y$10$vBmekxWiBWqFD0ELjcEgU.6VUHflTKfSW9InBmYFVJaY4JzdQIPs.';  -- password_hash('HeadSalud2026')
+    h text := '$2y$10$vBmekxWiBWqFD0ELjcEgU.6VUHflTKfSW9InBmYFVJaY4JzdQIPs.';  -- password_hash('NovaSol Salud2026')
     r_admin int := (select idrol from rol where nombre = 'ADMINISTRADOR');
     r_recep int := (select idrol from rol where nombre = 'RECEPCIONISTA');
     r_med   int := (select idrol from rol where nombre = 'MEDICO');

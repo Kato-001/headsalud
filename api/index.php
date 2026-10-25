@@ -1,6 +1,6 @@
 <?php
 /**
- * HeadSalud · Controlador frontal
+ * NovaSol Salud · Controlador frontal
  * ---------------------------------------------------------------------
  * Todas las peticiones llegan aquí (Vercel: vercel.json · Apache: .htaccess ·
  * servidor de PHP: router.php) y se envían al controlador correspondiente.
@@ -17,6 +17,10 @@ $r->get('/', [AuthController::class, 'inicio'])
   ->get('/login', [AuthController::class, 'formulario'])
   ->post('/login', [AuthController::class, 'ingresar'])
   ->post('/salir', [AuthController::class, 'salir'])
+  ->get('/recuperar', [RecuperacionController::class, 'formulario'])
+  ->post('/recuperar', [RecuperacionController::class, 'enviar'])
+  ->get('/recuperar/codigo', [RecuperacionController::class, 'codigo'])
+  ->post('/recuperar/codigo', [RecuperacionController::class, 'restablecer'])
   ->get('/panel', [PanelController::class, 'index'])
   ->get('/usuarios', [UsuarioController::class, 'index'])
   ->get('/usuarios/nuevo', [UsuarioController::class, 'crear'])

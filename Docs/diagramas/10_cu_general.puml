@@ -1,6 +1,6 @@
 @startuml 10_cu_general
 !include estilo.iuml
-title Diagrama general de casos de uso · HeadSalud
+title Diagrama general de casos de uso · NovaSol Salud
 left to right direction
 skinparam packageStyle rectangle
 skinparam nodesep 18

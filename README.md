@@ -1,6 +1,6 @@
 <div align="center">
 
-# HeadSalud · Sistema Web de Gestión de Citas Médicas
+# NovaSol Salud · Sistema Web de Gestión de Citas Médicas
 
 **Proyecto de Examen Parcial II** — Desarrollo web con PHP y PostgreSQL
 Caso de estudio: *Clínica Vida Salud*
@@ -8,9 +8,9 @@ Caso de estudio: *Clínica Vida Salud*
 [![PHP](https://img.shields.io/badge/PHP-8.3-777BB4?logo=php&logoColor=white)](#tecnologías)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?logo=postgresql&logoColor=white)](#base-de-datos)
 [![PDO](https://img.shields.io/badge/PDO-pdo__pgsql-0d9488)](#seguridad)
-[![Vercel](https://img.shields.io/badge/Demo-Vercel-000?logo=vercel)](https://headsalud.vercel.app)
+[![Vercel](https://img.shields.io/badge/Demo-Vercel-000?logo=vercel)](https://novasol-salud.vercel.app)
 
-**Demo en línea:** https://headsalud.vercel.app · **Repositorio:** https://github.com/Kato-001/headsalud
+**Demo en línea:** https://novasol-salud.vercel.app · **Repositorio:** https://github.com/Kato-001/novasol-salud
 
 | Repositorio | Demo |
 |:-:|:-:|
@@ -33,9 +33,9 @@ Caso de estudio: *Clínica Vida Salud*
 
 | Documento | Contenido |
 |---|---|
-| [📘 Documentación completa (Word)](Docs/Documentacion_HeadSalud_Grupo20.docx) · [PDF](Docs/Documentacion_HeadSalud_Grupo20.pdf) | Carátula, índice, perfil, marco teórico, modelo de negocio, los flujos de trabajo (captura de requisitos, análisis, diseño, implementación y pruebas), conclusiones, recomendaciones, bibliografía y anexos. 117 páginas, 118 figuras. |
-| [📐 Diagramas UML (PlantUML)](Docs/diagramas) | 64 diagramas: negocio, casos de uso (general y por paquete), prototipos, comunicación y secuencia de los 20 CU, clases, estados, despliegue, paquetes, componentes, datos y trazabilidad. Fuente `.puml` e imagen `.png`. |
-| [🖼️ Capturas de pantalla](Docs/capturas) | 50 pantallas del sistema funcionando, de cada rol. |
+| [📘 Documentación completa (Word)](Docs/Documentacion_NovaSolSalud_Grupo20.docx) · [PDF](Docs/Documentacion_NovaSolSalud_Grupo20.pdf) | Carátula, índice, perfil, marco teórico, modelo de negocio, los flujos de trabajo (captura de requisitos, análisis, diseño, implementación y pruebas), conclusiones, recomendaciones, bibliografía y anexos. 120 páginas, 123 figuras. |
+| [📐 Diagramas UML (PlantUML)](Docs/diagramas) | 66 diagramas: negocio, casos de uso (general y por paquete), prototipos, comunicación y secuencia de los 20 CU, clases, estados, despliegue, paquetes, componentes, datos y trazabilidad. Fuente `.puml` e imagen `.png`. |
+| [🖼️ Capturas de pantalla](Docs/capturas) | 53 pantallas del sistema funcionando, de cada rol. |
 | [📝 Diagrama de clases original](Docs/Diagrama%20de%20Clinica.svg) | Diagrama de clases del que parte la base de datos. |
 
 ---
@@ -70,7 +70,7 @@ Caso de estudio: *Clínica Vida Salud*
 
 La Clínica Vida Salud administraba sus citas con cuadernos, llamadas y hojas de cálculo, lo que provocaba citas duplicadas, datos de pacientes perdidos, desconocimiento de los horarios disponibles y falta de reportes.
 
-**HeadSalud** centraliza esa información en una aplicación web: registra pacientes, médicos, especialidades y horarios, **programa citas mostrando solo los horarios realmente libres** y controla sus estados (programada, confirmada, atendida, cancelada, inasistencia). Incluye agenda médica, historial por paciente, atención médica con tratamientos, reportes administrativos y un portal donde el paciente reserva y sigue sus propias citas.
+**NovaSol Salud** centraliza esa información en una aplicación web: registra pacientes, médicos, especialidades y horarios, **programa citas mostrando solo los horarios realmente libres** y controla sus estados (programada, confirmada, atendida, cancelada, inasistencia). Incluye agenda médica, historial por paciente, atención médica con tratamientos, reportes administrativos y un portal donde el paciente reserva y sigue sus propias citas.
 
 ## ¿Para quién es el sistema?
 
@@ -113,7 +113,7 @@ El Proceso Unificado es iterativo: el sistema se construyó en dos ciclos. El pr
 
 | Requerimiento | Implementación |
 |---|---|
-| **RF01** Inicio de sesión y control de acceso | Login con usuario, correo o CI (pacientes). `password_hash()` / `password_verify()`, sesión regenerada al ingresar, menú según permisos, cierre de sesión y bloqueo tras 5 intentos fallidos por IP. |
+| **RF01** Inicio de sesión y control de acceso | Login con usuario, correo o CI (pacientes). `password_hash()` / `password_verify()`, sesión regenerada al ingresar, menú según permisos, cierre de sesión, bloqueo tras 5 intentos fallidos por IP y **recuperación de contraseña con un código de 6 dígitos enviado al correo (Gmail)**. |
 | **RF02** Gestión de pacientes | Registro con código autogenerado (`PAC-0001`), búsqueda por CI, nombre o apellido, edición, desactivación sin perder el historial, historia clínica y contactos de emergencia. CI único. |
 | **RF03** Gestión de médicos | Registro con su cuenta de acceso, una o varias especialidades, búsqueda por nombre o especialidad, ficha con agenda y activación/desactivación. |
 | **RF04** Especialidades | CRUD con estado. No se repiten nombres normalizados ("Pediatría" = "pediatria "). |
@@ -153,7 +153,7 @@ Los permisos se asignan por rol desde **Administración → Roles y permisos** (
 
 Los artefactos siguen los flujos de trabajo del Proceso Unificado y describen **el sistema tal como está construido**. Cada diagrama se corresponde con archivos reales del repositorio (ver [Trazabilidad](#trazabilidad-trace)). Los diagramas de esta sección están escritos en Mermaid, que GitHub dibuja automáticamente.
 
-> **Versión UML completa:** los 64 diagramas en notación UML estándar (PlantUML) están en [`Docs/diagramas`](Docs/diagramas) y en la [documentación Word](Docs/Documentacion_HeadSalud_Grupo20.docx). Incluyen la descripción, el diagrama de comunicación y el diagrama de secuencia de **los 20 casos de uso**.
+> **Versión UML completa:** los 66 diagramas en notación UML estándar (PlantUML) están en [`Docs/diagramas`](Docs/diagramas) y en la [documentación Word](Docs/Documentacion_NovaSolSalud_Grupo20.docx). Incluyen la descripción, el diagrama de comunicación y el diagrama de secuencia de **los 20 casos de uso**.
 
 ### 1. Captura de requisitos
 
@@ -301,7 +301,7 @@ Los prototipos se construyeron como pantallas funcionales. Prototipo de **CU10 R
 
 | CU | Interfaz (ruta) |
 |---|---|
-| CU1 | `/login` |
+| CU1 | `/login`, `/recuperar`, `/recuperar/codigo` |
 | CU2 | `/roles` (matriz de permisos) |
 | CU3 | `/usuarios`, `/usuarios/nuevo`, `/configuracion`, `/bitacora` |
 | CU4 | `/especialidades` |
@@ -807,6 +807,11 @@ Navegador ──HTTP──▶ api/index.php (controlador frontal + rutas)
   - Cada petición recarga el usuario y sus permisos.
   - Una cuenta desactivada pierde la sesión de inmediato.
   - Ninguna página interna se puede abrir sin sesión.
+- **Recuperación de cuenta:** "¿Olvidaste tu contraseña?" envía un **código de 6 dígitos** al correo por SMTP (Gmail).
+  - El código se guarda con `password_hash()`, es de un solo uso, vence en 15 minutos y admite 5 intentos.
+  - Se limitan las solicitudes por cuenta y por IP.
+  - La respuesta es la misma exista o no el correo, así que no revela qué cuentas están registradas.
+  - Al restablecer la contraseña se cierran las sesiones abiertas de esa cuenta.
 - **Fuerza bruta:** se bloquea tras 5 intentos fallidos por IP en 10 minutos, y cada intento queda registrado en la bitácora.
 - **Errores:**
   - En producción no se muestran detalles internos: se registran en el log y el usuario ve un mensaje claro.
@@ -820,17 +825,17 @@ Navegador ──HTTP──▶ api/index.php (controlador frontal + rutas)
 
 1. **Clonar el repositorio**
    ```bash
-   git clone https://github.com/Kato-001/headsalud.git && cd headsalud
+   git clone https://github.com/Kato-001/novasol-salud.git && cd novasol-salud
    ```
 2. **Crear la base de datos.** En PostgreSQL local, por ejemplo con pgAdmin:
    ```sql
-   CREATE DATABASE headsalud;
+   CREATE DATABASE novasol_salud;
    ```
    Luego ejecute en orden `01_esquema.sql`, `02_reglas_negocio.sql`, `03_datos_iniciales.sql` y `04_usuario_app.sql` (cambie `CAMBIAR_CLAVE` por su contraseña). Los scripts funcionan igual en PostgreSQL local y en Supabase.
 3. **Configurar el entorno**
    ```bash
    cp .env.example .env
-   # DATABASE_URL=postgresql://headsalud_app:SU_CLAVE@localhost:5432/headsalud?sslmode=disable
+   # DATABASE_URL=postgresql://headsalud_app:SU_CLAVE@localhost:5432/novasol_salud?sslmode=disable
    ```
 4. **Ejecutar**, con una de estas dos opciones:
    - **Servidor integrado de PHP:**
@@ -848,6 +853,11 @@ PHP corre en Vercel gracias al runtime comunitario [`vercel-php`](https://github
 npx vercel link
 npx vercel env add DATABASE_URL production   # cadena del pooler de Supabase (puerto 6543)
 npx vercel env add APP_ENV production         # valor: production
+# Envío del código de recuperación por Gmail (contraseña de aplicación de 16 letras)
+npx vercel env add SMTP_HOST production       # smtp.gmail.com
+npx vercel env add SMTP_PORT production       # 465
+npx vercel env add SMTP_USER production       # correo Gmail remitente
+npx vercel env add SMTP_PASS production       # contraseña de aplicación de Gmail
 npx vercel deploy --prod
 ```
 
@@ -857,9 +867,9 @@ npx vercel deploy --prod
 
 ## Cuentas de prueba
 
-Página de ingreso: **https://headsalud.vercel.app/login**. Se puede entrar con el **usuario** o con el **correo**; los pacientes también pueden usar su **CI**.
+Página de ingreso: **https://novasol-salud.vercel.app/login**. Se puede entrar con el **usuario** o con el **correo**; los pacientes también pueden usar su **CI**.
 
-**Contraseña de todas las cuentas: `HeadSalud2026`**
+**Contraseña de todas las cuentas: `NovaSol Salud2026`**
 
 | Rol | Persona | Usuario | Correo | Qué puede hacer |
 |---|---|---|---|---|
@@ -875,6 +885,7 @@ Página de ingreso: **https://headsalud.vercel.app/login**. Se puede entrar con 
 
 > **Para probar la atención médica:** un médico solo puede atender las citas del día. Entre con el médico que atiende el día de hoy, según el horario de la tabla.
 > Un paciente nuevo también puede crear su propia cuenta en **/registro**.
+> Si alguien olvida su contraseña, en el login está **"¿Olvidaste tu contraseña?"**: el código llega al correo de la cuenta. Las cuentas de demostración tienen correos ficticios, así que para probarlo hay que poner un correo real en una cuenta desde **Usuarios**.
 > Estas cuentas son de demostración. En un uso real, cambie las contraseñas desde **Mi cuenta**.
 
 ## Pruebas
@@ -898,11 +909,17 @@ Pruebas mínimas del enunciado, ejecutadas contra el sistema:
 - **En la base de datos:** insertando por SQL directo se rechazan el cruce de citas, las fechas pasadas, las horas fuera del horario, la duración incorrecta, las transiciones de estado inválidas, el borrado de pacientes con citas, el CI duplicado, las especialidades repetidas y los horarios cruzados.
 - **Permisos por rol:** la recepción, el médico y el paciente reciben **403** en las páginas que no les corresponden.
 - **Portal:** un paciente no puede cancelar citas de otro (404).
+- **Recuperación de contraseña** (probada con un servidor SMTP de prueba):
+  - Un correo no registrado recibe la misma respuesta que uno registrado.
+  - El código llega por correo.
+  - Un código incorrecto avisa cuántos intentos quedan.
+  - El código correcto restablece la contraseña y permite ingresar.
+  - Un código ya usado se rechaza.
 
 ## Estructura del proyecto
 
 ```
-headsalud/
+novasol-salud/
 ├── api/index.php              # Controlador frontal y tabla de rutas
 ├── app/
 │   ├── bootstrap.php          # Arranque: entorno, errores, autoload, sesión

@@ -1,6 +1,6 @@
 <?php
 /**
- * HeadSalud · Arranque de la aplicación
+ * NovaSol Salud · Arranque de la aplicación
  * ---------------------------------------------------------------------
  * Configura zona horaria, variables de entorno, manejo de errores,
  * carga automática de clases y la sesión. Todas las peticiones pasan
@@ -57,7 +57,7 @@ require APP_PATH . '/core/helpers.php';
 
 // Cualquier excepción no controlada termina en una página de error genérica
 set_exception_handler(function (Throwable $e): void {
-    error_log('[HeadSalud] ' . $e::class . ': ' . $e->getMessage() . ' en ' . $e->getFile() . ':' . $e->getLine());
+    error_log('[NovaSol Salud] ' . $e::class . ': ' . $e->getMessage() . ' en ' . $e->getFile() . ':' . $e->getLine());
     if (!headers_sent()) {
         http_response_code(500);
     }

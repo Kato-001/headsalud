@@ -24,7 +24,7 @@ $titulo = 'Ingresar';
 
         <div class="brand anim" style="padding:0;--i:0">
             <div class="brand-logo"><?= icono('cruz', 22) ?></div>
-            <div><strong style="color:#fff">HeadSalud</strong><small style="color:rgba(255,255,255,.6)"><?= e(config('NOMBRE_CLINICA', 'Clínica Vida Salud')) ?></small></div>
+            <div><strong style="color:#fff">NovaSol Salud</strong><small style="color:rgba(255,255,255,.6)"><?= e(config('NOMBRE_CLINICA', 'Clínica Vida Salud')) ?></small></div>
         </div>
 
         <div>
@@ -46,7 +46,7 @@ $titulo = 'Ingresar';
         <div class="auth-box anim">
             <div class="brand" style="padding:0">
                 <div class="brand-logo"><?= icono('cruz', 22) ?></div>
-                <div><strong>HeadSalud</strong><small>Sistema de gestión de citas médicas</small></div>
+                <div><strong>NovaSol Salud</strong><small>Sistema de gestión de citas médicas</small></div>
             </div>
             <h1>Bienvenido de nuevo</h1>
             <p>Ingrese con su usuario o correo electrónico y su contraseña.</p>
@@ -72,6 +72,7 @@ $titulo = 'Ingresar';
                     </span>
                     <?= error_campo('password') ?>
                 </label>
+                <div style="text-align:right;margin-top:-8px"><a href="/recuperar" style="font-size:13.5px;font-weight:600">¿Olvidaste tu contraseña?</a></div>
                 <button type="submit" class="btn btn-primary btn-block" style="height:48px;font-size:15px">Ingresar <?= icono('flecha', 17) ?></button>
             </form>
 

@@ -11,6 +11,7 @@ rectangle "P1 Seguridad y acceso" {
   usecase "CU1 Iniciar sesión" as CU1
   usecase "Cerrar sesión" as CS
   usecase "Cambiar contraseña" as CP
+  usecase "Recuperar contraseña\ncon código por correo" as RC
   usecase "CU2 Gestionar roles\ny permisos" as CU2
   usecase "Asignar / quitar\npermisos" as AP
   usecase "CU3 Gestionar usuarios" as CU3
@@ -25,6 +26,9 @@ A --> CU2
 A --> CU3
 A --> CF
 A --> BI
+CU1 <.. RC : <<extend>>\n(olvidó su contraseña)
+actor "Servidor de correo\n(Gmail SMTP)" as SMTP
+RC --> SMTP
 CU2 <.. AP : <<extend>>
 CU3 <.. AD : <<extend>>
 CU3 ..> CU2 : <<include>>\n(asignar rol)

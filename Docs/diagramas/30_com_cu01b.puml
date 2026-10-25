@@ -1,0 +1,20 @@
+@startuml 30_com_cu01b
+!include estilo.iuml
+title Diagrama de comunicación · CU1 (flujo alternativo) Recuperar contraseña
+left to right direction
+actor "Usuario" as A
+boundary "IU_RecuperarContraseña" as IU
+control "CtrlRecuperacion" as C
+entity "Usuario" as U
+entity "Recuperacion\n(código)" as R
+control "Mailer (SMTP)" as M
+actor "Servidor de correo\n(Gmail)" as G
+entity "Bitacora" as B
+A --> IU : "1: ingresarCorreo(email)\n7: ingresarCódigo(código, nuevaClave)"
+IU --> C : "2: enviar(email)\n8: restablecer(código, nuevaClave)"
+C --> U : "3: buscarActivoPorCorreo()\n11: cambiarPassword(password_hash)"
+C --> R : "4: crear() código de 6 dígitos (hash, vence 15 min)\n9: vigente()\n10: verificar(password_verify) / sumarIntento()\n12: marcarUsado()"
+C --> M : "5: enviar(correo, código)"
+M --> G : "6: SMTP AUTH + DATA"
+C --> B : "13: registrar(RECUPERAR_CONTRASENA)"
+@enduml

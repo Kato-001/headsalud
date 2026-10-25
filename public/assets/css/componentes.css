@@ -1,5 +1,5 @@
 /* =====================================================================
-   HeadSalud · Componentes y animaciones de la versión PHP
+   NovaSol Salud · Componentes y animaciones de la versión PHP
    (usa los tokens de color definidos en app.css)
    ===================================================================== */
 
@@ -257,6 +257,18 @@ a.agenda-item:hover { transform: translateX(4px); box-shadow: var(--shadow); }
 .notif.nueva { background: var(--primary-soft); }
 .notif p { margin: 0; font-size: 14px; }
 .notif small { color: var(--text-faint); font-size: 12px; }
+
+/* ------------------------------------------------ Recuperar contraseña */
+.auth-centro { min-height: 100%; display: grid; place-items: center; padding: 32px 16px;
+  background: radial-gradient(circle at 15% 10%, rgba(20,184,166,.18), transparent 40%), radial-gradient(circle at 85% 90%, rgba(79,70,229,.16), transparent 40%), var(--bg); }
+.auth-tarjeta { width: 100%; max-width: 440px; box-shadow: var(--shadow-lg); }
+.pasos-rec { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+.pasos-rec span { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 700; background: var(--bg-sunken); color: var(--text-faint); }
+.pasos-rec span.on { background: var(--grad); color: #fff; }
+.pasos-rec span.ok { background: var(--ok); color: #fff; }
+.pasos-rec i { flex: 0 0 48px; height: 3px; border-radius: 3px; background: var(--border); }
+.pasos-rec i.on { background: var(--grad); }
+.codigo-otp { font-family: var(--mono); font-size: 28px; letter-spacing: 12px; text-align: center; height: 60px; }
 
 /* ---------------------------------------------------------- Páginas de error */
 .error-page { min-height: 100%; display: grid; place-items: center; padding: 32px 16px; text-align: center; }
