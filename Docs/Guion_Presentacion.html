@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guion de presentación · NovaSol Salud</title>
+<style>
+  :root {
+    --fondo: #f6f8fa; --tarjeta: #ffffff; --texto: #1e293b; --suave: #64748b; --borde: #e2e8f0;
+    --acento: #0f766e; --acento-suave: #ccfbf1; --aviso: #b45309; --aviso-suave: #fffbeb; --codigo: #f1f5f9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --fondo: #0f172a; --tarjeta: #1e293b; --texto: #e2e8f0; --suave: #94a3b8; --borde: #334155;
+      --acento: #2dd4bf; --acento-suave: #134e4a; --aviso: #fbbf24; --aviso-suave: #3b2a0a; --codigo: #0f172a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fondo); color: var(--texto); font: 16px/1.6 "Segoe UI", system-ui, sans-serif; }
+  .contenedor { max-width: 960px; margin: 0 auto; padding: 24px 16px 64px; }
+  header { border-bottom: 3px solid var(--acento); margin-bottom: 24px; padding-bottom: 12px; }
+  h1 { margin: 0; font-size: 1.9rem; }
+  h2 { margin-top: 40px; padding-bottom: 6px; border-bottom: 1px solid var(--borde); color: var(--acento); }
+  h3 { margin: 24px 0 8px; }
+  .sub { color: var(--suave); margin: 4px 0 0; }
+  nav { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 10px; padding: 12px 18px; }
+  nav ol { margin: 0; padding-left: 20px; columns: 2; }
+  @media (max-width: 640px) { nav ol { columns: 1; } }
+  a { color: var(--acento); }
+  .tarjeta { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 10px; padding: 16px 18px; margin: 14px 0; }
+  .paso { border-left: 4px solid var(--acento); }
+  .paso h3 { margin-top: 0; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+  .tiempo { font-size: .8rem; font-weight: 600; color: var(--acento); background: var(--acento-suave); padding: 1px 8px; border-radius: 999px; }
+  .decir { background: var(--acento-suave); border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+  .decir::before { content: "🗣️ Qué decir: "; font-weight: 600; }
+  .ojo { background: var(--aviso-suave); border-left: 4px solid var(--aviso); border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+  .ojo::before { content: "⚠️ "; }
+  code, kbd { background: var(--codigo); border: 1px solid var(--borde); border-radius: 4px; padding: 0 5px; font-size: .9em; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: .95rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--borde); vertical-align: top; }
+  th { background: var(--acento-suave); }
+  .tabla { overflow-x: auto; }
+  ol.pasos li, ul li { margin: 4px 0; }
+  details { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 10px; padding: 10px 16px; margin: 10px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  details[open] summary { margin-bottom: 8px; }
+  .lista-check label { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; border-bottom: 1px dashed var(--borde); }
+  .lista-check input { margin-top: 5px; width: 18px; height: 18px; accent-color: var(--acento); }
+  .datos { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .dato { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 10px; padding: 12px; text-align: center; }
+  .dato b { display: block; font-size: 1.6rem; color: var(--acento); }
+  .dato span { color: var(--suave); font-size: .85rem; }
+  footer { margin-top: 48px; color: var(--suave); font-size: .85rem; text-align: center; }
+  @media print { nav, .lista-check input { display: none; } body { background: #fff; } .tarjeta, details { break-inside: avoid; } details { display: block; } }
+</style>
+</head>
+<body>
+<div class="contenedor">
+<header>
+  <h1>🎤 Guion de presentación · NovaSol Salud</h1>
+  <p class="sub">Sistema Web de Gestión de Citas Médicas · Grupo 20 · Sergio Estaca Paco y Frank Miguel Yerbales Molina</p>
+  <p class="sub">Sistema: <a href="https://novasol-salud.vercel.app">novasol-salud.vercel.app</a> · Código: <a href="https://github.com/Kato-001/novasol-salud">github.com/Kato-001/novasol-salud</a></p>
+</header>
+
+<nav>
+  <strong>Contenido</strong>
+  <ol>
+    <li><a href="#antes">Antes de presentar</a></li>
+    <li><a href="#cuentas">Cuentas de prueba</a></li>
+    <li><a href="#datos">Datos para memorizar</a></li>
+    <li><a href="#guion">Guion paso a paso</a></li>
+    <li><a href="#pruebas">Las 10 pruebas del enunciado</a></li>
+    <li><a href="#preguntas">Preguntas probables</a></li>
+    <li><a href="#problemas">Si algo falla</a></li>
+    <li><a href="#reparto">Reparto entre los dos</a></li>
+  </ol>
+</nav>
+
+<!-- ============================================================ -->
+<h2 id="antes">1. Antes de presentar</h2>
+<div class="tarjeta lista-check" id="checklist">
+  <label><input type="checkbox"> <span><b>Un día antes:</b> abrir la página e iniciar sesión. Supabase (plan gratuito) pausa la base tras 7 días sin uso; si aparece un error de conexión, entrar a supabase.com → proyecto <i>headsalud</i> → <i>Restore</i>.</span></label>
+  <label><input type="checkbox"> <span><b>El mismo día:</b> volver a abrir la página 10 minutos antes (la primera carga en Vercel tarda 2 o 3 segundos).</span></label>
+  <label><input type="checkbox"> <span>Probar las cuentas <code>admin</code>, <code>mrojas</code>, <code>cmendoza</code> y <code>jperez</code> con la contraseña <code>HeadSalud2026</code>.</span></label>
+  <label><input type="checkbox"> <span>Revisar que el médico <b>Carlos Mendoza</b> tenga citas <b>de hoy</b> en su agenda (para mostrar la atención). Si no hay, programar una para hoy desde la recepción antes de empezar.</span></label>
+  <label><input type="checkbox"> <span>Tener abiertas pestañas separadas: una ventana normal y una <b>ventana de incógnito</b> (para tener dos sesiones a la vez, por ejemplo recepcionista y paciente).</span></label>
+  <label><input type="checkbox"> <span>Tener el informe en PDF descargado (y, si se puede, impreso) por si falla internet.</span></label>
+  <label><input type="checkbox"> <span>Tener abierto GitHub con la carpeta <code>Bakend/database</code> para mostrar los scripts SQL.</span></label>
+  <label><input type="checkbox"> <span>Si ya está configurado el correo de la página: probar «¿Olvidaste tu contraseña?» con un correo real.</span></label>
+  <label><input type="checkbox"> <span>Pantalla del proyector: zoom del navegador al 110 % o 125 % para que se lea desde lejos.</span></label>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="cuentas">2. Cuentas de prueba</h2>
+<p>Contraseña de todas: <code>HeadSalud2026</code>. Se puede ingresar con el usuario o el correo; los pacientes también con su CI.</p>
+<div class="tabla"><table>
+  <tr><th>Rol</th><th>Usuario</th><th>Persona</th><th>Para mostrar</th></tr>
+  <tr><td>Administrador</td><td><code>admin</code></td><td>Administrador General</td><td>Usuarios, roles, especialidades, médicos, horarios, bitácora, reportes</td></tr>
+  <tr><td>Recepcionista</td><td><code>mrojas</code></td><td>María Fernanda Rojas</td><td>Pacientes, programar, reprogramar y cancelar citas, agenda</td></tr>
+  <tr><td>Médico</td><td><code>cmendoza</code></td><td>Dr. Carlos Mendoza (Medicina General y Cardiología)</td><td>Su agenda, atender, consulta, tratamiento y estudios</td></tr>
+  <tr><td>Paciente</td><td><code>jperez</code> (CI 1234567)</td><td>Juan Pérez Quispe</td><td>Portal: reservar, cancelar, historial y resultados</td></tr>
+</table></div>
+
+<!-- ============================================================ -->
+<h2 id="datos">3. Datos para memorizar</h2>
+<div class="datos">
+  <div class="dato"><b>20</b><span>casos de uso</span></div>
+  <div class="dato"><b>2</b><span>ciclos (CU1–7 y CU8–20)</span></div>
+  <div class="dato"><b>6</b><span>paquetes + portal</span></div>
+  <div class="dato"><b>4</b><span>actores</span></div>
+  <div class="dato"><b>25</b><span>tablas (esquema clinica)</span></div>
+  <div class="dato"><b>13 / 14</b><span>RF / reglas de negocio</span></div>
+  <div class="dato"><b>30</b><span>consultas SQL</span></div>
+  <div class="dato"><b>5 + 5</b><span>procedimientos + triggers</span></div>
+  <div class="dato"><b>3FN</b><span>normalización</span></div>
+  <div class="dato"><b>30 min</b><span>duración de cada cita</span></div>
+  <div class="dato"><b>PHP 8.3</b><span>sin framework (MVC propio)</span></div>
+  <div class="dato"><b>PostgreSQL 17</b><span>en Supabase, conexión con PDO</span></div>
+</div>
+<div class="tarjeta">
+  <b>Ciclo I</b> (base del sistema): P1 Seguridad y acceso (CU1 Iniciar sesión, CU2 Roles y permisos, CU3 Usuarios), P2 Gestión médica (CU4 Especialidades, CU5 Médicos, CU6 Horarios), P3 Pacientes (CU7 Gestionar pacientes).<br>
+  <b>Ciclo II</b> (núcleo del negocio): CU8 Registrarse como paciente, P4 Citas (CU9 Disponibilidad, CU10 Reservar, CU11 Reprogramar, CU12 Cancelar, CU13 Asistencia, CU14 Agenda), P5 Atención (CU15 Consulta, CU16 Historial clínico, CU17 Tratamiento, CU18 Estudios, CU19 Historial y resultados), P6 Reportes (CU20).
+</div>
+
+<!-- ============================================================ -->
+<h2 id="guion">4. Guion paso a paso (unos 15 minutos)</h2>
+
+<div class="tarjeta paso">
+  <h3>Paso 0 · Introducción <span class="tiempo">1 min</span></h3>
+  <div class="decir">«La Clínica Vida Salud programaba sus citas en cuadernos y hojas de cálculo, lo que provocaba citas duplicadas, pérdida de datos y ningún reporte. Con el método de Ishikawa vimos que la causa raíz era la falta de un sistema centralizado. Desarrollamos NovaSol Salud con PHP y PostgreSQL siguiendo el Proceso Unificado en dos ciclos: el Ciclo I construye la seguridad y los datos maestros, y el Ciclo II las citas, la atención médica, los reportes y el portal del paciente.»</div>
+  <p>Mostrar rápidamente el informe: índice, diagrama de Ishikawa y diagrama de casos de uso por ciclo.</p>
+</div>
+
+<div class="tarjeta paso">
+  <h3>Paso 1 · Inicio de sesión (CU1) <span class="tiempo">1 min</span></h3>
+  <ol class="pasos">
+    <li>Abrir <code>/login</code> y escribir <code>admin</code> con una contraseña equivocada → mensaje «Usuario o contraseña incorrectos».</li>
+    <li>Ingresar bien con <code>admin</code> / <code>HeadSalud2026</code> → panel del administrador.</li>
+    <li>Mostrar el enlace «¿Olvidaste tu contraseña?» (explicar el código de 6 dígitos por correo).</li>
+  </ol>
+  <div class="decir">«Las contraseñas se guardan cifradas con password_hash; tras 5 intentos fallidos se bloquea el ingreso 10 minutos y cada ingreso queda en la bitácora. Para recuperar la contraseña se envía un código de 6 dígitos que vence en 15 minutos.»</div>
+</div>
+
+<div class="tarjeta paso">
+  <h3>Paso 2 · Administración: Ciclo I (CU2 a CU6) <span class="tiempo">2 min</span></h3>
+  <ol class="pasos">
+    <li><b>Roles y permisos (CU2):</b> mostrar la matriz de permisos por rol.</li>
+    <li><b>Usuarios (CU3):</b> mostrar el listado y el formulario.</li>
+    <li><b>Especialidades (CU4):</b> intentar crear «pediatria» (sin tilde y en minúsculas) → el sistema la rechaza porque ya existe «Pediatría».</li>
+    <li><b>Médicos (CU5):</b> abrir la ficha de Carlos Mendoza (tiene dos especialidades).</li>
+    <li><b>Horarios (CU6):</b> mostrar los horarios semanales y los bloqueos de agenda (feriados, permisos).</li>
+    <li><b>Bitácora:</b> mostrar que quedaron registrados los ingresos y cambios.</li>
+  </ol>
+  <div class="decir">«No se eliminan médicos ni pacientes con historial: se desactivan (RN11). La base de datos también lo impide con claves foráneas.»</div>
+</div>
+
+<div class="tarjeta paso">
+  <h3>Paso 3 · Recepción: pacientes (CU7) <span class="tiempo">2 min</span></h3>
+  <p>Cerrar sesión y entrar como <code>mrojas</code>.</p>
+  <ol class="pasos">
+    <li><b>Prueba 1:</b> Pacientes → Nuevo paciente → registrar uno con un CI nuevo → «Paciente registrado correctamente».</li>
+    <li><b>Prueba 2:</b> registrar otro con el CI <code>1234567</code> → «Ya existe un paciente registrado con ese CI».</li>
+    <li><b>Prueba 10:</b> escribir letras en el CI o una fecha de nacimiento futura → el sistema muestra el error y no guarda.</li>
+    <li><b>Prueba 7:</b> abrir la ficha de Juan Pérez → historial de citas (pasadas, futuras y canceladas) e historia clínica.</li>
+  </ol>
+</div>
+
+<div class="tarjeta paso">
+  <h3>Paso 4 · Recepción: citas (Ciclo II, CU9 a CU14) <span class="tiempo">3 min</span></h3>
+  <ol class="pasos">
+    <li><b>Prueba 3 (CU9 y CU10):</b> Programar cita → buscar al paciente por CI → especialidad → médico → día → el sistema muestra <b>solo los horarios libres</b> → Confirmar cita.</li>
+    <li><b>Prueba 4 (cita superpuesta):</b> abrir la pantalla de programar en <b>dos pestañas</b>, elegir el <b>mismo médico, día y hora</b> en ambas y confirmar las dos. La segunda muestra «El horario ya no está disponible».</li>
+    <li><b>Prueba 5 (fuera de horario):</b> explicar que la pantalla no ofrece horas fuera del horario del médico y que, aunque alguien envíe una hora distinta, el servidor y el trigger <code>cita_validar</code> la rechazan (está en el informe, capítulo 5, «Triggers»).</li>
+    <li><b>CU11:</b> abrir la cita → Reprogramar → nueva fecha y motivo.</li>
+    <li><b>Prueba 6 (CU12):</b> Cancelar cita → escribir el motivo → la cita queda «Cancelada», el horario vuelve a estar libre y el historial conserva todos los cambios.</li>
+    <li><b>Prueba 8 (CU14):</b> Agenda → filtrar por médico y fecha.</li>
+  </ol>
+  <div class="decir">«Para evitar citas duplicadas usamos tres niveles: la pantalla solo ofrece horarios libres, el servidor vuelve a verificar dentro de una transacción que bloquea al médico, y PostgreSQL tiene una restricción EXCLUDE que hace imposible guardar dos citas que se crucen.»</div>
+</div>
+
+<div class="tarjeta paso">
+  <h3>Paso 5 · Médico: atención (CU13, CU15 a CU18) <span class="tiempo">2 min</span></h3>
+  <p>En la ventana de incógnito, entrar como <code>cmendoza</code>.</p>
+  <ol class="pasos">
+    <li>Mi agenda → abrir una cita <b>de hoy</b> → Atender.</li>
+    <li>Registrar signos vitales y diagnóstico (CU15), agregar un medicamento (CU17) y solicitar un estudio (CU18) → Guardar. La cita pasa a «Atendida».</li>
+    <li>Mostrar que el médico <b>no</b> puede entrar a Pacientes ni a Reportes (403): cada rol ve solo lo suyo.</li>
+  </ol>
+  <div class="ojo">Solo se puede atender una cita del día. Una cita futura no permite registrar asistencia (regla del trigger).</div>
+</div>
+
+<div class="tarjeta paso">
+  <h3>Paso 6 · Paciente: portal (CU8, CU10, CU12, CU19) <span class="tiempo">2 min</span></h3>
+  <ol class="pasos">
+    <li>Mostrar <code>/registro</code> (CU8: el paciente se registra solo).</li>
+    <li>Entrar como <code>jperez</code> → Reservar cita → especialidad → médico → día → hora → Confirmar.</li>
+    <li>Mis citas → cancelar la cita con un motivo.</li>
+    <li>Historial médico (CU19): consultas, tratamientos y resultados de estudios.</li>
+  </ol>
+</div>
+
+<div class="tarjeta paso">
+  <h3>Paso 7 · Reportes (CU20) y seguridad <span class="tiempo">1 min</span></h3>
+  <ol class="pasos">
+    <li>Como <code>admin</code>: Reportes → resumen del período, por médico y por fecha → Exportar CSV o Imprimir / PDF.</li>
+    <li><b>Prueba 9:</b> cerrar sesión y escribir directamente <code>/pacientes</code> en la barra → el sistema redirige a <code>/login</code>.</li>
+  </ol>
+</div>
+
+<div class="tarjeta paso">
+  <h3>Paso 8 · Base de datos <span class="tiempo">1 min</span></h3>
+  <ol class="pasos">
+    <li>En GitHub, abrir <code>Bakend/database</code>: scripts 01 (tablas), 02 (reglas), 03 (datos), 04 (usuario), 05 (30 consultas) y 06 (procedimientos y triggers).</li>
+    <li>Mostrar en el informe el diagrama relacional y la normalización.</li>
+  </ol>
+  <div class="decir">«La aplicación valida todo, pero la base de datos es la última línea de defensa: aunque alguien inserte datos directamente con SQL, los triggers y las restricciones impiden citas en el pasado, fuera de horario, superpuestas o con transiciones de estado inválidas.»</div>
+</div>
+
+<div class="tarjeta paso">
+  <h3>Paso 9 · Cierre <span class="tiempo">30 s</span></h3>
+  <div class="decir">«En conclusión, el sistema cumple los 13 requerimientos funcionales y las 14 reglas de negocio, está publicado en la nube y se puede usar desde cualquier celular o computadora. Quedamos atentos a sus preguntas.»</div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="pruebas">5. Las 10 pruebas mínimas del enunciado</h2>
+<div class="tabla"><table>
+  <tr><th>N.º</th><th>Prueba</th><th>Dónde se muestra</th></tr>
+  <tr><td>1</td><td>Registrar un paciente nuevo</td><td>Paso 3</td></tr>
+  <tr><td>2</td><td>Paciente con CI duplicado</td><td>Paso 3</td></tr>
+  <tr><td>3</td><td>Cita en horario disponible</td><td>Paso 4</td></tr>
+  <tr><td>4</td><td>Cita superpuesta para el mismo médico</td><td>Paso 4 (dos pestañas)</td></tr>
+  <tr><td>5</td><td>Cita fuera del horario</td><td>Paso 4 (explicación + informe)</td></tr>
+  <tr><td>6</td><td>Cancelar una cita</td><td>Paso 4</td></tr>
+  <tr><td>7</td><td>Historial de un paciente</td><td>Paso 3</td></tr>
+  <tr><td>8</td><td>Citas de un médico por fecha</td><td>Paso 4 (Agenda)</td></tr>
+  <tr><td>9</td><td>Página interna sin sesión</td><td>Paso 7</td></tr>
+  <tr><td>10</td><td>Datos inválidos</td><td>Paso 3</td></tr>
+</table></div>
+
+<!-- ============================================================ -->
+<h2 id="preguntas">6. Preguntas probables de la ingeniera</h2>
+<p>Haz clic en cada pregunta para ver una respuesta corta.</p>
+
+<h3>Metodología</h3>
+<details><summary>¿Qué es el PUDS y cuáles son sus características?</summary>
+Es el Proceso Unificado de Desarrollo de Software. Tiene tres características: está <b>dirigido por casos de uso</b> (guían todo el desarrollo), está <b>centrado en la arquitectura</b> y es <b>iterativo e incremental</b> (se construye por ciclos). Sus fases son inicio, elaboración, construcción y transición; y sus flujos de trabajo, captura de requisitos, análisis, diseño, implementación y pruebas.</details>
+<details><summary>¿Por qué dividieron el proyecto en dos ciclos? ¿Qué tiene cada uno?</summary>
+Porque los casos de uso de las citas dependen de datos que deben existir antes. El <b>Ciclo I</b> (CU1 a CU7) construye la base: seguridad, especialidades, médicos, horarios y pacientes. El <b>Ciclo II</b> (CU8 a CU20) construye el núcleo del negocio: disponibilidad, citas, atención médica, estudios, reportes y el portal.</details>
+<details><summary>¿Qué caso de uso es el más importante y por qué?</summary>
+<b>CU10 Reservar ficha</b>: es el objetivo de la clínica y concentra la mayoría de las reglas de negocio (RN03 a RN09 y RN13). También <b>CU1</b>, porque todo exige sesión y permisos.</details>
+<details><summary>¿Cuál es la diferencia entre «include» y «extend»?</summary>
+<b>«include»</b> es un comportamiento que siempre se ejecuta: reservar una ficha siempre consulta la disponibilidad (CU10 incluye a CU9). <b>«extend»</b> es opcional: el tratamiento (CU17) y los estudios (CU18) extienden la consulta (CU15), porque no siempre se indican.</details>
+<details><summary>¿Qué son las clases boundary, control y entity?</summary>
+Son los estereotipos de las clases de análisis. <b>Boundary</b> (interfaz) son las pantallas, como IU_ProgramarCita. <b>Control</b> coordina un caso de uso, como CtrlCita. <b>Entity</b> (entidad) es la información que se guarda, como Cita o Paciente.</details>
+<details><summary>¿Para qué sirvió el diagrama de Ishikawa?</summary>
+Para ordenar las causas del problema «programación deficiente de las citas» en 6 categorías: métodos y procesos, personal, tecnología, información y datos, pacientes y gestión administrativa. Mostró que la causa raíz es la falta de un sistema centralizado, y de cada causa salió una alternativa que se convirtió en un módulo del sistema.</details>
+<details><summary>¿Qué diferencia hay entre el modelo de dominio y el diagrama de clases?</summary>
+El modelo de dominio muestra los conceptos del negocio y sus relaciones, sin tipos de datos ni métodos. El diagrama de clases persistentes ya es de diseño: tiene atributos con tipos, multiplicidades y se mapea a las tablas.</details>
+
+<h3>Base de datos</h3>
+<details><summary>¿Cómo evitan que se registren dos citas a la misma hora?</summary>
+En tres niveles: (1) la pantalla solo muestra horarios libres; (2) el servidor, dentro de una transacción, bloquea al médico con <code>SELECT … FOR UPDATE</code> y vuelve a verificar; (3) PostgreSQL tiene la restricción <code>EXCLUDE USING gist</code> <i>cita_sin_cruce_medico</i>, que impide guardar dos citas cuyos rangos de hora se crucen (las canceladas no cuentan).</details>
+<details><summary>¿Qué es un trigger y cuáles tienen?</summary>
+Es un procedimiento que la base de datos ejecuta automáticamente antes o después de insertar, modificar o eliminar. Tenemos 5: <b>cita_validar</b> (no permite citas en el pasado, fuera de horario, con otra duración o transiciones inválidas), <b>rol_proteger</b> (no se borran los roles del sistema), <b>paciente_normalizar</b> (limpia espacios, CI en mayúsculas y correo en minúsculas), <b>medico_auditar_estado</b> (registra en la bitácora cuando se activa o desactiva un médico) y <b>estudio_fecha_resultado</b> (pone la fecha del resultado al completar un estudio).</details>
+<details><summary>¿Qué es un procedimiento almacenado y cuáles tienen?</summary>
+Es código guardado en la base de datos que se ejecuta con <code>CALL</code> o <code>SELECT</code>. Tenemos 5: <b>fn_horarios_libres</b> (horarios libres de un médico en una fecha), <b>sp_cancelar_cita</b> (cancela con motivo y guarda el historial), <b>sp_desactivar_paciente</b> (no deja desactivar si tiene citas pendientes), <b>fn_resumen_citas</b> (cantidad y porcentaje por estado) y <b>fn_edad_paciente</b>.</details>
+<details><summary>¿Qué es la normalización? ¿Hasta qué forma normal llegaron?</summary>
+Es organizar las tablas para eliminar datos repetidos. Llegamos a la <b>tercera forma normal</b>. <b>1FN:</b> datos atómicos (las especialidades del médico no van en una lista, van en MEDICOESPECIALIDAD). <b>2FN:</b> todo depende de la clave completa. <b>3FN:</b> sin dependencias transitivas (el nombre del estado está en ESTADOCITA, no repetido en cada cita).</details>
+<details><summary>¿Qué es la tabla de volumen?</summary>
+Es la estimación de cuántos registros tendrá cada tabla. Calculamos unas 17 000 citas al año (4 médicos × 16 citas diarias × 22 días × 12 meses) y, con eso, el crecimiento de las tablas relacionadas a 5 años.</details>
+<details><summary>¿Qué tipos de consultas hicieron?</summary>
+30 consultas en <code>05_consultas.sql</code>: 10 <b>simples</b> (una tabla, con WHERE, ORDER BY o GROUP BY), 10 <b>múltiples</b> (JOIN de varias tablas, por ejemplo la agenda con paciente, médico y especialidad) y 10 <b>subconsultas</b> (por ejemplo, médicos con más citas que el promedio o pacientes sin citas).</details>
+<details><summary>¿Por qué PostgreSQL y no MySQL?</summary>
+Lo pide el enunciado y, además, PostgreSQL tiene las restricciones de exclusión (EXCLUDE), que permiten que la base impida citas superpuestas, algo que MySQL no ofrece de forma nativa.</details>
+
+<h3>Programación y seguridad</h3>
+<details><summary>¿Qué arquitectura usaron?</summary>
+Cliente-servidor en capas con MVC: <b>vistas</b> (pantallas), <b>controladores</b> (reciben la petición y revisan permisos), <b>servicios</b> (reglas de negocio, como CitaService y Disponibilidad) y <b>modelos</b> (acceso a datos con PDO). Toda petición entra por un controlador frontal, <code>api/index.php</code>.</details>
+<details><summary>¿Cómo se conecta PHP con PostgreSQL? ¿Qué es la inyección SQL?</summary>
+Con <b>PDO</b> y el controlador <code>pdo_pgsql</code>. Todas las consultas son <b>parametrizadas</b>: los datos del usuario se envían aparte (por ejemplo <code>:ci</code>) y nunca se pegan al texto SQL. Así se evita la inyección SQL, que es cuando alguien escribe código SQL en un formulario para modificar la consulta.</details>
+<details><summary>¿Cómo guardan las contraseñas?</summary>
+Con <code>password_hash()</code> (algoritmo bcrypt) y se comprueban con <code>password_verify()</code>. Ni siquiera nosotros podemos ver la contraseña original.</details>
+<details><summary>¿Qué es CSRF y XSS?</summary>
+<b>CSRF</b>: que otra página envíe un formulario en nombre del usuario; lo evitamos con un token secreto en cada formulario. <b>XSS</b>: que alguien guarde código JavaScript en un campo; lo evitamos escapando todo lo que se muestra en pantalla.</details>
+<details><summary>¿Cómo controlan lo que puede hacer cada rol?</summary>
+Cada rol tiene permisos (tabla ROLPERMISO). En cada pantalla el servidor revisa el permiso con <code>Auth::requerir()</code>; si no lo tiene, responde 403. No basta con ocultar el menú: aunque se escriba la dirección a mano, se bloquea.</details>
+<details><summary>¿Cómo funciona la recuperación de la contraseña?</summary>
+El usuario escribe su correo; el sistema genera un código de 6 dígitos, lo guarda cifrado y lo envía desde la cuenta de correo de la página. El código vence en 15 minutos, admite 5 intentos y se usa una sola vez. El sistema responde lo mismo exista o no el correo, para no revelar qué cuentas existen.</details>
+<details><summary>¿Por qué está en Vercel si Vercel no es para PHP?</summary>
+Vercel ejecuta PHP 8.3 con el entorno <code>vercel-php</code> como funciones serverless. La base de datos está en Supabase, en la misma región (São Paulo). También funciona en un servidor local con XAMPP o Laragon.</details>
+<details><summary>¿Qué es la bitácora?</summary>
+Es el registro de auditoría: guarda quién hizo qué, en qué módulo, desde qué IP y cuándo (ingresos, intentos fallidos, altas, cambios, cancelaciones). La ve el administrador.</details>
+
+<!-- ============================================================ -->
+<h2 id="problemas">7. Si algo falla durante la presentación</h2>
+<div class="tabla"><table>
+  <tr><th>Problema</th><th>Qué hacer</th></tr>
+  <tr><td>La página muestra error de base de datos</td><td>Supabase se pausó: supabase.com → proyecto <i>headsalud</i> → Restore (tarda 1 o 2 minutos). Mientras tanto, mostrar el informe.</td></tr>
+  <tr><td>No hay internet</td><td>Mostrar las capturas y los diagramas del informe en PDF.</td></tr>
+  <tr><td>El médico no tiene citas hoy</td><td>Como recepcionista, programar una cita para hoy con Carlos Mendoza y luego atenderla.</td></tr>
+  <tr><td>No llega el correo de recuperación</td><td>Revisar la carpeta de spam; si no está configurado el correo de la página, explicar el flujo con el diagrama de secuencia de CU1.</td></tr>
+  <tr><td>Olvidaste una contraseña de prueba</td><td>Todas son <code>HeadSalud2026</code>.</td></tr>
+</table></div>
+
+<!-- ============================================================ -->
+<h2 id="reparto">8. Reparto entre los dos</h2>
+<div class="tabla"><table>
+  <tr><th>Integrante</th><th>Parte sugerida</th></tr>
+  <tr><td>Sergio Estaca Paco</td><td>Introducción, Ishikawa y Ciclo I (pasos 0 a 3); preguntas de metodología.</td></tr>
+  <tr><td>Frank Miguel Yerbales Molina</td><td>Ciclo II (pasos 4 a 7) y base de datos (paso 8); preguntas de base de datos.</td></tr>
+</table></div>
+<p class="sub">Sugerencia: el que no está hablando maneja la computadora. Ensayen al menos una vez completo con el cronómetro.</p>
+
+<footer>NovaSol Salud · Grupo 20 · Ingeniería en Requisitos y Modelado · M.Sc. Ing. Angelica Garzon Cuellar</footer>
+</div>
+<script>
+  // Recuerda las casillas marcadas en este navegador
+  document.querySelectorAll('#checklist input').forEach((c, i) => {
+    const k = 'guion-check-' + i;
+    try { c.checked = localStorage.getItem(k) === '1'; } catch (e) {}
+    c.addEventListener('change', () => { try { localStorage.setItem(k, c.checked ? '1' : '0'); } catch (e) {} });
+  });
+</script>
+</body>
+</html>

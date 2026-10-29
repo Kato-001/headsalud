@@ -147,3 +147,11 @@ create trigger estudio_fecha_resultado before insert or update on estudio
 
 revoke execute on all functions in schema clinica from public;
 revoke execute on all procedures in schema clinica from public;
+-- La aplicación (headsalud_app, ver 04_usuario_app.sql) puede usar las funciones nuevas
+do $$
+begin
+    if exists (select 1 from pg_roles where rolname = 'headsalud_app') then
+        execute 'grant execute on all functions in schema clinica to headsalud_app';
+        execute 'grant execute on all procedures in schema clinica to headsalud_app';
+    end if;
+end $$;
