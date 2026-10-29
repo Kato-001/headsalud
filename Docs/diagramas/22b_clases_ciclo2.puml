@@ -1,0 +1,65 @@
+@startuml 22b_clases_ciclo2
+!include estilo.iuml
+title Ciclo II · Diagrama de clases de análisis (P3 a P6 y portal)
+left to right direction
+hide empty members
+boundary IU_Registro
+boundary IU_ProgramarCita
+boundary IU_DetalleCita
+boundary IU_Reprogramar
+boundary IU_Agenda
+boundary IU_Consulta
+boundary IU_Estudios
+boundary IU_Portal
+boundary IU_Reportes
+control CtrlRegistro
+control CtrlDisponibilidad
+control CtrlCita
+control CtrlAgenda
+control CtrlAtencion
+control CtrlEstudio
+control CtrlPortal
+control CtrlReporte
+entity Paciente
+entity Medico
+entity Horario
+entity Cita
+entity EstadoCita
+entity HistorialCita
+entity Notificacion
+entity Consulta
+entity Tratamiento
+entity Medicamento
+entity Estudio
+entity CatalogoEstudio
+IU_Registro --> CtrlRegistro
+IU_ProgramarCita --> CtrlDisponibilidad
+IU_ProgramarCita --> CtrlCita
+IU_DetalleCita --> CtrlCita
+IU_Reprogramar --> CtrlCita
+IU_Agenda --> CtrlAgenda
+IU_Consulta --> CtrlAtencion
+IU_Estudios --> CtrlEstudio
+IU_Portal --> CtrlPortal
+IU_Reportes --> CtrlReporte
+CtrlRegistro --> Paciente
+CtrlDisponibilidad --> Horario
+CtrlDisponibilidad --> Cita
+CtrlCita --> CtrlDisponibilidad
+CtrlCita --> Cita
+CtrlCita --> EstadoCita
+CtrlCita --> HistorialCita
+CtrlCita --> Notificacion
+CtrlAgenda --> Cita
+CtrlAgenda --> Medico
+CtrlAtencion --> Consulta
+CtrlAtencion --> Tratamiento
+CtrlAtencion --> Medicamento
+CtrlAtencion --> Cita
+CtrlEstudio --> Estudio
+CtrlEstudio --> CatalogoEstudio
+CtrlPortal --> CtrlCita
+CtrlPortal --> Paciente
+CtrlReporte --> Cita
+CtrlReporte --> Paciente
+@enduml

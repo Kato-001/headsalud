@@ -1,0 +1,45 @@
+@startuml 60_comp_p4
+!include estilo.iuml
+title Componentes del paquete P4 Gestión de citas
+left to right direction
+package "Presentación (app/views)" {
+  component "citas/nueva.php\n+ citas.js" as vNue
+  component "citas/index.php\ncitas/ver.php" as vVer
+  component "citas/reprogramar.php" as vRep
+  component "agenda/index.php" as vAge
+}
+package "Control (app/controllers)" {
+  component "CitaController" as cCit
+  component "ApiController (JSON)" as cApi
+  component "AgendaController" as cAge
+}
+package "Lógica de negocio (app/services · app/core)" {
+  component "CitaService" as sCit
+  component "Disponibilidad" as sDis
+}
+package "Acceso a datos (app/models)" {
+  component "Cita" as mCit
+  component "Horario" as mHor
+  component "Notificacion" as mNot
+}
+component "Database (PDO)" as PDO
+database "PostgreSQL\ncita, estadocita,\nhistorialcita, notificacion\n(trigger validar_cita)" as DB
+vNue --> cCit
+vNue ..> cApi : fetch
+vVer --> cCit
+vRep --> cCit
+vAge --> cAge
+cCit --> sCit
+cApi --> sDis
+cAge --> sDis
+cAge --> mCit
+sCit --> sDis
+sCit --> mCit
+sCit --> mNot
+sDis --> mHor
+sDis --> mCit
+mCit --> PDO
+mHor --> PDO
+mNot --> PDO
+PDO --> DB : pdo_pgsql
+@enduml

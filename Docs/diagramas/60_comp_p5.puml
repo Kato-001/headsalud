@@ -1,0 +1,34 @@
+@startuml 60_comp_p5
+!include estilo.iuml
+title Componentes del paquete P5 Atención médica
+left to right direction
+package "Presentación (app/views)" {
+  component "consulta.php" as vCon
+  component "estudios/index.php" as vEst
+  component "estudios/resultado.php" as vRes
+  component "estudios/catalogo.php" as vCat
+}
+package "Control (app/controllers)" {
+  component "AtencionController" as cAte
+  component "EstudioController" as cEst
+}
+package "Acceso a datos (app/models)" {
+  component "Consulta" as mCon
+  component "Estudio" as mEst
+  component "Cita" as mCit
+}
+component "Database (PDO)" as PDO
+database "PostgreSQL\nconsulta, tratamiento,\nmedicamento, estudio,\ncatalogoestudio" as DB
+vCon --> cAte
+vEst --> cEst
+vRes --> cEst
+vCat --> cEst
+cAte --> mCon
+cAte --> mCit
+cAte --> mEst
+cEst --> mEst
+mCon --> PDO
+mEst --> PDO
+mCit --> PDO
+PDO --> DB : pdo_pgsql
+@enduml

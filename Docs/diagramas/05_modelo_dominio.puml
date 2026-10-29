@@ -1,0 +1,114 @@
+@startuml 05_modelo_dominio
+!include estilo.iuml
+title Modelo de dominio · Clínica Vida Salud
+hide circle
+hide methods
+skinparam linetype ortho
+class Paciente {
+  ci
+  nombres
+  apellidos
+  fechaNacimiento
+  sexo
+  teléfono
+}
+class HistoriaClinica {
+  antecedentes
+  alergias
+  enfermedadesCrónicas
+}
+class ContactoEmergencia {
+  nombre
+  parentesco
+  teléfono
+}
+class Medico {
+  registroProfesional
+  nombres
+  apellidos
+}
+class Especialidad {
+  nombre
+  descripción
+}
+class Horario {
+  díaSemana
+  horaInicio
+  horaFin
+}
+class BloqueoAgenda {
+  fecha
+  tipo
+  motivo
+}
+class Cita {
+  fecha
+  horaInicio
+  horaFin
+  modalidad
+  motivo
+}
+class EstadoCita {
+  nombre
+  ocupaHorario
+}
+class HistorialCita {
+  acción
+  motivo
+  fecha
+}
+class Consulta {
+  diagnóstico
+  signosVitales
+  observaciones
+}
+class Tratamiento {
+  dosis
+  frecuencia
+  duración
+}
+class Medicamento {
+  nombre
+  presentación
+}
+class Estudio {
+  indicaciones
+  estado
+  resultado
+}
+class CatalogoEstudio {
+  nombre
+  categoría
+}
+class Usuario {
+  usuario
+  correo
+  contraseña
+}
+class Rol {
+  nombre
+}
+class Recepcionista
+class Administrador
+
+Paciente "1" -- "1" HistoriaClinica : tiene
+Paciente "1" -- "0..*" ContactoEmergencia : registra
+Paciente "1" -- "0..*" Cita : solicita
+Medico "1..*" -- "1..*" Especialidad : atiende
+Medico "1" -- "1..*" Horario : trabaja en
+Medico "1" -- "0..*" BloqueoAgenda : no atiende en
+Medico "1" -- "0..*" Cita : atiende
+Cita "0..*" -- "1" Especialidad : de
+Cita "0..*" -- "1" EstadoCita : está en
+Cita "1" -- "1..*" HistorialCita : registra cambios
+Cita "1" -- "0..1" Consulta : genera
+Consulta "1" -- "0..*" Tratamiento : indica
+Tratamiento "0..*" -- "1" Medicamento : usa
+Consulta "1" -- "0..*" Estudio : solicita
+Estudio "0..*" -- "1" CatalogoEstudio : es de tipo
+Recepcionista "1" -- "0..*" Cita : programa
+Usuario "0..*" -- "1" Rol : tiene
+Usuario "0..1" -- "0..1" Paciente : accede como
+Usuario "0..1" -- "0..1" Medico : accede como
+Administrador -- Medico : administra
+@enduml

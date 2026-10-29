@@ -1,0 +1,167 @@
+@startuml 47_clases_persistentes
+!include estilo.iuml
+title Diseño de datos lógico · Diagrama de clases persistentes
+hide circle
+hide methods
+skinparam linetype ortho
+skinparam classAttributeFontSize 11
+class Rol {
+  idRol : int
+  nombre : String
+  descripcion : String
+}
+class Permiso {
+  idPermiso : int
+  codigo : String
+  nombre : String
+  modulo : String
+}
+class Usuario {
+  idUsuario : int
+  nombre : String
+  username : String
+  email : String
+  password : String
+  estado : String
+  ultimoAcceso : DateTime
+}
+class Bitacora {
+  idBitacora : int
+  accion : String
+  modulo : String
+  descripcion : String
+  ip : String
+  fecha : DateTime
+}
+class Especialidad {
+  idEspecialidad : int
+  nombre : String
+  descripcion : String
+  estado : String
+}
+class Medico {
+  idMedico : int
+  codigo : String
+  registroProfesional : String
+  nombres : String
+  apellidos : String
+  telefono : String
+  estado : String
+}
+class Horario {
+  idHorario : int
+  diaSemana : int
+  horaInicio : Time
+  horaFin : Time
+  estado : String
+}
+class BloqueoAgenda {
+  idBloqueo : int
+  fecha : Date
+  horaInicio : Time
+  horaFin : Time
+  tipo : String
+}
+class Paciente {
+  idPaciente : int
+  codigo : String
+  ci : String
+  nombres : String
+  apellidos : String
+  fechaNacimiento : Date
+  sexo : char
+  telefono : String
+  tipoSangre : String
+  estado : String
+}
+class HistoriaClinica {
+  idHistoria : int
+  numero : String
+  antecedentes : String
+  alergias : String
+}
+class ContactoEmergencia {
+  idContacto : int
+  nombre : String
+  parentesco : String
+  telefono : String
+}
+class EstadoCita {
+  codigo : String
+  nombre : String
+  ocupaHorario : boolean
+}
+class Cita {
+  idCita : int
+  codigo : String
+  fecha : Date
+  horaInicio : Time
+  horaFin : Time
+  modalidad : String
+  motivo : String
+}
+class HistorialCita {
+  idHistorial : int
+  accion : String
+  fechaAnterior : Date
+  fechaNueva : Date
+  motivo : String
+}
+class Notificacion {
+  idNotificacion : int
+  tipo : String
+  canal : String
+  mensaje : String
+}
+class Consulta {
+  idConsulta : int
+  fechaHora : DateTime
+  peso : decimal
+  talla : decimal
+  diagnostico : String
+}
+class Tratamiento {
+  idTratamiento : int
+  dosis : String
+  frecuencia : String
+  duracion : String
+}
+class Medicamento {
+  idMedicamento : int
+  nombre : String
+  presentacion : String
+}
+class Estudio {
+  idEstudio : int
+  estado : String
+  fechaSolicitud : DateTime
+  resultado : String
+}
+class CatalogoEstudio {
+  idCatalogo : int
+  nombre : String
+  categoria : String
+}
+
+Rol "1..*" -- "1..*" Permiso
+Usuario "0..*" -- "1" Rol
+Usuario "1" -- "0..*" Bitacora
+Medico "1" -- "1" Usuario
+Medico "1..*" -- "1..*" Especialidad
+Medico "1" *-- "1..*" Horario
+Medico "1" *-- "0..*" BloqueoAgenda
+Paciente "0..1" -- "0..1" Usuario
+Paciente "1" *-- "1" HistoriaClinica
+Paciente "1" *-- "0..*" ContactoEmergencia
+Cita "0..*" -- "1" Paciente
+Cita "0..*" -- "1" Medico
+Cita "0..*" -- "1" Especialidad
+Cita "0..*" -- "1" EstadoCita
+Cita "1" *-- "1..*" HistorialCita
+Cita "1" -- "0..*" Notificacion
+Cita "1" -- "0..1" Consulta
+Consulta "1" *-- "0..*" Tratamiento
+Tratamiento "0..*" -- "1" Medicamento
+Consulta "1" *-- "0..*" Estudio
+Estudio "0..*" -- "1" CatalogoEstudio
+@enduml

@@ -1,0 +1,21 @@
+@startuml 21a_paquetes_ciclo1
+!include estilo.iuml
+title Ciclo I · Vista de paquetes de análisis
+skinparam packageStyle folder
+package "P3 Gestión de pacientes" as P3 {
+}
+package "P2 Gestión médica" as P2 {
+}
+package "P1 Seguridad y acceso" as P1 {
+}
+P2 ..> P1 : <<use>>
+P3 ..> P1 : <<use>>
+note right of P1
+  Servicio común: autenticación,
+  permisos por rol y bitácora
+end note
+note bottom of P2
+  Datos maestros para el Ciclo II:
+  especialidades, médicos y horarios
+end note
+@enduml

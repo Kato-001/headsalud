@@ -1,0 +1,29 @@
+@startuml 60_comp_p3
+!include estilo.iuml
+title Componentes del paquete P3 Gestión de pacientes
+left to right direction
+package "Presentación (app/views)" {
+  component "pacientes/index.php" as vLis
+  component "pacientes/form.php\npacientes/ver.php" as vFic
+  component "registro.php" as vReg
+}
+package "Control (app/controllers)" {
+  component "PacienteController" as cPac
+  component "AuthController\n(registro)" as cAuth
+}
+package "Acceso a datos (app/models)" {
+  component "Paciente" as mPac
+  component "Usuario" as mUsu
+}
+component "Database (PDO)" as PDO
+database "PostgreSQL\npaciente, historiaclinica,\ncontactoemergencia, usuario" as DB
+vLis --> cPac
+vFic --> cPac
+vReg --> cAuth
+cPac --> mPac
+cAuth --> mPac
+cAuth --> mUsu
+mPac --> PDO
+mUsu --> PDO
+PDO --> DB : pdo_pgsql
+@enduml

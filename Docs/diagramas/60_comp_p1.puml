@@ -1,0 +1,56 @@
+@startuml 60_comp_p1
+!include estilo.iuml
+title Componentes del paquete P1 Seguridad y acceso
+left to right direction
+package "Presentación (app/views)" {
+  component "login.php" as vLogin
+  component "recuperar.php\nrecuperar_codigo.php" as vRec
+  component "usuarios/*.php" as vUsu
+  component "roles/index.php" as vRol
+  component "configuracion/index.php" as vConf
+  component "bitacora/index.php" as vBit
+}
+package "Control (app/controllers)" {
+  component "AuthController" as cAuth
+  component "RecuperacionController" as cRec
+  component "UsuarioController" as cUsu
+  component "RolController" as cRol
+  component "ConfiguracionController" as cConf
+  component "BitacoraController" as cBit
+}
+package "Lógica de negocio (app/services · app/core)" {
+  component "Auth · Session" as sAuth
+  component "Mailer (SMTP)" as sMail
+}
+package "Acceso a datos (app/models)" {
+  component "Usuario" as mUsu
+  component "Recuperacion" as mRec
+  component "Rol" as mRol
+  component "Configuracion" as mConf
+  component "Bitacora" as mBit
+}
+component "Database (PDO)" as PDO
+database "PostgreSQL\nusuario, rol, permiso,\nrolpermiso, bitacora,\nconfiguracion, recuperacion, sesion" as DB
+vLogin --> cAuth
+vRec --> cRec
+vUsu --> cUsu
+vRol --> cRol
+vConf --> cConf
+vBit --> cBit
+cAuth --> sAuth
+sAuth --> mUsu
+sAuth --> mBit
+cRec --> sMail
+cRec --> mRec
+cRec --> mUsu
+cUsu --> mUsu
+cRol --> mRol
+cConf --> mConf
+cBit --> mBit
+mUsu --> PDO
+mRec --> PDO
+mRol --> PDO
+mConf --> PDO
+mBit --> PDO
+PDO --> DB : pdo_pgsql
+@enduml

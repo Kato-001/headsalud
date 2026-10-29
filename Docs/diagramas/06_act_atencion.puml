@@ -1,0 +1,32 @@
+@startuml 06_act_atencion
+!include estilo.iuml
+title Modelo de negocio · Atención médica, tratamiento y estudios
+|Paciente|
+start
+:Llega a la clínica a la hora de su cita;
+|Recepcionista|
+:Busca la cita del día;
+if (¿El paciente se presentó?) then (sí)
+  :Marca la cita como atendida\no la deriva al médico;
+else (no)
+  :Registra la inasistencia;
+  stop
+endif
+|Médico|
+:Revisa el historial clínico\ny las citas anteriores;
+:Registra motivo, signos vitales\ny examen físico;
+:Registra el diagnóstico;
+if (¿Requiere tratamiento?) then (sí)
+  :Indica medicamentos, dosis,\nfrecuencia y duración;
+endif
+if (¿Requiere estudios?) then (sí)
+  :Solicita estudios del catálogo;
+  |Recepcionista|
+  :Registra el resultado\ncuando llega del laboratorio;
+  |Paciente|
+  :Consulta el resultado en el portal;
+endif
+|Médico|
+:Guarda la consulta\n(la cita queda ATENDIDA);
+stop
+@enduml

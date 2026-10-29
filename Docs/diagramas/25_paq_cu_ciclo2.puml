@@ -1,0 +1,28 @@
+@startuml 25_paq_cu_ciclo2
+!include estilo.iuml
+title Ciclo II · Relación entre paquetes y casos de uso
+skinparam packageStyle folder
+left to right direction
+package "P3 Gestión de pacientes" as P3 {
+  usecase "CU7 Gestionar pacientes" as CU7
+  usecase "CU8 Registrarse como paciente" as CU8
+}
+package "P4 Gestión de citas" as P4 {
+  usecase "CU9 Consultar disponibilidad" as CU9
+  usecase "CU10 Reservar ficha" as CU10
+  usecase "CU11 Reprogramar cita" as CU11
+  usecase "CU12 Cancelar cita" as CU12
+  usecase "CU13 Registrar asistencia" as CU13
+  usecase "CU14 Consultar agenda médica" as CU14
+}
+package "P5 Atención médica" as P5 {
+  usecase "CU15 Registrar consulta médica" as CU15
+  usecase "CU16 Gestionar historial clínico" as CU16
+  usecase "CU17 Registrar tratamiento" as CU17
+  usecase "CU18 Gestionar estudios médicos" as CU18
+  usecase "CU19 Consultar historial y resultados" as CU19
+}
+package "P6 Reportes" as P6 {
+  usecase "CU20 Generar reportes" as CU20
+}
+@enduml

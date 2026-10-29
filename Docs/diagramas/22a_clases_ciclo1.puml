@@ -1,0 +1,53 @@
+@startuml 22a_clases_ciclo1
+!include estilo.iuml
+title Ciclo I · Diagrama de clases de análisis (P1, P2 y P3)
+left to right direction
+hide empty members
+boundary IU_Login
+boundary IU_Usuarios
+boundary IU_Roles
+boundary IU_Especialidades
+boundary IU_Medicos
+boundary IU_Horarios
+boundary IU_Pacientes
+control CtrlSesion
+control CtrlUsuario
+control CtrlRol
+control CtrlEspecialidad
+control CtrlMedico
+control CtrlHorario
+control CtrlPaciente
+entity Usuario
+entity Rol
+entity Permiso
+entity Bitacora
+entity Especialidad
+entity Medico
+entity Horario
+entity BloqueoAgenda
+entity Paciente
+entity HistoriaClinica
+entity ContactoEmergencia
+IU_Login --> CtrlSesion
+IU_Usuarios --> CtrlUsuario
+IU_Roles --> CtrlRol
+IU_Especialidades --> CtrlEspecialidad
+IU_Medicos --> CtrlMedico
+IU_Horarios --> CtrlHorario
+IU_Pacientes --> CtrlPaciente
+CtrlSesion --> Usuario
+CtrlSesion --> Bitacora
+CtrlUsuario --> Usuario
+CtrlUsuario --> Rol
+CtrlRol --> Rol
+CtrlRol --> Permiso
+CtrlEspecialidad --> Especialidad
+CtrlMedico --> Medico
+CtrlMedico --> Especialidad
+CtrlMedico --> Usuario
+CtrlHorario --> Horario
+CtrlHorario --> BloqueoAgenda
+CtrlPaciente --> Paciente
+CtrlPaciente --> HistoriaClinica
+CtrlPaciente --> ContactoEmergencia
+@enduml

@@ -1,0 +1,36 @@
+@startuml 60_comp_p2
+!include estilo.iuml
+title Componentes del paquete P2 Gestión médica
+left to right direction
+package "Presentación (app/views)" {
+  component "especialidades/index.php" as vEsp
+  component "medicos/index.php\nmedicos/form.php\nmedicos/ver.php" as vMed
+  component "horarios/index.php" as vHor
+}
+package "Control (app/controllers)" {
+  component "EspecialidadController" as cEsp
+  component "MedicoController" as cMed
+  component "HorarioController" as cHor
+}
+package "Acceso a datos (app/models)" {
+  component "Especialidad" as mEsp
+  component "Medico" as mMed
+  component "Horario" as mHor
+  component "Usuario" as mUsu
+}
+component "Database (PDO)" as PDO
+database "PostgreSQL\nespecialidad, medico,\nmedicoespecialidad,\nhorario, bloqueoagenda" as DB
+vEsp --> cEsp
+vMed --> cMed
+vHor --> cHor
+cEsp --> mEsp
+cMed --> mMed
+cMed --> mEsp
+cMed --> mUsu
+cHor --> mHor
+mEsp --> PDO
+mMed --> PDO
+mHor --> PDO
+mUsu --> PDO
+PDO --> DB : pdo_pgsql
+@enduml

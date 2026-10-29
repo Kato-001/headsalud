@@ -1,0 +1,20 @@
+@startuml 25_paq_cu_ciclo1
+!include estilo.iuml
+title Ciclo I · Relación entre paquetes y casos de uso
+skinparam packageStyle folder
+left to right direction
+package "P1 Seguridad y acceso" as P1 {
+  usecase "CU1 Iniciar sesión" as CU1
+  usecase "CU2 Gestionar roles y permisos" as CU2
+  usecase "CU3 Gestionar usuarios" as CU3
+}
+package "P2 Gestión médica" as P2 {
+  usecase "CU4 Gestionar especialidades" as CU4
+  usecase "CU5 Gestionar médicos" as CU5
+  usecase "CU6 Gestionar horarios" as CU6
+}
+package "P3 Gestión de pacientes" as P3 {
+  usecase "CU7 Gestionar pacientes" as CU7
+  usecase "CU8 Registrarse como paciente" as CU8
+}
+@enduml

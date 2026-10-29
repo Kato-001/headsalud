@@ -1,0 +1,59 @@
+@startuml 10b_cu_ciclo2
+!include estilo.iuml
+title Ciclo II · Actores y casos de uso (CU8 a CU20)
+left to right direction
+skinparam packageStyle rectangle
+actor "Paciente" as PAC
+actor "Recepcionista" as REC
+actor "Médico" as MED
+actor "Administrador" as ADM
+rectangle "NovaSol Salud" {
+  package "P3 Gestión de pacientes" {
+    usecase "CU8 Registrarse como paciente" as CU8
+  }
+  package "P4 Gestión de citas" {
+    usecase "CU9 Consultar disponibilidad" as CU9
+    usecase "CU10 Reservar ficha" as CU10
+    usecase "CU11 Reprogramar cita" as CU11
+    usecase "CU12 Cancelar cita" as CU12
+    usecase "CU13 Registrar asistencia" as CU13
+    usecase "CU14 Consultar agenda médica" as CU14
+  }
+  package "P5 Atención médica" {
+    usecase "CU15 Registrar consulta médica" as CU15
+    usecase "CU16 Gestionar historial clínico" as CU16
+    usecase "CU17 Registrar tratamiento" as CU17
+    usecase "CU18 Gestionar estudios médicos" as CU18
+    usecase "CU19 Consultar historial y resultados" as CU19
+  }
+  package "P6 Reportes" {
+    usecase "CU20 Generar reportes" as CU20
+  }
+}
+PAC --> CU8
+PAC --> CU9
+REC --> CU9
+PAC --> CU10
+REC --> CU10
+REC --> CU11
+PAC --> CU12
+REC --> CU12
+REC --> CU13
+MED --> CU13
+MED --> CU14
+REC --> CU14
+MED --> CU15
+MED --> CU16
+REC --> CU16
+MED --> CU17
+MED --> CU18
+REC --> CU18
+PAC --> CU19
+ADM --> CU20
+REC --> CU20
+ADM --> CU14
+CU10 ..> CU9 : <<include>>
+CU11 ..> CU9 : <<include>>
+CU17 ..> CU15 : <<extend>>
+CU18 ..> CU15 : <<extend>>
+@enduml

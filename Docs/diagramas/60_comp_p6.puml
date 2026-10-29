@@ -1,0 +1,20 @@
+@startuml 60_comp_p6
+!include estilo.iuml
+title Componentes del paquete P6 Reportes
+left to right direction
+package "Presentación (app/views)" {
+  component "reportes/index.php\n(CSV · imprimir PDF)" as vRep
+}
+package "Control (app/controllers)" {
+  component "ReporteController" as cRep
+}
+package "Acceso a datos (app/models)" {
+  component "Reporte" as mRep
+}
+component "Database (PDO)" as PDO
+database "PostgreSQL\ncita, paciente, medico,\nespecialidad (consultas)" as DB
+vRep --> cRep
+cRep --> mRep
+mRep --> PDO
+PDO --> DB : pdo_pgsql
+@enduml

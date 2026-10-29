@@ -1,0 +1,44 @@
+@startuml 60_comp_portal
+!include estilo.iuml
+title Componentes del Portal del paciente
+left to right direction
+package "Presentación (app/views)" {
+  component "Portal/inicio.php" as vIni
+  component "Portal/reservar.php" as vRes
+  component "Portal/citas.php" as vCit
+  component "Portal/perfil.php" as vPer
+  component "Portal/historial.php" as vHis
+}
+package "Control (app/controllers)" {
+  component "PortalController" as cPor
+}
+package "Lógica de negocio (app/services · app/core)" {
+  component "CitaService" as sCit
+}
+package "Acceso a datos (app/models)" {
+  component "Paciente" as mPac
+  component "Cita" as mCit
+  component "Consulta" as mCon
+  component "Estudio" as mEst
+  component "Notificacion" as mNot
+}
+component "Database (PDO)" as PDO
+database "PostgreSQL\npaciente, cita, consulta,\nestudio, notificacion" as DB
+vIni --> cPor
+vRes --> cPor
+vCit --> cPor
+vPer --> cPor
+vHis --> cPor
+cPor --> sCit
+cPor --> mPac
+cPor --> mCon
+cPor --> mEst
+cPor --> mNot
+sCit --> mCit
+mPac --> PDO
+mCit --> PDO
+mCon --> PDO
+mEst --> PDO
+mNot --> PDO
+PDO --> DB : pdo_pgsql
+@enduml

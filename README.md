@@ -35,8 +35,9 @@ Caso de estudio: *Clínica Vida Salud*
 
 | Documento | Contenido |
 |---|---|
-| [📘 Informe del proyecto (PDF)](Docs/Informe_NovaSolSalud_Grupo20.pdf) | Carátula, índice, perfil, marco teórico, modelo de negocio, los flujos de trabajo (captura de requisitos, análisis, diseño, implementación y pruebas), conclusiones, recomendaciones, bibliografía y anexos. 121 páginas. |
-| [📐 Diagramas UML (PlantUML)](Docs/diagramas) | 66 diagramas: negocio, casos de uso (general y por paquete), prototipos, comunicación y secuencia de los 20 CU, clases, estados, despliegue, paquetes, componentes, datos y trazabilidad. Fuente `.puml` e imagen `.png`. |
+| [📘 Informe final (PDF)](Docs/Informe_Final_NovaSolSalud_Grupo20.pdf) · [Word](Docs/Informe_Final_NovaSolSalud_Grupo20.docx) | Informe final en formato APA 7, con el Ciclo I (CU1–CU7) y el Ciclo II (CU8–CU20) separados: perfil, elementos del sistema, tecnología, costos, beneficios, clientes, modelo de dominio y de negocio, marco teórico, método de Ishikawa, captura de requisitos, análisis, diseño, diseño de datos (mapeo, normalización, tabla de volumen, 30 consultas SQL, procedimientos almacenados y triggers), implementación, conclusiones, bibliografía y anexos. 205 páginas. |
+| [📗 Informe anterior (PDF)](Docs/Informe_NovaSolSalud_Grupo20.pdf) | Primera versión del informe (121 páginas). |
+| [📐 Diagramas UML (PlantUML)](Docs/diagramas) | 84 diagramas: negocio, Ishikawa, modelo de dominio, casos de uso (general, por ciclo y por paquete), prototipos, comunicación y secuencia de los 20 CU, clases de análisis por ciclo, estados, despliegue, paquetes, componentes (principal y por paquete), clases persistentes, modelo relacional y trazabilidad. Fuente `.puml` e imagen `.png`. |
 | [🖼️ Capturas de pantalla](Docs/capturas) | 53 pantallas del sistema funcionando, de cada rol. |
 | [📝 Diagrama de clases original](Docs/Diagrama%20de%20Clinica.svg) | Diagrama de clases del que parte la base de datos. |
 
@@ -155,7 +156,7 @@ Los permisos se asignan por rol desde **Administración → Roles y permisos** (
 
 Los artefactos siguen los flujos de trabajo del Proceso Unificado y describen **el sistema tal como está construido**. Cada diagrama se corresponde con archivos reales del repositorio (ver [Trazabilidad](#trazabilidad-trace)). Los diagramas de esta sección están escritos en Mermaid, que GitHub dibuja automáticamente.
 
-> **Versión UML completa:** los 66 diagramas en notación UML estándar (PlantUML) están en [`Docs/diagramas`](Docs/diagramas) y en el [informe del proyecto](Docs/Informe_NovaSolSalud_Grupo20.pdf). Incluyen la descripción, el diagrama de comunicación y el diagrama de secuencia de **los 20 casos de uso**.
+> **Versión UML completa:** los 84 diagramas en notación UML estándar (PlantUML) están en [`Docs/diagramas`](Docs/diagramas) y en el [informe final](Docs/Informe_Final_NovaSolSalud_Grupo20.pdf). Incluyen la descripción, el diagrama de comunicación y el diagrama de secuencia de **los 20 casos de uso**.
 
 ### 1. Captura de requisitos
 
@@ -767,6 +768,8 @@ Navegador ──HTTP──▶ api/index.php (controlador frontal + rutas)
 | `02_reglas_negocio.sql` | Trigger `validar_cita` (RN04–RN08, RF08, RF10), protección de roles del sistema y RLS. |
 | `03_datos_iniciales.sql` | Roles, permisos, configuración, estados, especialidades, médicos con horarios, pacientes y unas 240 citas de ejemplo alrededor de la fecha actual. |
 | `04_usuario_app.sql` | Usuario de base de datos con privilegios mínimos para la aplicación. |
+| `05_consultas.sql` | 30 consultas de ejemplo: 10 simples, 10 de varias tablas y 10 subconsultas (solo lectura). |
+| `06_procedimientos_triggers.sql` | (Opcional) 5 procedimientos almacenados (horarios libres, cancelar cita, desactivar paciente, resumen de citas, edad) y 3 disparadores (normalizar paciente, auditar estado del médico, fecha del resultado de un estudio). |
 | `00_limpiar_version_anterior.sql` | (Opcional) borra una versión de prueba anterior. |
 
 **Relaciones principales:**

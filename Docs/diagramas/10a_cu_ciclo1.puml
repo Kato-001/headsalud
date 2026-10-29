@@ -1,0 +1,37 @@
+@startuml 10a_cu_ciclo1
+!include estilo.iuml
+title Ciclo I · Actores y casos de uso (CU1 a CU7)
+left to right direction
+skinparam packageStyle rectangle
+actor "Administrador" as ADM
+actor "Recepcionista" as REC
+actor "Médico" as MED
+actor "Paciente" as PAC
+rectangle "NovaSol Salud" {
+  package "P1 Seguridad y acceso" {
+    usecase "CU1 Iniciar sesión" as CU1
+    usecase "CU2 Gestionar roles y permisos" as CU2
+    usecase "CU3 Gestionar usuarios" as CU3
+  }
+  package "P2 Gestión médica" {
+    usecase "CU4 Gestionar especialidades" as CU4
+    usecase "CU5 Gestionar médicos" as CU5
+    usecase "CU6 Gestionar horarios" as CU6
+  }
+  package "P3 Gestión de pacientes" {
+    usecase "CU7 Gestionar pacientes" as CU7
+  }
+}
+ADM --> CU1
+REC --> CU1
+MED --> CU1
+PAC --> CU1
+ADM --> CU2
+ADM --> CU3
+ADM --> CU4
+ADM --> CU5
+REC --> CU5
+ADM --> CU6
+REC --> CU7
+ADM --> CU7
+@enduml
